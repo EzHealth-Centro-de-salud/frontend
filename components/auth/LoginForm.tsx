@@ -10,6 +10,7 @@ import { useState } from "react"
 import ezhealth from '@/img/ezhealth.png'
 import { httpLink } from "@/components/apollo/ApolloConfig";
 import { LOGIN_PATIENT_MUTATION } from "../apollo/mutations";
+import { Navigate, redirect  } from "react-router-dom";
 const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
@@ -17,7 +18,7 @@ const client = new ApolloClient({
 
 export default function LoginForm() {
 
-  const [email, setEmail] = useState('')
+  const [rut, setRut] = useState('')
   const [password, setPassword] = useState('')
   const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState<string | null>(null)
@@ -27,12 +28,31 @@ export default function LoginForm() {
 
   )
   const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();//evita que se refresque la pagina al enviar el formulario
+    const { data, errors } = await loginPatient({
+      variables: {
+        LoginInput: {
+          rut,
+          password,
+        },
+      },
+    });
+    if (data?.loginPatient) {
+      console.log(data.loginPatient)
+      window.alert('Login exitoso')
+      //redirect('/patient/dashboard')
+      window.location.href = '/patient/dashboard'
 
+      
+    }else{
+      console.log(errors)
+      setError('Error al iniciar sesión')
+    }
   }
 
   return (
     <main className="bg-[#26313c] h-screen flex items-center justify-center p-10">
-      <div className="grid w-full h-full grid-cols-1 bg-white box-anim md:grid-cols-2">
+      <div className="grid w-full h-full grid-cols-1 bg-white box-anim ">
         <div className="bg-[#16202a] text-white flex items-center justify-center flex-col">
           <div className="my-4">
             <h1 className="text-3xl font-semibold ">Login</h1>
@@ -42,14 +62,14 @@ export default function LoginForm() {
           </div>
           <form onSubmit={onSubmit}>
 
-            <Label htmlFor="email">Email*</Label>
+            <Label htmlFor="email">RUT</Label>
             <Input
               className="mt-2 mb-4 bg-transparent rounded-full"
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
+              onChange={(e) => setRut(e.target.value)}
+              type="text"
               id="email"
               placeholder="Email"
-              maxLength={254}
+              maxLength={9}
             />
             <Label htmlFor="password">Password*</Label>
             <Input
@@ -71,7 +91,7 @@ export default function LoginForm() {
               ¿Olvidaste tu contraseña?{" "}
               <Link
                 className="text-indigo-500 hover:underline"
-                href="./recoverypassword"
+                href="./recoveryPassword"
               >
                 Recupérala
               </Link>{" "}
@@ -91,11 +111,7 @@ export default function LoginForm() {
             @2023 All rights reserved
           </p>
         </div>
-        <div className="relative hidden md:block">
-        <div className="absolute top-0 left-0 w-full h-full object-cover">
-        <Image className="object-cover" src={ezhealth} alt="ezhealth" width={800} height={1080} priority />
-        </div>
-        </div>
+        
       </div>
     </main>
   );

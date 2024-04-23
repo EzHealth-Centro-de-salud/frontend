@@ -10,8 +10,8 @@ export const REGISTER_PATIENT_MUTATION = gql`
 `;
 
 export const LOGIN_PATIENT_MUTATION = gql`
-    mutation LoginPatient($loginInput: loginInput!) {
-        loginPatient(loginInput: $loginInput) {
+    mutation LoginPatient($LoginInput: LoginInput!) {
+        loginPatient(loginInput: $LoginInput) {
             id
             access_token
             rut
