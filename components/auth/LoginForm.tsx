@@ -1,6 +1,6 @@
 'use client';
 
-
+import { ApolloClient, InMemoryCache, useMutation, ApolloProvider } from "@apollo/client"; 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -8,7 +8,12 @@ import Link from 'next/link'
 import Image from 'next/image';
 import { useState } from "react"
 import ezhealth from '@/img/ezhealth.png'
-//import { httpLink } from "@/components/apolloConfig/apolloConfig";
+import { httpLink } from "@/components/apollo/ApolloConfig";
+import { LOGIN_PATIENT_MUTATION } from "../apollo/mutations";
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+});
 
 export default function LoginForm() {
 
@@ -16,7 +21,11 @@ export default function LoginForm() {
   const [password, setPassword] = useState('')
   const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState<string | null>(null)
+  const [loginPatient] = useMutation(LOGIN_PATIENT_MUTATION, {
+    client,
+  }
 
+  )
   const onSubmit = async (e: React.FormEvent) => {
 
   }
@@ -40,6 +49,7 @@ export default function LoginForm() {
               type="email"
               id="email"
               placeholder="Email"
+              maxLength={254}
             />
             <Label htmlFor="password">Password*</Label>
             <Input
@@ -48,6 +58,7 @@ export default function LoginForm() {
               type="password"
               id="password"
               placeholder="password"
+              maxLength={128}
             />
 
             <Button
@@ -63,6 +74,15 @@ export default function LoginForm() {
                 href="./recoverypassword"
               >
                 Recupérala
+              </Link>{" "}
+            </p>
+            <p className="text-center mt-2" >
+              ¿No tienes una cuenta?{" "}
+              <Link
+                className="text-indigo-500 hover:underline"
+                href="/auth/register"
+              >
+                Creala
               </Link>{" "}
             </p>
 
