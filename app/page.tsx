@@ -12,6 +12,9 @@ export default function HomePage() {
           <Link href="/auth/login  ">
             <h1>Login </h1>
           </Link>
+          <Link href="/auth/personnelLogin  ">
+            <h1>Personnel Login </h1>
+          </Link>
         </div>
       </div>
       
