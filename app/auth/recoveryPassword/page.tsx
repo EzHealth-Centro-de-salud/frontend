@@ -1,4 +1,4 @@
-import RecoveryPasswordForm from "@/components/auth/RecoveryPasswordForm";
+import RecoveryPasswordPatientForm from "@/components/auth/RecoveryPasswordPatientForm";
 
 
 
@@ -8,7 +8,7 @@ export default function RecoveryPasswordPage(){
             <div className="shadow-xl px-8 pb-8 pt-12 bg-white rounded-xl space-y-12">
             <h1 className="font-semibold text-2xl ">Recupera tu contraseña</h1>
             
-            <RecoveryPasswordForm />
+            <RecoveryPasswordPatientForm />
             <div className="text-center">
                 <p>¿No te olvidaste? <a className="text-indigo-500 hover:underline" href="/auth/login">Inicia sesión</a></p>
             </div>

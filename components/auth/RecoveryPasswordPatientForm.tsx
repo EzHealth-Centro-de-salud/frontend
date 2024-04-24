@@ -5,20 +5,35 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { httpLink } from "@/components/apollo/ApolloConfig"
 import { useState } from "react";
+import { RECOVERY_PATIENT_MUTATION } from "../apollo/mutations";
 const client = new ApolloClient({
     link: httpLink,
     cache: new InMemoryCache(),
 });
 
-
-const onSubmit= async (e: React.FormEvent) => {
-    e.preventDefault()
-
-}
-
-export default function RecoveryPasswordForm() {
+export default function RecoveryPasswordPatientForm() {
 
     const [rut, setRut] = useState('')
+    const [recoveryPatient] = useMutation(RECOVERY_PATIENT_MUTATION, {
+        client
+    })
+    const onSubmit= async (e: React.FormEvent) => {
+        e.preventDefault()
+        const { data, errors } = await recoveryPatient({
+            variables: {
+                recoveryInput: {
+                    rut
+                }
+            }
+        })
+        if(data?.recoveryPatient){//si el correo se envio correctamente
+            console.log(data.recoveryPatient)
+            window.alert('Correo enviado')
+            window.location.href = '/auth/recoveryPassword/validateRecovery'
+        }
+    
+    }
+
     return (
         <div className="space-y-8 w-[400px]">
         <form onSubmit={onSubmit} className="space-y-8 w-[400px]">
