@@ -29,11 +29,11 @@ export default function PersonnelLoginForm() {
   const [loginPatient] = useMutation(LOGIN_PATIENT_MUTATION, {
     client,
   });
-  
+
   const onSubmit = async (e: React.FormEvent) => {
-    try{
-      console.log("here")
-      e.preventDefault(); //evita que se refresque la pagina al enviar el formulario
+    try {
+      console.log("here");
+      e.preventDefault();
       const { data, errors } = await loginPatient({
         variables: {
           LoginInput: {
@@ -51,72 +51,73 @@ export default function PersonnelLoginForm() {
         console.log(errors);
         setError("Error al iniciar sesión");
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <main className="bg-[#26313c] h-screen flex items-center justify-center p-10">
-      <div className="grid w-full h-full grid-cols-1 bg-white box-anim ">
-        <div className="bg-[#16202a] text-white flex items-center justify-center flex-col">
-          <div className="my-4">
-            <h1 className="text-3xl font-semibold ">Login Personnel</h1>
-            <p className="mt-2 text-xs text-slate-400">
-              See Your Growth and get consulting growth
-            </p>
-          </div>
-          <form onSubmit={onSubmit}>
-            <Label htmlFor="email">RUT</Label>
-            <Input
-              className="mt-2 mb-4 bg-transparent rounded-full"
-              onChange={(e) => setRut(e.target.value)}
-              type="text"
-              id="email"
-              placeholder="Email"
-              maxLength={9}
-            />
-            <Label htmlFor="password">Password*</Label>
-            <Input
-              className="mt-2 bg-transparent rounded-full"
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              id="password"
-              placeholder="password"
-              maxLength={128}
-            />
-
-            <Button
-              type="submit"
-              className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
-            >
-              Login
-            </Button>
-            <p className="text-center mt-2">
-              ¿Olvidaste tu contraseña?{" "}
-              <Link
-                className="text-indigo-500 hover:underline"
-                href="./recoveryPassword"
-              >
-                Recupérala
-              </Link>{" "}
-            </p>
-            <p className="text-center mt-2">
-              ¿No tienes una cuenta?{" "}
-              <Link
-                className="text-indigo-500 hover:underline"
-                href="/auth/register"
-              >
-                Créala
-              </Link>{" "}
-            </p>
-          </form>
-          <p className="mt-4 text-xs text-slate-200">
-            @2023 All rights reserved
+    <div className="flex-1 bg-[#16202a] flex items-center justify-center py-12">
+      <div className="mx-auto  w-[350px] space-y-6">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-semibold text-slate-200">
+            Login Personnel
+          </h1>
+          <p className="mt-2 text-xs text-slate-400">
+            See Your Growth and get consulting growth
           </p>
         </div>
+        <form onSubmit={onSubmit}>
+          <Label className="text-slate-200" htmlFor="email">
+            RUT
+          </Label>
+          <Input
+            className="mt-2 mb-4 bg-transparent rounded-full"
+            onChange={(e) => setRut(e.target.value)}
+            type="text"
+            id="email"
+            placeholder="Email"
+            maxLength={9}
+          />
+          <Label className="text-slate-200" htmlFor="password">
+            Password*
+          </Label>
+          <Input
+            className="mt-2 bg-transparent rounded-full "
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            id="password"
+            placeholder="password"
+            maxLength={128}
+          />
+
+          <Button
+            type="submit"
+            className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
+          >
+            Login
+          </Button>
+          <p className="text-center mt-2 text-zinc-500">
+            ¿Olvidaste tu contraseña?{" "}
+            <Link
+              className="text-indigo-500 hover:underline"
+              href="./recoveryPassword"
+            >
+              Recupérala
+            </Link>{" "}
+          </p>
+          <p className="text-center mt-2 text-zinc-500">
+            ¿No tienes una cuenta?{" "}
+            <Link
+              className="text-indigo-500 hover:underline"
+              href="/auth/register"
+            >
+              Créala
+            </Link>{" "}
+          </p>
+        </form>
+        <p className="mt-4 text-xs text-slate-200">@2023 All rights reserved</p>
       </div>
-    </main>
+    </div>
   );
 }
