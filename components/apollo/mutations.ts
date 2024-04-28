@@ -1,25 +1,40 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const REGISTER_PATIENT_MUTATION = gql`
-    mutation CreatePatient($CreatePatientInput: CreatePatientInput!) {
-        createPatient(patientInput: $CreatePatientInput) {
-            success
-            message
-        }
-    }   
+  mutation CreatePatient($CreatePatientInput: CreatePatientInput!) {
+    createPatient(patientInput: $CreatePatientInput) {
+      success
+      message
+    }
+  }
 `;
 
 export const LOGIN_PATIENT_MUTATION = gql`
-    mutation LoginPatient($LoginInput: LoginInput!) {
-        loginPatient(loginInput: $LoginInput) {
-            id
-            access_token
-            rut
-            first_name
-            surname
-            email
-        }
-    }   
+  mutation LoginPatient($LoginInput: LoginInput!) {
+    loginPatient(loginInput: $LoginInput) {
+      id
+      access_token
+      rut
+      first_name
+      surname
+      email
+    }
+  }
+`;
+
+export const LOGIN_PERSONNEL_MUTATION = gql`
+  mutation LoginPersonnel($LoginInput: LoginInput!) {
+    loginPersonnel(loginInput: $LoginInput) {
+      id
+      access_token
+      rut
+      first_name
+      surname
+      email
+      role
+      specialty
+    }
+  }
 `;
 
 export const RECOVERY_PATIENT_MUTATION = gql`
@@ -36,4 +51,3 @@ export const VALIDATE_RECOVERY_MUTATION = gql`
     }
   }
 `;
-

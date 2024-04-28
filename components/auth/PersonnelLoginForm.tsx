@@ -10,12 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
-import ezhealth from "@/img/ezhealth.png";
 import { httpLink } from "@/components/apollo/ApolloConfig";
-import { LOGIN_PATIENT_MUTATION } from "../apollo/mutations";
-import { Navigate, redirect } from "react-router-dom";
+import { LOGIN_PERSONNEL_MUTATION } from "../apollo/mutations";
 const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
@@ -26,7 +23,7 @@ export default function PersonnelLoginForm() {
   const [password, setPassword] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [loginPatient] = useMutation(LOGIN_PATIENT_MUTATION, {
+  const [loginPersonnel] = useMutation(LOGIN_PERSONNEL_MUTATION, {
     client,
   });
 
@@ -34,7 +31,7 @@ export default function PersonnelLoginForm() {
     try {
       console.log("here");
       e.preventDefault();
-      const { data, errors } = await loginPatient({
+      const { data, errors } = await loginPersonnel({
         variables: {
           LoginInput: {
             rut,
@@ -46,7 +43,7 @@ export default function PersonnelLoginForm() {
         console.log(data.loginPatient);
         window.alert("Login exitoso");
         //redirect('/patient/dashboard')
-        window.location.href = "/patient/dashboard";
+        window.location.href = "/personnel/dashboard";
       } else {
         console.log(errors);
         setError("Error al iniciar sesión");
