@@ -1,4 +1,4 @@
-import PersonnelLoginForm from "@/components/auth/PersonnelLoginForm";
+import PersonnelLoginForm from "@/components/auth/personnel/PersonnelLoginForm";
 import Image from "next/image";
 
 export default function PersonnelLoginPage() {

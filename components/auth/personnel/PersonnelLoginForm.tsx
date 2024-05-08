@@ -11,12 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useState } from "react";
-import { httpLink } from "@/components/apollo/ApolloConfig";
-import { LOGIN_PERSONNEL_MUTATION } from "../apollo/mutations";
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
-});
+import { LOGIN_PERSONNEL_MUTATION } from "../../apollo/mutations";
+import client from "../../apollo/ApolloClient";
 
 export default function PersonnelLoginForm() {
   const [rut, setRut] = useState("");
@@ -42,7 +38,6 @@ export default function PersonnelLoginForm() {
       if (data?.loginPatient) {
         console.log(data.loginPatient);
         window.alert("Login exitoso");
-        //redirect('/patient/dashboard')
         window.location.href = "/personnel/dashboard";
       } else {
         console.log(errors);
@@ -107,7 +102,7 @@ export default function PersonnelLoginForm() {
             ¿No tienes una cuenta?{" "}
             <Link
               className="text-indigo-500 hover:underline"
-              href="/auth/register"
+              href="/auth/personnelRegister"
             >
               Créala
             </Link>{" "}
