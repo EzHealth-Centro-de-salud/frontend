@@ -13,17 +13,20 @@ import Link from "next/link";
 import { useState } from "react";
 import { LOGIN_PERSONNEL_MUTATION } from "../../apollo/mutations";
 import client from "../../apollo/ApolloClient";
+import { Loader2 } from "lucide-react";
 
 export default function PersonnelLoginForm() {
   const [rut, setRut] = useState("");
   const [password, setPassword] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [loginPersonnel] = useMutation(LOGIN_PERSONNEL_MUTATION, {
     client,
   });
 
   const onSubmit = async (e: React.FormEvent) => {
+    setLoading(true);
     try {
       console.log("here");
       e.preventDefault();
@@ -45,6 +48,8 @@ export default function PersonnelLoginForm() {
       }
     } catch (error) {
       console.error(error);
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -87,8 +92,18 @@ export default function PersonnelLoginForm() {
             type="submit"
             className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
           >
-            Login
+            {loading ? (
+              <Button
+                disabled
+                className="w-full bg-indigo-600 rounded-full hover:bg-indigo-700"
+              >
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Logiando...
+              </Button>
+            ) : (
+              "Login"
+            )}
           </Button>
+
           <p className="text-center mt-2 text-zinc-500">
             ¿Olvidaste tu contraseña?{" "}
             <Link

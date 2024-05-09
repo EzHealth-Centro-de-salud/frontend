@@ -11,18 +11,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { REGISTER_PERSONNEL_MUTATION } from "../../apollo/mutations";
 import client from "../../apollo/ApolloClient";
+import { Loader2 } from "lucide-react";
 
 interface PersonnelFormState {
   rut: string;
   password: string;
-  firstName: string;
-  middleName: string;
+  first_name: string;
+  middle_name?: string;
   surname: string;
-  secondSurname: string;
+  second_surname?: string;
   email: string;
   role: string;
-  specialty: string;
-  idBranch: string;
+  speciality: string;
+  id_branch: number;
 }
 
 function PersonnelRegisterForm() {
@@ -30,48 +31,58 @@ function PersonnelRegisterForm() {
     useState<PersonnelFormState>({
       rut: "",
       password: "",
-      firstName: "",
-      middleName: "",
+      first_name: "",
+      middle_name: "",
       surname: "",
-      secondSurname: "",
+      second_surname: "",
       email: "",
       role: "",
-      specialty: "",
-      idBranch: "",
+      speciality: "",
+      id_branch: 1,
     });
+  const [loading, setLoading] = useState(false);
 
   const [registerPersonnel] = useMutation(REGISTER_PERSONNEL_MUTATION, {
     client,
   });
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+    const parsedValue = name === 'id_branch' ? parseInt(value, 10) : value;
     setPersonnelFormState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); //evita que se refresque la pagina al enviar el formulario
-
-    const { data, errors } = await registerPersonnel({
-      variables: {
-        CreatePersonnelInput: { ...personnelFormState },
-      },
-    });
-
-    console.log(data);
-    if (data?.createPersonnel.success) {
-      window.alert("Usuario creado");
-      history.back();
-    } else {
-      window.alert("Error al crear usuario");
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    console.log("passed loading true")
+    try {
+      await registerPersonnel({
+        variables: { input: personnelFormState },
+      });
+      setPersonnelFormState({
+        rut: "",
+        password: "",
+        first_name: "",
+        middle_name: "",
+        surname: "",
+        second_surname: "",
+        email: "",
+        role: "",
+        speciality: "", // Corrected field name
+        id_branch: 1,
+      });
+      // Handle success, maybe show a success message or redirect
+    } catch (error) {
+      console.error("Error registering personnel:", error);
+      // Handle error
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,36 +103,35 @@ function PersonnelRegisterForm() {
             maxLength={12}
             name="rut"
           />
-          {errors.rut && <span className="text-red-500">{errors.rut}</span>}
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="firstName">
+            <Label className="text-white" htmlFor="first_name">
               Primer Nombre
             </Label>
             <Input
               className="bg-[#26313c] text-white"
               required
-              value={personnelFormState.firstName}
+              value={personnelFormState.first_name}
               onChange={handleInputChange}
-              id="firstName"
+              id="first_name"
               type="text"
               maxLength={50}
-              name="firstName"
+              name="first_name"
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="middleName">
+            <Label className="text-white" htmlFor="middle_name">
               Segundo Nombre
             </Label>
             <Input
               className="bg-[#26313c] text-white"
-              value={personnelFormState.middleName}
+              value={personnelFormState.middle_name}
               onChange={handleInputChange}
-              id="middleName"
+              id="middle_name"
               type="text"
               maxLength={50}
-              name="middleName"
+              name="middle_name"
             />
           </div>
         </div>
@@ -142,18 +152,17 @@ function PersonnelRegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="secondSurname">
+            <Label className="text-white" htmlFor="second_surname">
               Apellido Materno
             </Label>
             <Input
               className="bg-[#26313c] text-white"
-              required
-              value={personnelFormState.secondSurname}
+              value={personnelFormState.second_surname}
               onChange={handleInputChange}
-              id="secondSurname"
+              id="second_surname"
               type="text"
               maxLength={50}
-              name="secondSurname"
+              name="second_surname"
             />
           </div>
         </div>
@@ -191,35 +200,35 @@ function PersonnelRegisterForm() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="specialty">
+            <Label className="text-white" htmlFor="speciality">
               Especialidad
             </Label>
             <Input
               className="bg-[#26313c] text-white"
               required
-              value={personnelFormState.specialty}
+              value={personnelFormState.speciality}
               onChange={handleInputChange}
-              id="specialty"
+              id="speciality"
               maxLength={254}
-              name="specialty"
+              name="speciality"
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="idBranch">
+            <Label className="text-white" htmlFor="id_branch">
               Sucursal
             </Label>
             <select
               className="bg-[#26313c] text-white"
               required
-              value={personnelFormState.idBranch}
+              value={personnelFormState.id_branch}
               onChange={handleInputChange}
-              id="idBranch"
-              name="idBranch"
+              id="id_branch"
+              name="id_branch"
             >
               <option value="">Seleccione...</option>
-              <option value={parseInt("0", 10)}>Coquimbo 1</option>
-              <option value={parseInt("1", 10)}>Coquimbo 2</option>
-              <option value={parseInt("2", 10)}>La Serena 1</option>
+              <option value={0}>Coquimbo 1</option>
+              <option value={1}>Coquimbo 2</option>
+              <option value={2}>La Serena 1</option>
             </select>
           </div>
           <div className="grid w-full items-center gap-1.5">
@@ -241,7 +250,13 @@ function PersonnelRegisterForm() {
 
         <div className="w-full">
           <Button type="submit" className="w-full" size="lg">
-            Registrar personal
+            {loading ? (
+              <Button disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...
+              </Button>
+            ) : (
+              "Registrar personal"
+            )}
           </Button>
         </div>
       </form>

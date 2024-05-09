@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import vicuna04 from '@/img/vicuna04.jpg'
 import Link from 'next/link'
 
 export default function HomePage() {

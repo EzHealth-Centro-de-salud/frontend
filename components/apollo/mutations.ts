@@ -24,8 +24,8 @@ export const LOGIN_PATIENT_MUTATION = gql`
 
 
 export const REGISTER_PERSONNEL_MUTATION = gql`
-  mutation CreatePersonnel($CreatePersonnelInput: CreatePersonnelInput!) {
-    createPersonnel(personnelInput: $CreatePersonnelInput) {
+  mutation CreatePersonnel($input: CreatePersonnelInput!) {
+    createPersonnel(input: $input) {
       success
       message
     }
