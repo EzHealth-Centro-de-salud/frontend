@@ -1,7 +1,8 @@
 import React from "react";
 
 const page = () => {
-  return <div>Welcome to the personnel dashboard page</div>;
+  return <div>Página de reserva</div>;
 };
 
 export default page;
+  

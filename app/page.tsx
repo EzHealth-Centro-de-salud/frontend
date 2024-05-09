@@ -8,11 +8,11 @@ export default function HomePage() {
         <p className="text-2xl text-white">Disfruta de nuestra plataforma</p>
         <div className='text-2xl text-white mt-6'>
           <Link href="/auth/login  ">
-            <h1>Login </h1>
+            <h1>INGRESA </h1>
           </Link>
-          <Link href="/auth/personnelLogin  ">
+          {/*<Link href="/auth/personnelLogin  ">
             <h1>Personnel Login </h1>
-          </Link>
+           </Link>*/}
         </div>
       </div>
       

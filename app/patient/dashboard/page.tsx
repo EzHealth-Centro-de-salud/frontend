@@ -3,7 +3,7 @@ function PatientDashboardPage() {
   return (
     <div>
       <h1>Dashboard</h1>
-      <p>Welcome to patient your dashboard</p>
+      <p>Página de reserva</p>
     </div>
   );
 }export default PatientDashboardPage;

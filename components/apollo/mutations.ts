@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const REGISTER_PATIENT_MUTATION = gql`
   mutation CreatePatient($CreatePatientInput: CreatePatientInput!) {
-    createPatient(patientInput: $CreatePatientInput) {
+    createPatient(input: $CreatePatientInput) {
       success
       message
     }
@@ -11,7 +11,7 @@ export const REGISTER_PATIENT_MUTATION = gql`
 
 export const LOGIN_PATIENT_MUTATION = gql`
   mutation LoginPatient($LoginInput: LoginInput!) {
-    loginPatient(loginInput: $LoginInput) {
+    loginPatient(input: $LoginInput) {
       id
       access_token
       rut
@@ -21,7 +21,6 @@ export const LOGIN_PATIENT_MUTATION = gql`
     }
   }
 `;
-
 
 export const REGISTER_PERSONNEL_MUTATION = gql`
   mutation CreatePersonnel($input: CreatePersonnelInput!) {
@@ -34,7 +33,7 @@ export const REGISTER_PERSONNEL_MUTATION = gql`
 
 export const LOGIN_PERSONNEL_MUTATION = gql`
   mutation LoginPersonnel($LoginInput: LoginInput!) {
-    loginPersonnel(loginInput: $LoginInput) {
+    loginPersonnel(input: $LoginInput) {
       id
       access_token
       rut
@@ -42,20 +41,29 @@ export const LOGIN_PERSONNEL_MUTATION = gql`
       surname
       email
       role
-      specialty
+      speciality
     }
   }
 `;
 
 export const RECOVERY_PATIENT_MUTATION = gql`
   mutation RecoveryPatient($recoveryInput: RecoveryUserInput!) {
-    recoveryPatient(recoveryInput: $recoveryInput)
+    recoveryPatient(input: $recoveryInput)
   }
 `;
 
 export const VALIDATE_RECOVERY_MUTATION = gql`
   mutation ValidateRecovery($recoveryInput: ValidateRecoveryUserInput!) {
-    validateRecovery(recoveryInput: $recoveryInput) {
+    validateRecovery(input: $recoveryInput) {
+      success
+      message
+    }
+  }
+`;
+
+export const CHANGE_PASSWORD_PATIENT_MUTATION = gql`
+  mutation ChangePasswordPatient($recoveryInput: ChangePasswordInput!) {
+    changePasswordPatient(input: $recoveryInput) {
       success
       message
     }

@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { REGISTER_PATIENT_MUTATION } from "../apollo/mutations";
+import { Loader2 } from "lucide-react";
 
 const client = new ApolloClient({
   link: httpLink,
@@ -31,37 +32,45 @@ function RegisterForm() {
   const [commune, setCommune] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
   const [registerPatient] = useMutation(REGISTER_PATIENT_MUTATION, {
     client,
   });
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); //evita que se refresque la pagina al enviar el formulario
-
-    const { data, errors } = await registerPatient({
-      variables: {
-        CreatePatientInput: {
-          rut,
-          password,
-          birthdate,
-          first_name,
-          middle_name,
-          surname,
-          second_surname,
-          sex,
-          address,
-          region,
-          commune,
-          email,
-          phone,
+    setLoading(true);
+    try {
+      const { data, errors } = await registerPatient({
+        variables: {
+          CreatePatientInput: {
+            rut,
+            password,
+            birthdate,
+            first_name,
+            middle_name,
+            surname,
+            second_surname,
+            sex,
+            address,
+            region,
+            commune,
+            email,
+            phone,
+          },
         },
-      },
-    });
-    console.log(data);
-    if (data?.createPatient.success) {
-      window.alert("Usuario creado");
-      history.back();
-    } else {
-      window.alert("Error al crear usuario");
+      });
+      console.log(data);
+      if (data?.createPatient.success) {
+        window.alert("Usuario creado");
+        history.back();
+      } else {
+        window.alert("Error al crear usuario");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,6 +88,7 @@ function RegisterForm() {
             onChange={(e) => setRut(e.target.value)}
             id="rut"
             type="text"
+            placeholder="Ingrese su rut"
             maxLength={12}
           />
         </div>
@@ -199,7 +209,6 @@ function RegisterForm() {
               <option value="">Seleccione...</option>
               <option value="femenino">Femenino</option>
               <option value="masculino">Masculino</option>
-              <option value="masculino">Tanque Panzer</option>
             </select>
           </div>
         </div>
@@ -289,7 +298,13 @@ function RegisterForm() {
         </div>
         <div className="w-full">
           <Button type="submit" className="w-full" size="lg">
-            Registrarse
+            {loading ? (
+              <Button disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...
+              </Button>
+            ) : (
+              "Registrar personal"
+            )}
           </Button>
         </div>
       </form>

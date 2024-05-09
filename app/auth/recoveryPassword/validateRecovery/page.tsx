@@ -42,12 +42,12 @@ export default function ValidateRecoveryPage() {
                 <h3 className="font-semibold text-2xl ">si su rut es valido se enviara un correo con el codigo de recuperacion </h3>
                 <form onSubmit={onSubmit} className="space-y-8 w-[400px]">
                     <div className="grid w-full items-center gap-1.5">
-                        <Label htmlFor="email">Codigo de recuperacion</Label>
+                        <Label>Codigo de recuperacion</Label>
                         <Input
                             required
                             value={code}
                             onChange={e => setCode(e.target.value)}
-                            id="recoveryPass"
+                            id="recoveryCode"
                             type="text"
                             maxLength={9}
                         />

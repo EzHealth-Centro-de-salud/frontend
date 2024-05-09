@@ -21,35 +21,37 @@ const NavBar: React.FC<NavBarProps> = () => {
         </Link>
         <nav className="hidden md:flex items-center gap-6">
           <Link
-            href="#"
+            href="/"
             className="text-gray-600 hover:text-blue-500 transition-colors dark:text-gray-400 dark:hover:text-blue-500"
           >
-            Home
+            Inicio
           </Link>
           <Link
             href="#"
             className="text-gray-600 hover:text-blue-500 transition-colors dark:text-gray-400 dark:hover:text-blue-500"
           >
-            About
+            Nosotros
           </Link>
           <Link
             href="#"
             className="text-gray-600 hover:text-blue-500 transition-colors dark:text-gray-400 dark:hover:text-blue-500"
           >
-            Services
+            Servicios
           </Link>
           <Link
             href="#"
             className="text-gray-600 hover:text-blue-500 transition-colors dark:text-gray-400 dark:hover:text-blue-500"
           >
-            Contact
+            Contacto
           </Link>
         </nav>
         <div className="flex items-center gap-4">
           <Button className="hidden md:inline-flex" variant={"outline"}>
-            Register
+            <Link href="/auth/register">Registrarse</Link>
           </Button>
-          <Button className="hidden md:inline-flex">Login</Button>
+          <Button className="hidden md:inline-flex">
+            <Link href="/auth/login">Ingresar</Link>
+          </Button>
           <Button className="md:hidden" size={"icon"} variant={"outline"}>
             <span className="sr-only">Toggle navigation</span>
           </Button>
