@@ -1,11 +1,9 @@
 "use client";
 import {
-  ApolloClient,
-  InMemoryCache,
   useMutation,
   ApolloProvider,
 } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -286,7 +284,7 @@ function RegisterForm() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               id="phone"
-              type="text"
+              type="number" 
               maxLength={9}
             />
           </div>
