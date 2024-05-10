@@ -13,7 +13,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import ezhealth from "@/img/ezhealth.png";
-import { httpLink } from "@/components/apollo/ApolloConfig";
+import  httpLink  from "@/components/apollo/ApolloClient";
 import { LOGIN_PATIENT_MUTATION } from "../apollo/mutations";
 import { Navigate, redirect } from "react-router-dom";
 import { Loader2 } from "lucide-react";
