@@ -284,7 +284,7 @@ function RegisterForm() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               id="phone"
-              type="number" 
+              type="text"
               maxLength={9}
             />
           </div>
