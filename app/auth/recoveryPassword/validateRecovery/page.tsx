@@ -5,12 +5,7 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react";
 import { ApolloClient, InMemoryCache, useMutation } from "@apollo/client";
 import { VALIDATE_RECOVERY_MUTATION } from "@/components/apollo/mutations";
-import { httpLink } from "@/components/apollo/ApolloConfig"
-
-const client = new ApolloClient({
-    link: httpLink,
-    cache: new InMemoryCache(),
-});
+import client from "@/components/apollo/ApolloClient";
 
 export default function ValidateRecoveryPage() {
     const [code, setCode] = useState("");

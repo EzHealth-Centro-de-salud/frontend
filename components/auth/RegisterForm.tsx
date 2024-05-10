@@ -5,18 +5,13 @@ import {
   useMutation,
   ApolloProvider,
 } from "@apollo/client";
-import { httpLink } from "@/components/apollo/ApolloConfig";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { REGISTER_PATIENT_MUTATION } from "../apollo/mutations";
 import { Loader2 } from "lucide-react";
-
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
-});
+import client from "@/components/apollo/ApolloClient";
 
 function RegisterForm() {
   const [rut, setRut] = useState("");

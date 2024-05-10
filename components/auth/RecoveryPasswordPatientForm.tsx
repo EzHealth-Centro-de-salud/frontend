@@ -3,13 +3,9 @@ import { ApolloClient, InMemoryCache, useMutation } from "@apollo/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { httpLink } from "@/components/apollo/ApolloConfig";
 import { useState } from "react";
 import { RECOVERY_PATIENT_MUTATION } from "../apollo/mutations";
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
-});
+import client from "@/components/apollo/ApolloClient";
 
 export default function RecoveryPasswordPatientForm() {
   const [rut, setRut] = useState("");
