@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { createHttpLink } from "@apollo/client";
 
 const httpLink = createHttpLink({
-  uri: "https://ezhealth.adaptable.app/graphql",
+  uri: process.env.BACKEND_URL,
 });
 
 const client = new ApolloClient({
