@@ -1,10 +1,7 @@
 "use client";
 
 import {
-  ApolloClient,
-  InMemoryCache,
   useMutation,
-  ApolloProvider,
 } from "@apollo/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +15,6 @@ import { Loader2 } from "lucide-react";
 export default function PersonnelLoginForm() {
   const [rut, setRut] = useState("");
   const [password, setPassword] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [loginPersonnel] = useMutation(LOGIN_PERSONNEL_MUTATION, {

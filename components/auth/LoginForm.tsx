@@ -1,28 +1,20 @@
 "use client";
 
 import {
-  ApolloClient,
-  InMemoryCache,
   useMutation,
-  ApolloProvider,
 } from "@apollo/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
-import ezhealth from "@/img/ezhealth.png";
-import { httpLink } from "@/components/apollo/ApolloConfig";
 import { LOGIN_PATIENT_MUTATION } from "../apollo/mutations";
-import { Navigate, redirect } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import client from "../apollo/ApolloClient";
 
 export default function LoginForm() {
   const [rut, setRut] = useState("");
   const [password, setPassword] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [loginPatient] = useMutation(LOGIN_PATIENT_MUTATION, {
@@ -42,6 +34,7 @@ export default function LoginForm() {
       });
       if (data?.loginPatient) {
         console.log(data.loginPatient);
+        localStorage.setItem("rut", data.loginPatient.rut);
         window.alert("Login exitoso");
         //redirect('/patient/dashboard')
         window.location.href = "/patient/dashboard";

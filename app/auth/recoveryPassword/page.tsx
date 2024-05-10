@@ -1,19 +1,21 @@
 import RecoveryPasswordPatientForm from "@/components/auth/RecoveryPasswordPatientForm";
 
+export default function RecoveryPasswordPage() {
+  return (
+    <div className="h-screen w-screen flex justify-center items-center bg-stone-400">
+      <div className="shadow-xl px-8 pb-8 pt-12 bg-white rounded-xl space-y-12">
+        <h1 className="font-semibold text-2xl ">Recupera tu contraseña</h1>
 
-
-export default function RecoveryPasswordPage(){
-    return (
-        <div className="h-screen w-screen flex justify-center items-center bg-stone-400" >
-            <div className="shadow-xl px-8 pb-8 pt-12 bg-white rounded-xl space-y-12">
-            <h1 className="font-semibold text-2xl ">Recupera tu contraseña</h1>
-            
-            <RecoveryPasswordPatientForm />
-            <div className="text-center">
-                <p>¿No te olvidaste? <a className="text-indigo-500 hover:underline" href="/auth/login">Inicia sesión</a></p>
-            </div>
-
-            </div>
+        <RecoveryPasswordPatientForm />
+        <div className="text-center">
+          <p>
+            ¿No te olvidaste?{" "}
+            <a className="text-indigo-500 hover:underline" href="/auth/login">
+              Inicia sesión
+            </a>
+          </p>
         </div>
-    )
+      </div>
+    </div>
+  );
 }

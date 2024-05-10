@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import {useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { CHANGE_PASSWORD_PATIENT_MUTATION } from "@/components/apollo/mutations";
 import client from "@/components/apollo/ApolloClient";
 
