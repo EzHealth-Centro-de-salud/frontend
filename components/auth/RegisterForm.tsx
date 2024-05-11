@@ -73,7 +73,7 @@ function RegisterForm() {
         setEmail("");
         setPhone("");
         setTimeout(() => {
-          window.history.back();
+          window.location.href = "/";
         }, 4000);
       } else {
         console.log("inside else");
