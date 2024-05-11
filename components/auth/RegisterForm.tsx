@@ -341,7 +341,7 @@ function RegisterForm() {
 }
 const RegisterFormComponent = () => (
   <ApolloProvider client={client}>
-    <RegisterForm />
+    <RegisterForm /> 
   </ApolloProvider>
 );
 RegisterFormComponent.displayName = "RegisterFormComponent";
