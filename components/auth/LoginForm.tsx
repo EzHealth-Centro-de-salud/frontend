@@ -1,8 +1,6 @@
 "use client";
 
-import {
-  useMutation,
-} from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +9,7 @@ import { useState } from "react";
 import { LOGIN_PATIENT_MUTATION } from "../apollo/mutations";
 import { Loader2 } from "lucide-react";
 import client from "../apollo/ApolloClient";
+import { Alert } from "../ui/alert";
 
 export default function LoginForm() {
   const [rut, setRut] = useState("");
@@ -23,7 +22,7 @@ export default function LoginForm() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); //evita que se refresque la pagina al enviar el formulario
     setLoading(true);
-    try{
+    try {
       const { data, errors } = await loginPatient({
         variables: {
           LoginInput: {
@@ -33,21 +32,28 @@ export default function LoginForm() {
         },
       });
       if (data?.loginPatient) {
-        console.log(data.loginPatient);
         localStorage.setItem("rut", data.loginPatient.rut);
-        window.alert("Login exitoso");
-        //redirect('/patient/dashboard')
-        window.location.href = "/patient/dashboard";
+        setError("Login exitoso, redirigiendo...");
+        setTimeout(() => {
+          setError(null);
+          window.location.href = "/patient/dashboard";
+        }, 4000);
       } else {
         console.log(errors);
         setError("Error al iniciar sesión");
       }
-    }
-    catch(error){
+    } catch (error) {
+      setError("Credenciales inválidas, intente nuevamente.");
       console.error(error);
-    }finally{
+    } finally {
       setLoading(false);
     }
+  };
+  const showAlert = (type: string, message: string) => {
+    setError(message);
+    setTimeout(() => {
+      setError(null);
+    }, 5000); // Clear the error message after 5 seconds
   };
 
   return (
@@ -68,7 +74,8 @@ export default function LoginForm() {
               type="text"
               id="rut"
               placeholder="Ingrese su RUT"
-              maxLength={9}
+              required
+              maxLength={12}
             />
             <Label htmlFor="password">Contraseña</Label>
             <Input
@@ -77,6 +84,7 @@ export default function LoginForm() {
               type="password"
               id="password"
               placeholder="Ingrese su contraseña"
+              required
               maxLength={128}
             />
 
@@ -117,6 +125,15 @@ export default function LoginForm() {
           <p className="mt-4 text-xs text-slate-200">
             @2023 All rights reserved
           </p>
+          {error && (
+            <div className="pt-10" >
+              <Alert
+                variant={error === "Login exitoso, redirigiendo..." ? "default" : "destructive"}
+              >
+                {error}
+              </Alert>
+            </div>
+          )}
         </div>
       </div>
     </main>

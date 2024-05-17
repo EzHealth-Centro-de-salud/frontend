@@ -42,7 +42,7 @@ export default function RecoveryPasswordPatientForm() {
             id="rut"
             type="text"
             placeholder="Ingrese su rut"
-            maxLength={9}
+            maxLength={12}
           />
         </div>
         <div className="w-full">

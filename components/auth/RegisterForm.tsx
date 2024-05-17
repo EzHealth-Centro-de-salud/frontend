@@ -1,14 +1,13 @@
 "use client";
-import {
-  useMutation,
-  ApolloProvider,
-} from "@apollo/client";
+import { useMutation, ApolloProvider } from "@apollo/client";
 import { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { REGISTER_PATIENT_MUTATION } from "../apollo/mutations";
 import { Loader2 } from "lucide-react";
+
 import client from "@/components/apollo/ApolloClient";
 
 function RegisterForm() {
@@ -26,14 +25,18 @@ function RegisterForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
+
   const [registerPatient] = useMutation(REGISTER_PATIENT_MUTATION, {
     client,
   });
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); //evita que se refresque la pagina al enviar el formulario
     setLoading(true);
     try {
+      console.log("inside try");
       const { data, errors } = await registerPatient({
         variables: {
           CreatePatientInput: {
@@ -53,15 +56,34 @@ function RegisterForm() {
           },
         },
       });
-      console.log(data);
       if (data?.createPatient.success) {
-        window.alert("Usuario creado");
-        history.back();
+        setAlertType("success");
+        setAlertMessage("Usuario creado, volviendo al menú principal...");
+        setRut("");
+        setPassword("");
+        setBirthdate("");
+        setFirst_name("");
+        setMiddle_name("");
+        setSurname("");
+        setSecond_surname("");
+        setSex("");
+        setAddress("");
+        setRegion("");
+        setCommune("");
+        setEmail("");
+        setPhone("");
+        setTimeout(() => {
+          window.history.back();
+        }, 4000);
       } else {
-        window.alert("Error al crear usuario");
+        console.log("inside else");
+        setAlertType("error");
+        setAlertMessage("Error al crear usuario");
       }
     } catch (error) {
-      console.error(error);
+      console.log("inside catch");
+      setAlertType("big error");
+      setAlertMessage("Revise sus datos e intente nuevamente");
     } finally {
       setLoading(false);
     }
@@ -135,7 +157,6 @@ function RegisterForm() {
             </Label>
             <Input
               className="bg-[#26313c] text-white"
-              required
               value={second_surname}
               onChange={(e) => setSecond_surname(e.target.value)}
               id="second_surname"
@@ -284,7 +305,7 @@ function RegisterForm() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               id="phone"
-              type="number" 
+              type="text"
               maxLength={9}
             />
           </div>
@@ -301,6 +322,20 @@ function RegisterForm() {
           </Button>
         </div>
       </form>
+      {alertMessage && (
+        <div className="fixed bottom-4 right-4">
+          <Alert
+            variant={alertType === "big error" ? "destructive" : "default"}
+          >
+            <AlertTitle>
+              {alertType === "big error"
+                ? "¡Oops, ocurrió un error!"
+                : "¡Registro exitoso!"}
+            </AlertTitle>
+            <AlertDescription>{alertMessage}</AlertDescription>
+          </Alert>
+        </div>
+      )}
     </div>
   );
 }
