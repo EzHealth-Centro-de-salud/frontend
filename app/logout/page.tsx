@@ -20,7 +20,7 @@ const Logout = () => {
     }
   }, [isLoggingOut, router]);
 
-  return <div>Logging out...</div>;
+  return null;
 };
 
 export default Logout;

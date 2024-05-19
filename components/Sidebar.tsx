@@ -12,7 +12,7 @@ interface menuLink {
 const Sidebar: React.FC<{ menuLinks: menuLink[] }> = ({ menuLinks }) => {
   const pathname = usePathname();
   return (
-    <div className="hidden border-r bg-gray-100/40 dark:bg-gray-800/40 lg:block w-1/6 h-full mr-6">
+    <div className="hidden border-r bg-gray-100/40 dark:bg-gray-800/40 lg:block w-1/6 h-full">
       <div className="flex max-h-screen flex-col gap-2">
         <div className="flex h-[60px] items-center border-b px-6">
           <Link
