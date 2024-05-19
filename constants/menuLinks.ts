@@ -55,3 +55,24 @@ export const PersonnelMenuLinks = [
     link: "/logout",
   },
 ];
+
+export const AdminMenuLinks = [
+  {
+    name: "Dashboard",
+    link: "/admin/dashboard",
+  },
+  
+  {
+    name: "Personnel",
+    link: "/admin/personnel",
+  },
+  {
+    name: "Patients",
+    link: "/admin/patients",
+  },
+  {
+    name: "Cerrar Sesión",
+    link: "/logout",
+  },
+];
+
