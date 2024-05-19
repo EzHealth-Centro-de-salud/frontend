@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { useMutation, useQuery, ApolloProvider } from "@apollo/client";
 import { useState, useEffect } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -33,33 +33,26 @@ interface EditFormProps {
 */
 
 function EditForm({ rut }: EditFormProps) {
-  const { data: patientData, loading: patientLoading } = useQuery(
-    GET_PATIENT_QUERY,
-    {
-      variables: { id: rut },
-      client,
-    }
-  );
-  console.log(rut)
-  
-  
-  const [first_name,setFirstName] = useState("");
-  const [middle_name,setMiddleName] = useState("");
-  const [surname,setSurname] = useState("");
-  const [second_surname,setSecondSurname] = useState("");
-  const [birthdate,setBirthdate] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [region, setRegion] = useState("");
-  const [commune, setCommune] = useState("");
+  const { data: patientData, loading: patientLoading } = useQuery(GET_PATIENT_QUERY, {
+    variables: { rut } 
+  });
+
+  console.log(patientData)
+
+  const [first_name, setFirstName] = useState('');
+  const [middle_name, setMiddleName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [second_surname, setSecondSurname] = useState('');
+  const [birthdate, setBirthdate] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [region, setRegion] = useState('');
+  const [commune, setCommune] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION, {
-    client,
-  });
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alertType, setAlertType] = useState("");
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState('');
 
   useEffect(() => {
     if (patientData) {
@@ -74,23 +67,25 @@ function EditForm({ rut }: EditFormProps) {
         address,
         region,
         commune,
-      } = patientData.getPatientByRut;      
-      setFirstName(first_name || "");
-      setMiddleName(middle_name || "");
-      setSurname(surname || "");
-      setSecondSurname(second_surname || "");
-      setBirthdate(birthdate || "");
-      setEmail(email || "");
-      setPhone(phone || "");
-      setAddress(address || "");
-      setRegion(region || "");
-      setCommune(commune || "");
-      
+      } = patientData.getPatientByRut;
+      setFirstName(first_name || '');
+      setMiddleName(middle_name || '');
+      setSurname(surname || '');
+      setSecondSurname(second_surname || '');
+      setBirthdate(birthdate || '');
+      setEmail(email || '');
+      setPhone(phone || '');
+      setAddress(address || '');
+      setRegion(region || '');
+      setCommune(commune || '');
     }
   }, [patientData]);
 
- 
-
+  
+  const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION, {
+    client,
+  });
+  
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -113,7 +108,6 @@ function EditForm({ rut }: EditFormProps) {
         },
       });
       if (data?.updatePatient.success) {
-        
         setAlertType("success");
         setAlertMessage("Datos actualizados correctamente");
       } else {
@@ -145,16 +139,20 @@ function EditForm({ rut }: EditFormProps) {
             Nombre Completo
           </Label>
           <div className="text-[#26313c] bg-white p-2 rounded-md">
-            {first_name + " " + middle_name + " " + surname + " " + second_surname}
+            {first_name +
+              " " +
+              middle_name +
+              " " +
+              surname +
+              " " +
+              second_surname}
           </div>
         </div>
         <div>
           <Label className="text-gray-900 dark:text-gray-50">
             Fecha de Nacimiento
           </Label>
-          <div className="text-[#26313c] bg-white p-2 rounded-md">
-            {"test"}
-          </div>
+          <div className="text-[#26313c] bg-white p-2 rounded-md">{"test"}</div>
         </div>
       </div>
 

@@ -20,8 +20,8 @@ export const PatientMenuLinks = [
     link: "/patient/medical-records",
   },
   {
-    name: "Settings",
-    link: "/patient/settings",
+    name: "Cerrar Sesión",
+    link: "/logout",
   },
   {
     name: "Don't click!!!",
@@ -51,7 +51,7 @@ export const PersonnelMenuLinks = [
     link: "/personnel/medical-records",
   },
   {
-    name: "Settings",
-    link: "/personnel/settings",
+    name: "Cerrar Sesión",
+    link: "/logout",
   },
 ];

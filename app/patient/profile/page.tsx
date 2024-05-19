@@ -1,9 +1,9 @@
-'use client';
+'use client'
 
-import EditFormComponent from '@/components/patient/EditForm';
-import React, { useEffect, useState } from 'react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Loader2 } from 'lucide-react';
+import EditFormComponent from "@/components/patient/EditForm";
+import React, { useEffect, useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Loader2 } from "lucide-react";
 
 const Page = () => {
   const [userRut, setUserRut] = useState<string | null>(null);
@@ -43,11 +43,13 @@ const Page = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8 w-full">
       <div className="bg-white shadow-lg rounded-lg p-8">
-        <h1 className="text-2xl font-semibold mb-6 text-center">Editar Datos del Paciente</h1>
-        <EditFormComponent rut={userRut || ''} /> 
-        </div>
+        <h1 className="text-2xl font-semibold mb-6 text-center">
+          Editar Datos del Paciente
+        </h1>
+        <EditFormComponent rut={userRut || ""} />
+      </div>
     </div>
   );
-}
+};
 
 export default Page;
