@@ -123,7 +123,7 @@ export default function LoginForm() {
             </p>
           </form>
           <p className="mt-4 text-xs text-slate-200">
-            @2023 All rights reserved
+            @{new Date().getFullYear()} All rights reserved
           </p>
           {error && (
             <div className="pt-10" >

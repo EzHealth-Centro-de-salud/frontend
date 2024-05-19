@@ -69,3 +69,14 @@ export const CHANGE_PASSWORD_PATIENT_MUTATION = gql`
     }
   }
 `;
+
+
+export const UPDATE_PATIENT_MUTATION = gql`
+  mutation UpdatePatient($input: CreatePatientInput!) {
+    createPatient(input: $input) {
+      success
+      message
+    }
+  }
+`;
+
