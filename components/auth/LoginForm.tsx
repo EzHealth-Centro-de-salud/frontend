@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useMutation } from "@apollo/client";
 import { Button } from "@/components/ui/button";
@@ -33,6 +33,7 @@ export default function LoginForm() {
       });
       if (data?.loginPatient) {
         localStorage.setItem("rut", data.loginPatient.rut);
+        localStorage.setItem("access_token", data.loginPatient.access_token);
         setError("Login exitoso, redirigiendo...");
         setTimeout(() => {
           setError(null);
@@ -123,7 +124,7 @@ export default function LoginForm() {
             </p>
           </form>
           <p className="mt-4 text-xs text-slate-200">
-            @2023 All rights reserved
+            @{new Date().getFullYear()} All rights reserved
           </p>
           {error && (
             <div className="pt-10" >
