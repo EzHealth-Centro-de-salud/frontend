@@ -4,27 +4,33 @@ import { CREATE_BOX_MUTATION } from "../../apollo/mutations";
 import { GET_BRANCHES_QUERY } from "@/components/apollo/queries";
 import { useMutation, ApolloProvider, useQuery } from "@apollo/client";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {  Select,  SelectContent,  SelectItem,  SelectTrigger,  SelectValue,} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import client from "@/components/apollo/ApolloClient";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@radix-ui/react-select";
 
-
-interface Branch{
+interface Branch {
   id: string;
   box_count: number;
   address: string;
 }
 
 function CreateBoxForm() {
-  const [idBranch, setIdBranch] = useState('');
-  const [box, setBox] = useState('');
+  const [idBranch, setIdBranch] = useState("");
+  const [box, setBox] = useState("");
   const [loadingMutation, setLoadingMutation] = useState(false);
-  
-  const { loading: loadingBranches, error: errorBranches, data: dataBranches } = useQuery(GET_BRANCHES_QUERY);
-  const [createBox, { loading: loadingCreate, error: errorCreate, data: dataCreate }] = useMutation(CREATE_BOX_MUTATION, { client });
+
+  const {
+    loading: loadingBranches,
+    error: errorBranches,
+    data: dataBranches,
+  } = useQuery(GET_BRANCHES_QUERY);
+  const [
+    createBox,
+    { loading: loadingCreate, error: errorCreate, data: dataCreate },
+  ] = useMutation(CREATE_BOX_MUTATION, { client });
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
@@ -33,7 +39,11 @@ function CreateBoxForm() {
     e.preventDefault(); //evita que se refresque la pagina al enviar el formulario
     setLoadingMutation(true);
     try {
-      const result = await createBox({ variables: { input: { id_branch: parseFloat(idBranch), box: parseFloat(box) } } });
+      const result = await createBox({
+        variables: {
+          input: { id_branch: parseFloat(idBranch), box: parseFloat(box) },
+        },
+      });
       console.log(result);
       if (result.data.createBox.success) {
         console.log("inside if");
@@ -54,7 +64,8 @@ function CreateBoxForm() {
   };
 
   if (loadingBranches) return <p>Loading branches...</p>;
-  if (errorBranches) return <p>Error loading branches: {errorBranches.message}</p>;
+  if (errorBranches)
+    return <p>Error loading branches: {errorBranches.message}</p>;
 
   return (
     <div className="space-y-8 w-[400px] ">
@@ -72,16 +83,15 @@ function CreateBoxForm() {
             maxLength={12}
           />
         </div>
-
         <div>
-        <label>Branch:</label>
+        <Label className="text-[#26313c]">Branch</Label>
           <Select onValueChange={(value) => setIdBranch(value)}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select a branch" />
             </SelectTrigger>
             <SelectContent>
-              {dataBranches.getBranches.map((branch : Branch) => (
-                <SelectItem key={branch.id} value={branch.id}>
+              {dataBranches.getBranches.map((branch: Branch) => (
+                <SelectItem value={branch.id + branch.address } key={branch.id}>
                   {branch.address}
                 </SelectItem>
               ))}
@@ -113,10 +123,10 @@ function CreateBoxForm() {
             <AlertDescription>{alertMessage}</AlertDescription>
           </Alert>
         </div>
-      )}{errorCreate && <p>Error: {errorCreate.message}</p>}
+      )}
+      {errorCreate && <p>Error: {errorCreate.message}</p>}
       {dataCreate && <p>Box created successfully!</p>}
     </div>
-    
   );
 }
 const CreateBoxFormComponent = () => (
