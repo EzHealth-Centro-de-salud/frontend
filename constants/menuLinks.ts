@@ -71,6 +71,10 @@ export const AdminMenuLinks = [
     link: "/admin/patients",
   },
   {
+    name: "Box",
+    link: "/admin/box",
+  },
+  {
     name: "Cerrar Sesión",
     link: "/logout",
   },
