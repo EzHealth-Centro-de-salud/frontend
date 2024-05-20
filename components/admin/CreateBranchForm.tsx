@@ -21,6 +21,7 @@ function CreateBranchForm() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setLoading(true);
     try {
       const { data, errors } = await registerPatient({
         variables: {
@@ -41,6 +42,8 @@ function CreateBranchForm() {
       console.error(error)
       setAlertType("error");
       setAlertMessage("Error al crear la sucursal");
+    }finally {
+      setLoading(false);
     }
   
   

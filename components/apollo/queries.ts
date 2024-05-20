@@ -37,3 +37,13 @@ export const GET_PERSONNEL_QUERY = gql`
     }
   }
 `;
+
+export const GET_BRANCHES_QUERY = gql`
+  query GetBranches {
+    getBranches {
+      id
+      box_count
+      address
+    }
+  }
+`;
