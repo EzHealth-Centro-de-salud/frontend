@@ -98,3 +98,12 @@ export const UPDATE_PERSONNEL_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_BRANCH_MUTATION = gql`
+  mutation CreateBranch($input: CreateBranchInput!) {
+    createBranch(input: $input) {
+      success
+      message
+    }
+  }
+`;
