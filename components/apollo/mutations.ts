@@ -99,6 +99,15 @@ export const UPDATE_PERSONNEL_MUTATION = gql`
   }
 `;
 
+export const CREATE_BRANCH_MUTATION = gql`
+  mutation CreateBranch($input: CreateBranchInput!) {
+    createBranch(input: $input) {
+      success
+      message
+    }
+  }
+`;
+
 export const CREATE_BOX_MUTATION = gql`
   mutation CreateBox($input: CreateBoxInput!) {
     createBox(input: $input) {
@@ -107,4 +116,3 @@ export const CREATE_BOX_MUTATION = gql`
     }
   }
 `;
-

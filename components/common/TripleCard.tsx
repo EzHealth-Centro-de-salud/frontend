@@ -1,6 +1,7 @@
 
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import Link from 'next/link'
 
 export default function TripleCard() {
   return (
@@ -20,7 +21,9 @@ export default function TripleCard() {
           <CardTitle>Sucursal</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <Button variant="outline">Crear Sucursal</Button>
+          <Link className="grid gap-4" href="/admin/sucursal/new">
+            <Button variant="outline">Crear Sucursal</Button>
+          </Link>  
           <Button variant="outline">Ver de Sucursales</Button>
           <Button variant="outline">Eliminar Sucursal</Button>
           <Button variant="outline">Editar Sucursal</Button>

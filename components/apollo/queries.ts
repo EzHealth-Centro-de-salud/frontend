@@ -43,7 +43,7 @@ export const GET_BRANCHES_QUERY = gql`
     getBranches {
       id
       box_count
-      address 
+      address
     }
   }
 `;
