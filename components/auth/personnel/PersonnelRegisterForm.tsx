@@ -247,11 +247,25 @@ function PersonnelRegisterForm() {
         </div>
 
         <div className="w-full">
-          <Button type="submit" className="w-full" size="lg">
+          {/*<Button type="submit" className="w-full" size="lg">
             {loading ? (
               <Button disabled>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...
               </Button>
+            ) : (
+              "Registrar personal"
+            )}
+          </Button>*/}
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="flex items-center">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...
+              </span>
             ) : (
               "Registrar personal"
             )}

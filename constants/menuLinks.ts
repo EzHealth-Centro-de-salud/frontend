@@ -4,19 +4,19 @@ export const PatientMenuLinks = [
     link: "/patient/dashboard",
   },
   {
-    name: "Profile",
+    name: "Perfíl",
     link: "/patient/profile",
   },
   {
-    name: "Appointments",
+    name: "Citas Médicas",
     link: "/patient/appointments",
   },
   {
-    name: "Book Appointment",
+    name: "Agendar Cita Médica",
     link: "/patient/book-appointment",
   },
   {
-    name: "Medical Records",
+    name: "Historial Médico",
     link: "/patient/medical-records",
   },
   {
@@ -35,20 +35,16 @@ export const PersonnelMenuLinks = [
     link: "/personnel/dashboard",
   },
   {
-    name: "Profile",
+    name: "Perfíl",
     link: "/personnel/profile",
   },
   {
-    name: "Appointments",
+    name: "Citas Médicas",
     link: "/personnel/appointments",
   },
   {
-    name: "Prescriptions",
-    link: "/personnel/prescriptions",
-  },
-  {
-    name: "Medical Records",
-    link: "/personnel/medical-records",
+    name: "Horarios de Atención",
+    link: "/personnel/schedule",
   },
   {
     name: "Cerrar Sesión",
@@ -71,8 +67,12 @@ export const AdminMenuLinks = [
     link: "/admin/patients",
   },
   {
+    name: "Surcursales",
+    link: "/admin/branches",
+  },
+  {
     name: "Box",
-    link: "/admin/box",
+    link: "/admin/box/new",
   },
   {
     name: "Cerrar Sesión",

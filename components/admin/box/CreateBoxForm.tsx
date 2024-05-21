@@ -84,14 +84,17 @@ function CreateBoxForm() {
           />
         </div>
         <div>
-        <Label className="text-[#26313c]">Branch</Label>
+          <Label className="text-[#26313c]">Branch</Label>
           <Select onValueChange={(value) => setIdBranch(value)}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select a branch" />
             </SelectTrigger>
             <SelectContent>
               {dataBranches.getBranches.map((branch: Branch) => (
-                <SelectItem value={branch.id + branch.address } key={branch.id}>
+                <SelectItem
+                  value={branch.id + "\n" + branch.address}
+                  key={branch.id}
+                >
                   {branch.address}
                 </SelectItem>
               ))}
@@ -99,11 +102,17 @@ function CreateBoxForm() {
           </Select>
         </div>
         <div className="w-full">
-          <Button type="submit" className="w-full" size="lg">
+          
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={loadingMutation}
+          >
             {loadingMutation ? (
-              <Button disabled>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...
-              </Button>
+              <span className="flex items-center">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Agregando...
+              </span>
             ) : (
               "Agregar Box a Sucursal"
             )}

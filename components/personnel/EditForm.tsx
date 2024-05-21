@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useMutation, useQuery, ApolloProvider } from "@apollo/client";
 import { useState, useEffect } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -114,16 +114,32 @@ function EditForm({ rut }: EditFormProps) {
           <div className="text-[#26313c] bg-white p-2 rounded-md">{rut}</div>
         </div>
         <div>
-          <Label className="text-gray-900 dark:text-gray-50">Nombre Completo</Label>
-          <div className="text-[#26313c] bg-white p-2 rounded-md">{first_name + " " + middle_name + " " + surname + " " + second_surname}</div>
+          <Label className="text-gray-900 dark:text-gray-50">
+            Nombre Completo
+          </Label>
+          <div className="text-[#26313c] bg-white p-2 rounded-md">
+            {first_name +
+              " " +
+              middle_name +
+              " " +
+              surname +
+              " " +
+              second_surname}
+          </div>
         </div>
         <div>
-          <Label className="text-gray-900 dark:text-gray-50">Especialidad</Label>
-          <div className="text-[#26313c] bg-white p-2 rounded-md">{speciality}</div>
+          <Label className="text-gray-900 dark:text-gray-50">
+            Especialidad
+          </Label>
+          <div className="text-[#26313c] bg-white p-2 rounded-md">
+            {speciality}
+          </div>
         </div>
         <div>
           <Label className="text-gray-900 dark:text-gray-50">Sucursal</Label>
-          <div className="text-[#26313c] bg-white p-2 rounded-md">{id_branch}</div>
+          <div className="text-[#26313c] bg-white p-2 rounded-md">
+            {id_branch}
+          </div>
         </div>
 
         {/* Add more fields as needed */}
@@ -133,7 +149,9 @@ function EditForm({ rut }: EditFormProps) {
       <div className="lg:w-1/2 space-y-8 w-[400px]">
         <form onSubmit={onSubmit} className="space-y-8">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-gray-900 dark:text-gray-50" htmlFor="email">Email</Label>
+            <Label className="text-gray-900 dark:text-gray-50" htmlFor="email">
+              Email
+            </Label>
             <Input
               className="text-[#26313c]"
               required
@@ -144,15 +162,30 @@ function EditForm({ rut }: EditFormProps) {
               maxLength={254}
             />
           </div>
-          
+
           {/* Add more input fields for other personnel details */}
           <div className="w-full">
-            <Button type="submit" className="w-full" size="lg">
+            {/*<Button type="submit" className="w-full" size="lg">
               {loading ? (
                 <Button disabled>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
                   Actualizando...
                 </Button>
+              ) : (
+                "Actualizar datos"
+              )}
+            </Button>*/}
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="flex items-center">
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                  Actualizando...
+                </span>
               ) : (
                 "Actualizar datos"
               )}

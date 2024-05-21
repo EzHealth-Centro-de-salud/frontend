@@ -15,11 +15,9 @@ export default function LandingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <NavBar />
-        {children}
-      </body>
-    </html>
+    <div>
+      <NavBar />
+      {children}
+    </div>
   );
 }
