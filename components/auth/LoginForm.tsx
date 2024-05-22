@@ -38,7 +38,7 @@ export default function LoginForm() {
         setTimeout(() => {
           setError(null);
           window.location.href = "/patient/dashboard";
-        }, 4000);
+        }, 200);
       } else {
         console.log(errors);
         setError("Error al iniciar sesión");
@@ -88,8 +88,23 @@ export default function LoginForm() {
               required
               maxLength={128}
             />
-
+            
             <Button
+            type="submit"
+            className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
+            size="lg"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="flex items-center">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Ingresando...
+              </span>
+            ) : (
+              "Ingresar"
+            )}
+          </Button>
+
+            {/*<Button
               type="submit"
               className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
             >
@@ -103,7 +118,7 @@ export default function LoginForm() {
               ) : (
                 "Login"
               )}
-            </Button>
+            </Button>*/}
             <p className="text-center mt-2">
               ¿Olvidaste tu contraseña?{" "}
               <Link

@@ -15,7 +15,7 @@ export default function LandingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className={inter.className}>
       <NavBar />
       {children}
     </div>

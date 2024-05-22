@@ -14,24 +14,6 @@ interface EditFormProps {
   rut: string;
 }
 
-/*interface GetPatientByRutQuery {
-  getPatientByRut: {
-    id: string;
-    rut: string;
-    first_name: string;
-    middle_name: string;
-    surname: string;
-    second_surname: string;
-    birthdate: string;
-    phone: string;
-    email: string;
-    address: string;
-    region: string;
-    commune: string;    
-  } | null;
-}
-*/
-
 function EditForm({ rut }: EditFormProps) {
   const { data: patientData, loading: patientLoading } = useQuery(GET_PATIENT_QUERY, {
     variables: { rut } 
