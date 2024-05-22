@@ -1,9 +1,9 @@
+import React from 'react'
 
-function PatientDashboardPage() {
+const page = () => {
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Página de reserva</p>
-    </div>
-  );
-}export default PatientDashboardPage;
+    <div>blah blah blah page</div>
+  )
+}
+
+export default page

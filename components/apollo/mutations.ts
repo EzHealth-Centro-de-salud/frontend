@@ -69,3 +69,50 @@ export const CHANGE_PASSWORD_PATIENT_MUTATION = gql`
     }
   }
 `;
+
+export const UPDATE_PATIENT_MUTATION = gql`
+  mutation UpdatePatient($input: CreatePatientInput!) {
+    createPatient(input: $input) {
+      success
+      message
+    }
+  }
+`;
+
+export const UPDATE_PERSONNEL_MUTATION = gql`
+  mutation UpdatePersonnel($input: UpdatePersonnelInput!) {
+    updatePersonnel(input: $input) {
+      success
+      message
+      personnel {
+        rut
+        firstName
+        middleName
+        surname
+        secondSurname
+        email
+        role
+        speciality
+        idBranch
+      }
+    }
+  }
+`;
+
+export const CREATE_BRANCH_MUTATION = gql`
+  mutation CreateBranch($input: CreateBranchInput!) {
+    createBranch(input: $input) {
+      success
+      message
+    }
+  }
+`;
+
+export const CREATE_BOX_MUTATION = gql`
+  mutation CreateBox($input: CreateBoxInput!) {
+    createBox(input: $input) {
+      success
+      message
+    }
+  }
+`;

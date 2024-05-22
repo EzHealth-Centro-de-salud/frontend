@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useMutation } from "@apollo/client";
 import { Button } from "@/components/ui/button";
@@ -33,11 +33,12 @@ export default function LoginForm() {
       });
       if (data?.loginPatient) {
         localStorage.setItem("rut", data.loginPatient.rut);
+        localStorage.setItem("access_token", data.loginPatient.access_token);
         setError("Login exitoso, redirigiendo...");
         setTimeout(() => {
           setError(null);
           window.location.href = "/patient/dashboard";
-        }, 4000);
+        }, 200);
       } else {
         console.log(errors);
         setError("Error al iniciar sesión");
@@ -87,8 +88,23 @@ export default function LoginForm() {
               required
               maxLength={128}
             />
-
+            
             <Button
+            type="submit"
+            className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
+            size="lg"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="flex items-center">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Ingresando...
+              </span>
+            ) : (
+              "Ingresar"
+            )}
+          </Button>
+
+            {/*<Button
               type="submit"
               className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
             >
@@ -102,7 +118,7 @@ export default function LoginForm() {
               ) : (
                 "Login"
               )}
-            </Button>
+            </Button>*/}
             <p className="text-center mt-2">
               ¿Olvidaste tu contraseña?{" "}
               <Link
@@ -123,7 +139,7 @@ export default function LoginForm() {
             </p>
           </form>
           <p className="mt-4 text-xs text-slate-200">
-            @2023 All rights reserved
+            @{new Date().getFullYear()} All rights reserved
           </p>
           {error && (
             <div className="pt-10" >
