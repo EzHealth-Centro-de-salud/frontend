@@ -11,8 +11,10 @@ import { useState } from "react";
 import { LOGIN_PERSONNEL_MUTATION } from "../../apollo/mutations";
 import client from "../../apollo/ApolloClient";
 import { Loader2 } from "lucide-react";
+import { useRouter } from 'next/navigation'
 
 export default function PersonnelLoginForm() {
+  const router = useRouter()
   const [rut, setRut] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -28,16 +30,21 @@ export default function PersonnelLoginForm() {
       e.preventDefault();
       const { data, errors } = await loginPersonnel({
         variables: {
-          LoginInput: {
+          input: {
             rut,
             password,
           },
         },
       });
-      if (data?.loginPatient) {
-        console.log(data.loginPatient);
+      if (data?.loginPersonnel) {
+        console.log(data.loginPersonnel);
         window.alert("Login exitoso");
-        window.location.href = "/personnel/dashboard";
+        if(data?.loginPersonnel.role === "admin"){
+          router.push("/admin/dashboard");
+        } else{
+          window.location.href = "/personnel/dashboard";
+        }
+        
       } else {
         console.log(errors);
         setError("Error al iniciar sesión");
@@ -65,18 +72,18 @@ export default function PersonnelLoginForm() {
             RUT
           </Label>
           <Input
-            className="mt-2 mb-4 bg-transparent rounded-full"
+            className="mt-2 mb-4 bg-transparent rounded-full text-white"
             onChange={(e) => setRut(e.target.value)}
             type="text"
-            id="email"
-            placeholder="Email"
+            id="rut"
+            placeholder="rut"
             maxLength={9}
           />
           <Label className="text-slate-200" htmlFor="password">
             Password*
           </Label>
           <Input
-            className="mt-2 bg-transparent rounded-full "
+            className="mt-2 bg-transparent rounded-full text-white"
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             id="password"

@@ -32,8 +32,8 @@ export const REGISTER_PERSONNEL_MUTATION = gql`
 `;
 
 export const LOGIN_PERSONNEL_MUTATION = gql`
-  mutation LoginPersonnel($LoginInput: LoginInput!) {
-    loginPersonnel(input: $LoginInput) {
+  mutation LoginPersonnel($input: LoginInput!) {
+    loginPersonnel(input: $input) {
       id
       access_token
       rut

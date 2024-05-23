@@ -15,7 +15,7 @@ function CreateBranchForm() {
   const [alertType, setAlertType] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [registerPatient] = useMutation(CREATE_BRANCH_MUTATION, {
+  const [createBranch] = useMutation(CREATE_BRANCH_MUTATION, {
     client,
   });
 
@@ -23,18 +23,18 @@ function CreateBranchForm() {
     e.preventDefault()
     setLoading(true);
     try {
-      const { data, errors } = await registerPatient({
+      const { data, errors } = await createBranch({
         variables: {
           input: {
             address
           },
         },
       });
-      if (data?.createBranch) {
+      if (data?.createBranch?.success) {
         setAlertType("success");
         setAlertMessage("sucursal creada exitosamente");
       } else {
-        console.log(errors)
+        console.log("errores: ", errors)
         setAlertType("error");
         setAlertMessage("Error al crear la sucursal");
       }
