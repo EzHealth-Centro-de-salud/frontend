@@ -48,20 +48,18 @@ function PersonnelRegisterForm() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    const parsedValue = name === 'id_branch' ? parseInt(value, 10) : value;
-    setPersonnelFormState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setPersonnelFormState({
+      ...personnelFormState,
+      [name]: name === 'id_branch' ? parseInt(value) : value,
+    });
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    console.log("passed loading true")
     try {
       await registerPersonnel({
-        variables: { input: personnelFormState },
+        variables: { input: { ...personnelFormState, id_branch: parseInt(personnelFormState.id_branch.toString()) }},
       });
       setPersonnelFormState({
         rut: "",
@@ -72,13 +70,11 @@ function PersonnelRegisterForm() {
         second_surname: "",
         email: "",
         role: "",
-        speciality: "", // Corrected field name
+        speciality: "",
         id_branch: 1,
       });
-      // Handle success, maybe show a success message or redirect
     } catch (error) {
       console.error("Error registering personnel:", error);
-      // Handle error
     } finally {
       setLoading(false);
     }
@@ -212,7 +208,7 @@ function PersonnelRegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="id_branch">
+            <Label className="text-white">
               Sucursal
             </Label>
             <select
@@ -247,15 +243,6 @@ function PersonnelRegisterForm() {
         </div>
 
         <div className="w-full">
-          {/*<Button type="submit" className="w-full" size="lg">
-            {loading ? (
-              <Button disabled>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...
-              </Button>
-            ) : (
-              "Registrar personal"
-            )}
-          </Button>*/}
           <Button
             type="submit"
             className="w-full"
