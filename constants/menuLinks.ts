@@ -64,11 +64,11 @@ export const AdminMenuLinks = [
   },
   {
     name: "Patients",
-    link: "/admin/patients",
+    link: "/admin/patient",
   },
   {
     name: "Surcursales",
-    link: "/admin/branches",
+    link: "/admin/branch",
   },
   {
     name: "Box",
