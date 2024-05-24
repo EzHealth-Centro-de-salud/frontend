@@ -84,7 +84,7 @@ function PersonnelRegisterForm() {
     <div className="space-y-8 w-[400px] ">
       <form onSubmit={onSubmit} className="space-y-8 ">
         <div className="grid w-full items-center gap-1.5">
-          <Label className="text-white" htmlFor="rut">
+          <Label className="text-white">
             RUT
           </Label>
           <Input

@@ -42,7 +42,7 @@ export default function PersonnelLoginForm() {
         if(data?.loginPersonnel.role === "admin"){
           router.push("/admin/dashboard");
         } else{
-          window.location.href = "/personnel/dashboard";
+          router.push("/personnel/dashboard");
         }
         
       } else {
@@ -90,22 +90,22 @@ export default function PersonnelLoginForm() {
             placeholder="password"
             maxLength={128}
           />
-
           <Button
             type="submit"
             className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
+            size="lg"
+            disabled={loading}
           >
             {loading ? (
-              <Button
-                disabled
-                className="w-full bg-indigo-600 rounded-full hover:bg-indigo-700"
-              >
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Logiando...
-              </Button>
+              <span className="flex items-center">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Ingresando...
+              </span>
             ) : (
-              "Login"
+              "Ingresar"
             )}
           </Button>
+
+          
 
           <p className="text-center mt-2 text-zinc-500">
             ¿Olvidaste tu contraseña?{" "}

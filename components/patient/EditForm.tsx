@@ -19,7 +19,7 @@ function EditForm({ rut }: EditFormProps) {
     variables: { rut } 
   });
 
-  console.log(patientData)
+  
 
   const [first_name, setFirstName] = useState('');
   const [middle_name, setMiddleName] = useState('');
@@ -103,6 +103,8 @@ function EditForm({ rut }: EditFormProps) {
       setLoading(false);
     }
   };
+
+  console.log(patientData.getPatientByRut.rut)
 
   if (patientLoading) {
     return <Loader2 className="mr-2 h-4 w-4 animate-spin" />;

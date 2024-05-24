@@ -15,15 +15,12 @@ interface EditFormProps {
 }
 
 function EditForm({ rut }: EditFormProps) {
-  const { data: personnelData, loading: personnelLoading } = useQuery(
-    GET_PERSONNEL_QUERY,
-    {
-      variables: { rut },
-      client,
-    }
-  );
+  const { data: personnelData, loading: personnelLoading } = useQuery(GET_PERSONNEL_QUERY,{
+    variables: { rut }
+  });
 
-  const [password, setPassword] = useState("");
+  
+  
   const [first_name, setFirstName] = useState("");
   const [middle_name, setMiddleName] = useState("");
   const [surname, setSurname] = useState("");
@@ -32,6 +29,7 @@ function EditForm({ rut }: EditFormProps) {
   const [role, setRole] = useState("");
   const [speciality, setSpeciality] = useState("");
   const [id_branch, setIdBranch] = useState(0);
+  const [branchAddress, setBranchAddress] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [updatePersonnel] = useMutation(UPDATE_PERSONNEL_MUTATION, {
@@ -44,7 +42,6 @@ function EditForm({ rut }: EditFormProps) {
   useEffect(() => {
     if (personnelData) {
       const {
-        password,
         first_name,
         middle_name,
         surname,
@@ -52,9 +49,8 @@ function EditForm({ rut }: EditFormProps) {
         email,
         role,
         speciality,
-        id_branch,
+        branch: { id: id_branch, address: branchAddress },
       } = personnelData.getPersonnelByRut;
-      setPassword(password || "");
       setFirstName(first_name || "");
       setMiddleName(middle_name || "");
       setSurname(surname || "");
@@ -63,6 +59,7 @@ function EditForm({ rut }: EditFormProps) {
       setRole(role || "");
       setSpeciality(speciality || "");
       setIdBranch(id_branch || 0);
+      setBranchAddress(branchAddress || "");
     }
   }, [personnelData]);
 
@@ -74,7 +71,6 @@ function EditForm({ rut }: EditFormProps) {
         variables: {
           UpdatePersonnelInput: {
             rut,
-            password,
             first_name,
             middle_name,
             surname,
@@ -104,6 +100,8 @@ function EditForm({ rut }: EditFormProps) {
   if (personnelLoading) {
     return <Loader2 className="mr-2 h-4 w-4 animate-spin" />;
   }
+
+  console.log(personnelData?.getPersonnelByRut.branch);
 
   return (
     <div className="flex flex-col w-[1000px] lg:flex-row gap-8 p-4 md:p-6 text-gray-900 bg-gray-100 dark:bg-gray-800 dark:text-gray-50">
@@ -138,14 +136,11 @@ function EditForm({ rut }: EditFormProps) {
         <div>
           <Label className="text-gray-900 dark:text-gray-50">Sucursal</Label>
           <div className="text-[#26313c] bg-white p-2 rounded-md">
-            {id_branch}
+            {branchAddress}
           </div>
         </div>
-
-        {/* Add more fields as needed */}
       </div>
 
-      {/* Right Column */}
       <div className="lg:w-1/2 space-y-8 w-[400px]">
         <form onSubmit={onSubmit} className="space-y-8">
           <div className="grid w-full items-center gap-1.5">
@@ -162,19 +157,7 @@ function EditForm({ rut }: EditFormProps) {
               maxLength={254}
             />
           </div>
-
-          {/* Add more input fields for other personnel details */}
           <div className="w-full">
-            {/*<Button type="submit" className="w-full" size="lg">
-              {loading ? (
-                <Button disabled>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
-                  Actualizando...
-                </Button>
-              ) : (
-                "Actualizar datos"
-              )}
-            </Button>*/}
             <Button
               type="submit"
               className="w-full"

@@ -25,15 +25,17 @@ export const GET_PERSONNEL_QUERY = gql`
   query GetPersonnelByRut($rut: String!) {
     getPersonnelByRut(rut: $rut) {
       rut
-      password
-      firstName
-      middleName
+      first_name
+      middle_name
       surname
-      secondSurname
+      second_surname
       email
       role
       speciality
-      idBranch
+      branch{
+        id
+        address
+      }
     }
   }
 `;
