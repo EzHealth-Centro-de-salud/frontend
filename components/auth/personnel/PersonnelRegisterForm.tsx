@@ -1,8 +1,5 @@
 "use client";
-import {
-  useMutation,
-  ApolloProvider,
-} from "@apollo/client";
+import { useMutation, ApolloProvider, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { REGISTER_PERSONNEL_MUTATION } from "../../apollo/mutations";
 import client from "../../apollo/ApolloClient";
 import { Loader2 } from "lucide-react";
+import { GET_BRANCHES_QUERY } from "@/components/apollo/queries";
 
 interface PersonnelFormState {
   rut: string;
@@ -40,6 +38,14 @@ function PersonnelRegisterForm() {
     });
   const [loading, setLoading] = useState(false);
 
+  const {
+    loading: loadingBranches,
+    error: errorBranches,
+    data: dataBranches,
+  } = useQuery(GET_BRANCHES_QUERY, { client });
+
+  const branches = dataBranches?.getBranches || [];
+
   const [registerPersonnel] = useMutation(REGISTER_PERSONNEL_MUTATION, {
     client,
   });
@@ -50,7 +56,7 @@ function PersonnelRegisterForm() {
     const { name, value } = e.target;
     setPersonnelFormState({
       ...personnelFormState,
-      [name]: name === 'id_branch' ? parseInt(value) : value,
+      [name]: name === "id_branch" ? parseInt(value) : value,
     });
   };
 
@@ -59,7 +65,12 @@ function PersonnelRegisterForm() {
     setLoading(true);
     try {
       await registerPersonnel({
-        variables: { input: { ...personnelFormState, id_branch: parseInt(personnelFormState.id_branch.toString()) }},
+        variables: {
+          input: {
+            ...personnelFormState,
+            id_branch: parseInt(personnelFormState.id_branch.toString()),
+          },
+        },
       });
       setPersonnelFormState({
         rut: "",
@@ -80,13 +91,13 @@ function PersonnelRegisterForm() {
     }
   };
 
+  if (loadingBranches) return <p>Loading...</p>;
+
   return (
     <div className="space-y-8 w-[400px] ">
       <form onSubmit={onSubmit} className="space-y-8 ">
         <div className="grid w-full items-center gap-1.5">
-          <Label className="text-white">
-            RUT
-          </Label>
+          <Label className="text-white">RUT</Label>
           <Input
             className="bg-[#26313c] text-white"
             required
@@ -208,21 +219,24 @@ function PersonnelRegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white">
-              Sucursal
-            </Label>
+            <Label className="text-white">Sucursal</Label>
             <select
-              className="bg-[#26313c] text-white"
+              className="text-sm w-full py-2 pl-3 pr-10 text-[#26313c] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-[#26313c] focus:ring focus:ring-[#26313c] focus:ring-opacity-50"
               required
               value={personnelFormState.id_branch}
               onChange={handleInputChange}
               id="id_branch"
               name="id_branch"
             >
-              <option value="">Seleccione...</option>
-              <option value={0}>Coquimbo 1</option>
-              <option value={1}>Coquimbo 2</option>
-              <option value={2}>La Serena 1</option>
+              {loadingBranches ? (
+                <option>Cargando...</option>
+              ) : (
+                branches.map((branch: any) => (
+                  <option key={branch.id} value={branch.id}>
+                    {branch.address}
+                  </option>
+                ))
+              )}
             </select>
           </div>
           <div className="grid w-full items-center gap-1.5">
@@ -243,12 +257,7 @@ function PersonnelRegisterForm() {
         </div>
 
         <div className="w-full">
-          <Button
-            type="submit"
-            className="w-full"
-            size="lg"
-            disabled={loading}
-          >
+          <Button type="submit" className="w-full" size="lg" disabled={loading}>
             {loading ? (
               <span className="flex items-center">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...

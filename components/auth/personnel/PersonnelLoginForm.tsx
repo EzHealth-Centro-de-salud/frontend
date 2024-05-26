@@ -12,6 +12,7 @@ import { LOGIN_PERSONNEL_MUTATION } from "../../apollo/mutations";
 import client from "../../apollo/ApolloClient";
 import { Loader2 } from "lucide-react";
 import { useRouter } from 'next/navigation'
+import { Alert } from "@/components/ui/alert";
 
 export default function PersonnelLoginForm() {
   const router = useRouter()
@@ -37,23 +38,33 @@ export default function PersonnelLoginForm() {
         },
       });
       if (data?.loginPersonnel) {
-        console.log(data.loginPersonnel);
-        window.alert("Login exitoso");
-        if(data?.loginPersonnel.role === "admin"){
-          router.push("/admin/dashboard");
-        } else{
-          router.push("/personnel/dashboard");
-        }
-        
+        localStorage.setItem("rut", data.loginPersonnel.rut);
+        localStorage.setItem("access_token", data.loginPersonnel. access_token);
+        setError("Login exitoso, redirigiendo...");
+        setTimeout(() => {
+          setError(null);
+          if(data?.loginPersonnel.role === "admin"){
+            router.push("/admin/dashboard");
+          } else{
+            router.push("/personnel/dashboard");
+          }
+        }, 200);
       } else {
         console.log(errors);
         setError("Error al iniciar sesión");
       }
     } catch (error) {
+      setError("Credenciales inválidas, intente nuevamente.");
       console.error(error);
-    }finally {
+    } finally {
       setLoading(false);
     }
+  };
+  const showAlert = (type: string, message: string) => {
+    setError(message);
+    setTimeout(() => {
+      setError(null);
+    }, 5000); // Clear the error message after 5 seconds
   };
 
   return (
@@ -127,6 +138,15 @@ export default function PersonnelLoginForm() {
           </p>
         </form>
         <p className="mt-4 text-xs text-slate-200">@2023 All rights reserved</p>
+        {error && (
+            <div className="pt-10" >
+              <Alert
+                variant={error === "Login exitoso, redirigiendo..." ? "default" : "destructive"}
+              >
+                {error}
+              </Alert>
+            </div>
+          )}
       </div>
     </div>
   );

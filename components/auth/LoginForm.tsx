@@ -20,7 +20,7 @@ export default function LoginForm() {
     client,
   });
   const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); //evita que se refresque la pagina al enviar el formulario
+    e.preventDefault();
     setLoading(true);
     try {
       const { data, errors } = await loginPatient({
@@ -103,22 +103,6 @@ export default function LoginForm() {
               "Ingresar"
             )}
           </Button>
-
-            {/*<Button
-              type="submit"
-              className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
-            >
-              {loading ? (
-                <Button
-                  disabled
-                  className="w-full bg-indigo-600 rounded-full hover:bg-indigo-700"
-                >
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Logiando...
-                </Button>
-              ) : (
-                "Login"
-              )}
-            </Button>*/}
             <p className="text-center mt-2">
               ¿Olvidaste tu contraseña?{" "}
               <Link
