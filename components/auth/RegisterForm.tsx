@@ -18,7 +18,7 @@ import {
 } from "../ui/select";
 import chileRegions from "@/constants/chileRegions";
 
-function RegisterForm() {
+export default function RegisterForm() {
   const [rut, setRut] = useState("");
   const [password, setPassword] = useState("");
   const [birthdate, setBirthdate] = useState("");
@@ -337,10 +337,3 @@ function RegisterForm() {
     </div>
   );
 }
-const RegisterFormComponent = () => (
-  <ApolloProvider client={client}>
-    <RegisterForm />
-  </ApolloProvider>
-);
-RegisterFormComponent.displayName = "RegisterFormComponent";
-export default RegisterFormComponent;
