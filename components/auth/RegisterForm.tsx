@@ -98,14 +98,14 @@ function RegisterForm() {
   };
 
   return (
-    <div className="space-y-8 w-[400px] ">
-      <form onSubmit={onSubmit} className="space-y-8 ">
-        <div className="grid w-full items-center gap-1.5">
-          <Label className="text-white" htmlFor="rut">
+    <div className="space-y-5 w-[1100px] ">
+      <form onSubmit={onSubmit} className="space-y-5 ">
+        <div className="grid w-full items-center gap-1">
+          <Label className="text-[#26313c]" htmlFor="rut">
             RUT
           </Label>
           <Input
-            className="bg-[#26313c] text-white"
+            className=" text-[#26313c]"
             required
             value={rut}
             onChange={(e) => setRut(e.target.value)}
@@ -117,11 +117,11 @@ function RegisterForm() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="first_name">
+            <Label className="text-[#26313c]" htmlFor="first_name">
               Primer Nombre
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={first_name}
               onChange={(e) => setFirst_name(e.target.value)}
@@ -131,11 +131,11 @@ function RegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="middle_name">
+            <Label className="text-[#26313c]" htmlFor="middle_name">
               Segundo Nombre
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               value={middle_name}
               onChange={(e) => setMiddle_name(e.target.value)}
               id="middle_name"
@@ -146,11 +146,11 @@ function RegisterForm() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="surname">
+            <Label className="text-[#26313c]" htmlFor="surname">
               Apellido Paterno
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={surname}
               onChange={(e) => setSurname(e.target.value)}
@@ -160,11 +160,11 @@ function RegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="second_surname">
+            <Label className="text-[#26313c]" htmlFor="second_surname">
               Apellido Materno
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               value={second_surname}
               onChange={(e) => setSecond_surname(e.target.value)}
               id="second_surname"
@@ -175,11 +175,11 @@ function RegisterForm() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="email">
+            <Label className="text-[#26313c]" htmlFor="email">
               Email
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -189,11 +189,11 @@ function RegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="password">
+            <Label className="text-[#26313c]" htmlFor="password">
               Contraseña
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -205,11 +205,11 @@ function RegisterForm() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="birthdate">
+            <Label className="text-[#26313c]" htmlFor="birthdate">
               Fecha de Nacimiento
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={birthdate}
               onChange={(e) => setBirthdate(e.target.value)}
@@ -218,29 +218,27 @@ function RegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="sex">
+            <Label className="text-[#26313c]" htmlFor="sex">
               Sexo
             </Label>
-            <select
-              className="bg-[#26313c] text-white"
-              required
-              value={sex}
-              onChange={(e) => setSex(e.target.value)}
-              id="sex"
-            >
-              <option value="">Seleccione...</option>
-              <option value="femenino">Femenino</option>
-              <option value="masculino">Masculino</option>
-            </select>
+            <Select onValueChange={setSex} value={sex}>
+              <SelectTrigger className=" text-[#26313c]">
+                <SelectValue placeholder="Seleccione..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="femenino">Femenino</SelectItem>
+                <SelectItem value="masculino">Masculino</SelectItem>                
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="address">
+            <Label className="text-[#26313c]" htmlFor="address">
               Dirección
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -250,11 +248,11 @@ function RegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="region">
+            <Label className="text-[#26313c]" htmlFor="region">
               Región
             </Label>
             <Select onValueChange={setRegion} value={region}>
-              <SelectTrigger className="bg-[#26313c] text-white">
+              <SelectTrigger className=" text-[#26313c]">
                 <SelectValue placeholder="Seleccione..." />
               </SelectTrigger>
               <SelectContent>
@@ -269,11 +267,11 @@ function RegisterForm() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="commune">
+            <Label className="text-[#26313c]" htmlFor="commune">
               Comuna
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={commune}
               onChange={(e) => setCommune(e.target.value)}
@@ -283,11 +281,11 @@ function RegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="phone">
+            <Label className="text-[#26313c]" htmlFor="phone">
               Teléfono
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -310,8 +308,8 @@ function RegisterForm() {
             />
           </div>
         </div>
-        <div className="w-full">
-          <Button type="submit" className="w-full" size="lg" disabled={loading}>
+        <div className="w-full flex justify-center">
+          <Button type="submit" className="w-[300px]" size="lg" disabled={loading}>
             {loading ? (
               <span className="flex items-center">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...

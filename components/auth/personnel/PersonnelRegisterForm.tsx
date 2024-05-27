@@ -8,6 +8,7 @@ import { REGISTER_PERSONNEL_MUTATION } from "../../apollo/mutations";
 import client from "../../apollo/ApolloClient";
 import { Loader2 } from "lucide-react";
 import { GET_BRANCHES_QUERY } from "@/components/apollo/queries";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface PersonnelFormState {
   rut: string;
@@ -21,6 +22,13 @@ interface PersonnelFormState {
   speciality: string;
   id_branch: number;
 }
+
+interface Branch {
+  id: string;
+  box_count: number;
+  address: string;
+}
+
 
 function PersonnelRegisterForm() {
   const [personnelFormState, setPersonnelFormState] =
@@ -44,7 +52,7 @@ function PersonnelRegisterForm() {
     data: dataBranches,
   } = useQuery(GET_BRANCHES_QUERY, { client });
 
-  const branches = dataBranches?.getBranches || [];
+  
 
   const [registerPersonnel] = useMutation(REGISTER_PERSONNEL_MUTATION, {
     client,
@@ -92,14 +100,16 @@ function PersonnelRegisterForm() {
   };
 
   if (loadingBranches) return <p>Loading...</p>;
+  if (errorBranches) return <p>Error: {errorBranches.message}</p>;
+  
 
   return (
-    <div className="space-y-8 w-[400px] ">
-      <form onSubmit={onSubmit} className="space-y-8 ">
+    <div className="space-y-5 w-[1000px] ">
+      <form onSubmit={onSubmit} className="space-y-3">
         <div className="grid w-full items-center gap-1.5">
-          <Label className="text-white">RUT</Label>
+          <Label className="text-[#26313c]">RUT</Label>
           <Input
-            className="bg-[#26313c] text-white"
+            className="text-[#26313c]"
             required
             value={personnelFormState.rut}
             onChange={handleInputChange}
@@ -111,11 +121,11 @@ function PersonnelRegisterForm() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="first_name">
+            <Label className="text-[#26313c]" htmlFor="first_name">
               Primer Nombre
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={personnelFormState.first_name}
               onChange={handleInputChange}
@@ -126,11 +136,11 @@ function PersonnelRegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="middle_name">
+            <Label className="text-[#26313c]" htmlFor="middle_name">
               Segundo Nombre
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               value={personnelFormState.middle_name}
               onChange={handleInputChange}
               id="middle_name"
@@ -142,11 +152,11 @@ function PersonnelRegisterForm() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="surname">
+            <Label className="text-[#26313c]" htmlFor="surname">
               Apellido Paterno
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={personnelFormState.surname}
               onChange={handleInputChange}
@@ -157,11 +167,11 @@ function PersonnelRegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="second_surname">
+            <Label className="text-[#26313c]" htmlFor="second_surname">
               Apellido Materno
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               value={personnelFormState.second_surname}
               onChange={handleInputChange}
               id="second_surname"
@@ -173,11 +183,11 @@ function PersonnelRegisterForm() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="email">
+            <Label className="text-[#26313c]" htmlFor="email">
               Email
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={personnelFormState.email}
               onChange={handleInputChange}
@@ -188,11 +198,11 @@ function PersonnelRegisterForm() {
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="password">
+            <Label className="text-[#26313c]" htmlFor="password">
               Contraseña
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={personnelFormState.password}
               onChange={handleInputChange}
@@ -205,11 +215,11 @@ function PersonnelRegisterForm() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="speciality">
+            <Label className="text-[#26313c]" htmlFor="speciality">
               Especialidad
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={personnelFormState.speciality}
               onChange={handleInputChange}
@@ -218,33 +228,30 @@ function PersonnelRegisterForm() {
               name="speciality"
             />
           </div>
+          <div>
+          <Label className="text-[#26313c]">Branch</Label>
+          <Select onValueChange={(value) => personnelFormState.id_branch}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Selecciona una sucursal" />
+            </SelectTrigger>
+            <SelectContent>
+              {dataBranches.getBranches.map((branch: Branch) => (
+                <SelectItem
+                  value={branch.id + "\n" + branch.address}
+                  key={branch.id}
+                >
+                  {branch.address}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
           <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white">Sucursal</Label>
-            <select
-              className="text-sm w-full py-2 pl-3 pr-10 text-[#26313c] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-[#26313c] focus:ring focus:ring-[#26313c] focus:ring-opacity-50"
-              required
-              value={personnelFormState.id_branch}
-              onChange={handleInputChange}
-              id="id_branch"
-              name="id_branch"
-            >
-              {loadingBranches ? (
-                <option>Cargando...</option>
-              ) : (
-                branches.map((branch: any) => (
-                  <option key={branch.id} value={branch.id}>
-                    {branch.address}
-                  </option>
-                ))
-              )}
-            </select>
-          </div>
-          <div className="grid w-full items-center gap-1.5">
-            <Label className="text-white" htmlFor="role">
+            <Label className="text-[#26313c]" htmlFor="role">
               Rol
             </Label>
             <Input
-              className="bg-[#26313c] text-white"
+              className=" text-[#26313c]"
               required
               value={personnelFormState.role}
               onChange={handleInputChange}
@@ -256,8 +263,8 @@ function PersonnelRegisterForm() {
           </div>
         </div>
 
-        <div className="w-full">
-          <Button type="submit" className="w-full" size="lg" disabled={loading}>
+        <div className="w-full flex justify-center pt-8">
+          <Button type="submit" className="w-[300px]" size="lg" disabled={loading}   >
             {loading ? (
               <span className="flex items-center">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...

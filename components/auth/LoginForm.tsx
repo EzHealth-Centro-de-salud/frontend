@@ -58,19 +58,21 @@ export default function LoginForm() {
   };
 
   return (
-    <main className="bg-[#26313c] h-screen flex items-center justify-center p-10">
-      <div className="grid w-full h-full grid-cols-1 bg-white box-anim ">
-        <div className="bg-[#16202a] text-white flex items-center justify-center flex-col">
-          <div className="my-4">
-            <h1 className="text-3xl font-semibold ">Inicio de Sesión</h1>
-            <p className="mt-2 text-xs text-slate-400 text-center">
-              Vive mejor, vive fácil con EzHealth.
+    <main className="bg-gray-100 h-[855px] flex p-10">
+      <div className="flex-1 bg-white flex items-center justify-center py-12 ">
+        <div className="mx-auto w-[350px] space-y-6">
+          <div className="space-y-2 text-center">
+            <h1 className="text-3xl font-semibold text-[#26313c] ">
+              Inicio de Sesión Paciente
+            </h1>
+            <p className="mt-2 text-xs text-[#26313c]">
+              See Your Growth and get consulting growth
             </p>
           </div>
           <form onSubmit={onSubmit}>
             <Label>RUT</Label>
             <Input
-              className="mt-2 mb-4 bg-transparent rounded-full"
+              className="mt-2 mb-4 bg-transparent rounded-full text-[#26313c]"
               onChange={(e) => setRut(e.target.value)}
               type="text"
               id="rut"
@@ -80,7 +82,7 @@ export default function LoginForm() {
             />
             <Label htmlFor="password">Contraseña</Label>
             <Input
-              className="mt-2 bg-transparent rounded-full"
+              className="mt-2 bg-transparent rounded-full text-[#26313c]"
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               id="password"
@@ -122,7 +124,7 @@ export default function LoginForm() {
               </Link>{" "}
             </p>
           </form>
-          <p className="mt-4 text-xs text-slate-200">
+          <p className="mt-4 text-xs text-slate-700 text-center">
             @{new Date().getFullYear()} All rights reserved
           </p>
           {error && (
