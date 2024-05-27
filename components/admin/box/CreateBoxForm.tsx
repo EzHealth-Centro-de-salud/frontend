@@ -17,7 +17,7 @@ interface Branch {
   address: string;
 }
 
-function CreateBoxForm() {
+export default function CreateBoxForm() {
   const [idBranch, setIdBranch] = useState("");
   const [box, setBox] = useState("");
   const [loadingMutation, setLoadingMutation] = useState(false);
@@ -138,10 +138,4 @@ function CreateBoxForm() {
     </div>
   );
 }
-const CreateBoxFormComponent = () => (
-  <ApolloProvider client={client}>
-    <CreateBoxForm />
-  </ApolloProvider>
-);
-CreateBoxFormComponent.displayName = "CreateBoxFormComponent";
-export default CreateBoxFormComponent;
+

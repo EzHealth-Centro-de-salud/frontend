@@ -15,7 +15,7 @@ interface EditFormProps {
   rut: string;
 }
 
-function EditForm({ rut }: EditFormProps) {
+export default function EditForm({ rut }: EditFormProps) {
   const { data: patientData, loading: patientLoading } = useQuery(
     GET_PATIENT_QUERY,
     {
@@ -284,11 +284,3 @@ function EditForm({ rut }: EditFormProps) {
   );
 }
 
-const EditFormComponent = ({ rut }: EditFormProps) => (
-  <ApolloProvider client={client}>
-    <EditForm rut={rut} />
-  </ApolloProvider>
-);
-
-EditFormComponent.displayName = "EditFormComponent";
-export default EditFormComponent;

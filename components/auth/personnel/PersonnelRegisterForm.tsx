@@ -30,7 +30,7 @@ interface Branch {
 }
 
 
-function PersonnelRegisterForm() {
+export default function PersonnelRegisterForm() {
   const [personnelFormState, setPersonnelFormState] =
     useState<PersonnelFormState>({
       rut: "",
@@ -278,10 +278,3 @@ function PersonnelRegisterForm() {
     </div>
   );
 }
-const PersonnelRegisterFormComponent = () => (
-  <ApolloProvider client={client}>
-    <PersonnelRegisterForm />
-  </ApolloProvider>
-);
-PersonnelRegisterFormComponent.displayName = "PersonnelRegisterFormComponent";
-export default PersonnelRegisterFormComponent;
