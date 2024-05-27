@@ -9,9 +9,7 @@ import client from "@/components/apollo/ApolloClient";
 
 export default function RecoveryPasswordPatientForm() {
   const [rut, setRut] = useState("");
-  const [recoveryPatient] = useMutation(RECOVERY_PATIENT_MUTATION, {
-    client,
-  });
+  const [recoveryPatient] = useMutation(RECOVERY_PATIENT_MUTATION,  );
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { data, errors } = await recoveryPatient({

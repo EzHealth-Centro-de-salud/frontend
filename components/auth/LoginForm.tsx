@@ -16,9 +16,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [loginPatient] = useMutation(LOGIN_PATIENT_MUTATION, {
-    client,
-  });
+  const [loginPatient] = useMutation(LOGIN_PATIENT_MUTATION,  );
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);

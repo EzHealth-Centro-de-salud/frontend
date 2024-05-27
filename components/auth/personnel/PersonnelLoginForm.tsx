@@ -18,9 +18,7 @@ export default function PersonnelLoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [loginPersonnel] = useMutation(LOGIN_PERSONNEL_MUTATION, {
-    client,
-  });
+  const [loginPersonnel] = useMutation(LOGIN_PERSONNEL_MUTATION,  );
 
   const onSubmit = async (e: React.FormEvent) => {
     setLoading(true);

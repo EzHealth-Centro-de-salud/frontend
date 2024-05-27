@@ -65,9 +65,7 @@ export default function EditForm({ rut }: EditFormProps) {
     }
   }, [patientData]);
 
-  const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION, {
-    client,
-  });
+  const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION,  );
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -32,9 +32,7 @@ export default function EditForm({ rut }: EditFormProps) {
   const [branchAddress, setBranchAddress] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [updatePersonnel] = useMutation(UPDATE_PERSONNEL_MUTATION, {
-    client,
-  });
+  const [updatePersonnel] = useMutation(UPDATE_PERSONNEL_MUTATION,  );
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");

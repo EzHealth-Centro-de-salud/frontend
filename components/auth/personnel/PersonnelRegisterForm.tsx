@@ -9,6 +9,7 @@ import client from "../../apollo/ApolloClient";
 import { Loader2 } from "lucide-react";
 import { GET_BRANCHES_QUERY } from "@/components/apollo/queries";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface PersonnelFormState {
   rut: string;
@@ -31,6 +32,10 @@ interface Branch {
 
 
 export default function PersonnelRegisterForm() {
+
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
+  
   const [personnelFormState, setPersonnelFormState] =
     useState<PersonnelFormState>({
       rut: "",
@@ -54,9 +59,7 @@ export default function PersonnelRegisterForm() {
 
   
 
-  const [registerPersonnel] = useMutation(REGISTER_PERSONNEL_MUTATION, {
-    client,
-  });
+  const [registerPersonnel] = useMutation(REGISTER_PERSONNEL_MUTATION,  );
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -92,8 +95,12 @@ export default function PersonnelRegisterForm() {
         speciality: "",
         id_branch: 1,
       });
+      setAlertType("success");
+      setAlertMessage("Personal creado exitosamente.");
     } catch (error) {
       console.error("Error registering personnel:", error);
+      setAlertType("big error");
+      setAlertMessage("Revise los datos e intente nuevamente");
     } finally {
       setLoading(false);
     }
@@ -275,6 +282,20 @@ export default function PersonnelRegisterForm() {
           </Button>
         </div>
       </form>
+      {alertMessage && (
+        <div className="fixed bottom-4 right-4">
+          <Alert
+            variant={alertType === "big error" ? "destructive" : "default"}
+          >
+            <AlertTitle>
+              {alertType === "big error"
+                ? "¡Oops, ocurrió un error!"
+                : "¡Registro exitoso!"}
+            </AlertTitle>
+            <AlertDescription>{alertMessage}</AlertDescription>
+          </Alert>
+        </div>
+      )}
     </div>
   );
 }
