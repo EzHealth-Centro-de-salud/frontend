@@ -226,7 +226,6 @@ export default function EditForm({ rut }: EditFormProps) {
                   </option>
                 ))}
               </select>
-              
             </div>
           </div>
 
@@ -283,4 +282,3 @@ export default function EditForm({ rut }: EditFormProps) {
     </div>
   );
 }
-

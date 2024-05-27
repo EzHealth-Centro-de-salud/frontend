@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function PersonnelLoginPage() {
   return (
-    <div className="h-screen flex">
+    <div className="h-full flex">
       <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
         <div className="hidden lg:block">
           <Image
