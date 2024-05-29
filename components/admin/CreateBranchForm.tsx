@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import React, { useState } from 'react'
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import client from "@/components/apollo/ApolloClient";
+//import client from "@/components/apollo/ApolloClient";
 import { CREATE_BRANCH_MUTATION } from "../apollo/mutations";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -15,9 +15,7 @@ function CreateBranchForm() {
   const [alertType, setAlertType] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [createBranch] = useMutation(CREATE_BRANCH_MUTATION, {
-    client,
-  });
+  const [createBranch] = useMutation(CREATE_BRANCH_MUTATION,);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

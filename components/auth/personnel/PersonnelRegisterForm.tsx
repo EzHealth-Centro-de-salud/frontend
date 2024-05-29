@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { REGISTER_PERSONNEL_MUTATION } from "../../apollo/mutations";
-import client from "../../apollo/ApolloClient";
+//import client from "../../apollo/ApolloClient";
 import { Loader2 } from "lucide-react";
 import { GET_BRANCHES_QUERY } from "@/components/apollo/queries";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -50,13 +50,11 @@ export default function PersonnelRegisterForm() {
     loading: loadingBranches,
     error: errorBranches,
     data: dataBranches,
-  } = useQuery(GET_BRANCHES_QUERY, { client });
+  } = useQuery(GET_BRANCHES_QUERY);
 
   
 
-  const [registerPersonnel] = useMutation(REGISTER_PERSONNEL_MUTATION, {
-    client,
-  });
+  const [registerPersonnel] = useMutation(REGISTER_PERSONNEL_MUTATION);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

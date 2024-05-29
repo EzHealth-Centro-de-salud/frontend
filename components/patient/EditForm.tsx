@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { UPDATE_PATIENT_MUTATION } from "../apollo/mutations";
 import { GET_PATIENT_QUERY } from "../apollo/queries"; // assuming you have a query to get patient details
 import { Loader2 } from "lucide-react";
-import client from "@/components/apollo/ApolloClient";
+//import client from "@/components/apollo/ApolloClient";
 import chileRegions from "@/constants/chileRegions";
 
 interface EditFormProps {
@@ -65,9 +65,7 @@ export default function EditForm({ rut }: EditFormProps) {
     }
   }, [patientData]);
 
-  const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION, {
-    client,
-  });
+  const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

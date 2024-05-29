@@ -116,3 +116,12 @@ export const CREATE_BOX_MUTATION = gql`
     }
   }
 `;
+
+export const ASSIGN_AVAILABILITY_MUTATION = gql`
+  mutation AssignAvailability($input: AssignAvailabilityInput!) {
+    assignAvailability(input: $input) {
+      success
+      message
+    }
+  }
+`;

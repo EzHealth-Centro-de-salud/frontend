@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { UPDATE_PERSONNEL_MUTATION } from "../apollo/mutations"; // assuming you have a mutation to update personnel details
 import { GET_PERSONNEL_QUERY } from "../apollo/queries"; // assuming you have a query to get personnel details
 import { Loader2 } from "lucide-react";
-import client from "@/components/apollo/ApolloClient";
+//import client from "@/components/apollo/ApolloClient";
 
 interface EditFormProps {
   rut: string;
@@ -32,9 +32,7 @@ export default function EditForm({ rut }: EditFormProps) {
   const [branchAddress, setBranchAddress] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [updatePersonnel] = useMutation(UPDATE_PERSONNEL_MUTATION, {
-    client,
-  });
+  const [updatePersonnel] = useMutation(UPDATE_PERSONNEL_MUTATION);
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");

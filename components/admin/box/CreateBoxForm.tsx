@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
-import client from "@/components/apollo/ApolloClient";
+//import client from "@/components/apollo/ApolloClient";
 
 interface Branch {
   id: string;
@@ -30,7 +30,7 @@ export default function CreateBoxForm() {
   const [
     createBox,
     { loading: loadingCreate, error: errorCreate, data: dataCreate },
-  ] = useMutation(CREATE_BOX_MUTATION, { client });
+  ] = useMutation(CREATE_BOX_MUTATION);
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");

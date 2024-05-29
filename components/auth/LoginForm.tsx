@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { LOGIN_PATIENT_MUTATION } from "../apollo/mutations";
 import { Loader2 } from "lucide-react";
-import client from "../apollo/ApolloClient";
+//import client from "../apollo/ApolloClient";
 import { Alert } from "../ui/alert";
 
 export default function LoginForm() {
@@ -16,9 +16,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [loginPatient] = useMutation(LOGIN_PATIENT_MUTATION, {
-    client,
-  });
+  const [loginPatient] = useMutation(LOGIN_PATIENT_MUTATION);
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);

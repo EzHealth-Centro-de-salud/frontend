@@ -1,4 +1,4 @@
-
+'use client'
 import PersonnelSingleCard from '@/components/personnel/PersonnelSingleCard'
 import React from 'react'
 

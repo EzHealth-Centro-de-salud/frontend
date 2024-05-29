@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useState } from "react";
 import { LOGIN_PERSONNEL_MUTATION } from "../../apollo/mutations";
-import client from "../../apollo/ApolloClient";
+//import client from "../../apollo/ApolloClient";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Alert } from "@/components/ui/alert";
@@ -18,9 +18,7 @@ export default function PersonnelLoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [loginPersonnel] = useMutation(LOGIN_PERSONNEL_MUTATION, {
-    client,
-  });
+  const [loginPersonnel] = useMutation(LOGIN_PERSONNEL_MUTATION);
 
   const onSubmit = async (e: React.FormEvent) => {
     setLoading(true);

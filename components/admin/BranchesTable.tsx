@@ -1,6 +1,6 @@
 import DataTable from 'react-data-table-component';
 import { Branch } from "@/interfaces/Branch";
-import client from "@/components/apollo/ApolloClient";
+//import client from "@/components/apollo/ApolloClient";
 import { useQuery } from '@apollo/client';
 import { GET_BRANCHES_QUERY } from '@/components/apollo/queries';
 
@@ -24,7 +24,7 @@ export default function BranchesTable(){
         loading: loadingBranches,
         error: errorBranches,
         data: dataBranches,
-    } = useQuery(GET_BRANCHES_QUERY, { client });
+    } = useQuery(GET_BRANCHES_QUERY);
 
     const branches = dataBranches?.getBranches;
 
