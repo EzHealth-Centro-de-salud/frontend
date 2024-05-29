@@ -1,15 +1,15 @@
 "use client";
-import { useMutation, ApolloProvider, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { REGISTER_PERSONNEL_MUTATION } from "../../apollo/mutations";
-import client from "../../apollo/ApolloClient";
 import { Loader2 } from "lucide-react";
 import { GET_BRANCHES_QUERY } from "@/components/apollo/queries";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Branch } from "@/interfaces/Branch";
 
 interface PersonnelFormState {
   rut: string;
@@ -23,13 +23,6 @@ interface PersonnelFormState {
   speciality: string;
   id_branch: number;
 }
-
-interface Branch {
-  id: string;
-  box_count: number;
-  address: string;
-}
-
 
 export default function PersonnelRegisterForm() {
 
@@ -55,7 +48,7 @@ export default function PersonnelRegisterForm() {
     loading: loadingBranches,
     error: errorBranches,
     data: dataBranches,
-  } = useQuery(GET_BRANCHES_QUERY, { client });
+  } = useQuery(GET_BRANCHES_QUERY);
 
   
 

@@ -49,3 +49,39 @@ export const GET_BRANCHES_QUERY = gql`
     }
   }
 `;
+
+export const GET_ALL_PATIENTS_QUERY = gql`
+  query GetAllPatients {
+    getAllPatients {
+      id
+      rut
+      birthdate
+      first_name
+      middle_name
+      surname
+      second_surname
+      sex
+      address
+      region
+      commune
+      email
+      phone
+    }
+  }
+`;
+
+export const GET_ALL_PERSONNEL_QUERY = gql`
+  query GetAllPersonnel {
+    getAllPersonnel {
+      rut
+      first_name
+      middle_name
+      surname
+      second_surname
+      email
+      role
+      speciality
+      id_branch
+    }
+  }
+`;

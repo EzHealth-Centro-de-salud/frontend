@@ -1,4 +1,4 @@
-import PatientsTable from '@/components/admin/patient/PatientsTable'
+import PersonnelTable from '@/components/admin/personnel/PersonnelTable'
 import React from 'react'
 
 const page = () => {
@@ -6,10 +6,10 @@ const page = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8 w-full">
       <div className="bg-white shadow-lg rounded-lg p-8">
         <h1 className="text-2xl font-semibold mb-6 text-center">
-          Lista de Pacientes
+          Lista de Personal
         </h1>
-        <PatientsTable/>
-      </div>
+        <PersonnelTable/>
+      </div>    
     </div>
   )
 }

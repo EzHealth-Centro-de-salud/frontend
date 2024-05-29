@@ -1,4 +1,5 @@
 export interface Branch {
-    address: string;
+    id: string;
     box_count: number;
+    address: string;
 }

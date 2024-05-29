@@ -8,12 +8,13 @@ export default function PersonnelLoginPage() {
         <div className="hidden lg:block">
           <Image
             alt="Image"
-            className="h-full w-full object-cover"
+            className="h-full w-full"
             height="1080"
             src="/patientLogin.jpg"
             style={{
               aspectRatio: "1920/1080",
               objectFit: "cover",
+              objectPosition: "0 30%",
             }}
             width="1920"
           />
