@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UPDATE_PERSONNEL_MUTATION } from "../../apollo/mutations"; // assuming you have a mutation to update personnel details
-import { GET_BRANCHES_QUERY, GET_PERSONNEL_QUERY } from "../../apollo/queries"; // assuming you have a query to get personnel details
+import { GET_ALL_BRANCHES_QUERY, GET_PERSONNEL_QUERY } from "../../apollo/queries"; // assuming you have a query to get personnel details
 import { Loader2 } from "lucide-react";
 import {
   Select,
@@ -50,7 +50,7 @@ export default function PersonnelEditForm({ rut }: EditFormProps) {
     loading: loadingBranches,
     error: errorBranches,
     data: dataBranches,
-  } = useQuery(GET_BRANCHES_QUERY);
+  } = useQuery(GET_ALL_BRANCHES_QUERY);
 
   const handleValueChange = (value: string) => {
     const [id, address] = value.split("\n");
@@ -234,7 +234,7 @@ export default function PersonnelEditForm({ rut }: EditFormProps) {
               <SelectValue placeholder={branchAddress} />
             </SelectTrigger>
             <SelectContent>
-              {dataBranches?.getBranches.map((branch: Branch) => (
+              {dataBranches?.getAllBranches.map((branch: Branch) => (
                 <SelectItem
                   value={branch.id + "\n" + branch.address}
                   key={branch.id}

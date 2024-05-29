@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { REGISTER_PERSONNEL_MUTATION } from "../../apollo/mutations";
-import { Loader2 } from "lucide-react";
-import { GET_BRANCHES_QUERY } from "@/components/apollo/queries";
+import { GET_ALL_BRANCHES_QUERY } from "@/components/apollo/queries";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Branch } from "@/interfaces/Branch";
+import LoadingButton from "@/components/ui/loadingButton";
 
 interface PersonnelFormState {
   rut: string;
@@ -48,7 +48,7 @@ export default function PersonnelRegisterForm() {
     loading: loadingBranches,
     error: errorBranches,
     data: dataBranches,
-  } = useQuery(GET_BRANCHES_QUERY);
+  } = useQuery(GET_ALL_BRANCHES_QUERY);
 
   
 
@@ -235,7 +235,7 @@ export default function PersonnelRegisterForm() {
               <SelectValue placeholder="Selecciona una sucursal" />
             </SelectTrigger>
             <SelectContent>
-              {dataBranches.getBranches.map((branch: Branch) => (
+              {dataBranches.getAllBranches.map((branch: Branch) => (
                 <SelectItem
                   value={branch.id + "\n" + branch.address}
                   key={branch.id}
@@ -264,7 +264,7 @@ export default function PersonnelRegisterForm() {
         </div>
 
         <div className="w-full flex justify-center pt-8">
-          <Button type="submit" className="w-[300px]" size="lg" disabled={loading}   >
+          {/*<Button type="submit" className="" size="lg" disabled={loading}   >
             {loading ? (
               <span className="flex items-center">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...
@@ -272,7 +272,8 @@ export default function PersonnelRegisterForm() {
             ) : (
               "Registrar personal"
             )}
-          </Button>
+          </Button>*/}
+          <LoadingButton title="Registrar personal" loadingTitle="Registrando..." isLoading={loading} styling= "w-[300px]"/>
         </div>
       </form>
       {alertMessage && (

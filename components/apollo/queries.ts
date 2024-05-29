@@ -40,9 +40,9 @@ export const GET_PERSONNEL_QUERY = gql`
   }
 `;
 
-export const GET_BRANCHES_QUERY = gql`
-  query GetBranches {
-    getBranches {
+export const GET_ALL_BRANCHES_QUERY = gql`
+  query GetAllBranches {
+    getAllBranches {
       id
       box_count
       address
@@ -81,7 +81,11 @@ export const GET_ALL_PERSONNEL_QUERY = gql`
       email
       role
       speciality
-      id_branch
+      branch{
+        id
+        box_count
+        address
+      }
     }
   }
 `;
