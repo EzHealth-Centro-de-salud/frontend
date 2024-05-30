@@ -4,7 +4,6 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { VALIDATE_RECOVERY_MUTATION } from "@/components/apollo/mutations";
-//import client from "@/components/apollo/ApolloClient";
 
 export default function ValidateRecoveryForm() {
   const [code, setCode] = useState("");
@@ -12,7 +11,7 @@ export default function ValidateRecoveryForm() {
 
   const onSubmit = async (e: React.FormEvent) => {
     const integerCode = parseInt(code);
-    e.preventDefault(); //evita que la pagina se recargue
+    e.preventDefault();
     const { data } = await validateRecovery({
       variables: {
         recoveryInput: {

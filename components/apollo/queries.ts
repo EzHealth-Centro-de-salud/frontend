@@ -40,9 +40,9 @@ export const GET_PERSONNEL_QUERY = gql`
   }
 `;
 
-export const GET_BRANCHES_QUERY = gql`
-  query GetBranches {
-    getBranches {
+export const GET_ALL_BRANCHES_QUERY = gql`
+  query GetAllBranches {
+    getAllBranches {
       id
       box_count
       address
@@ -50,10 +50,29 @@ export const GET_BRANCHES_QUERY = gql`
   }
 `;
 
+export const GET_ALL_PATIENTS_QUERY = gql`
+  query GetAllPatients {
+    getAllPatients {
+      id
+      rut
+      birthdate
+      first_name
+      middle_name
+      surname
+      second_surname
+      sex
+      address
+      region
+      commune
+      email
+      phone
+    }
+  }
+`;
+
 export const GET_ALL_PERSONNEL_QUERY = gql`
   query GetAllPersonnel {
     getAllPersonnel {
-      id
       rut
       first_name
       middle_name
@@ -62,12 +81,11 @@ export const GET_ALL_PERSONNEL_QUERY = gql`
       email
       role
       speciality
-      availability{
+      branch{
         id
-        day
-        turn
+        box_count
+        address
       }
-      
     }
   }
 `;

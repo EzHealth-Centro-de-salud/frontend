@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useMutation } from "@apollo/client";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { LOGIN_PATIENT_MUTATION } from "../apollo/mutations";
 import { Loader2 } from "lucide-react";
 //import client from "../apollo/ApolloClient";
 import { Alert } from "../ui/alert";
+import LoadingButton from "../ui/loadingButton";
 
 export default function LoginForm() {
   const [rut, setRut] = useState("");
@@ -88,21 +89,29 @@ export default function LoginForm() {
               required
               maxLength={128}
             />
-            
-            <Button
-            type="submit"
-            className="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
-            size="lg"
-            disabled={loading}
-          >
-            {loading ? (
-              <span className="flex items-center">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Ingresando...
-              </span>
-            ) : (
-              "Ingresar"
-            )}
-          </Button>
+
+            {/*<Button
+              type="submit"
+              className=""
+              size="lg"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="flex items-center">
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
+                  Ingresando...
+                </span>
+              ) : (
+                "Ingresar"
+              )}
+            </Button>
+            */}
+            <LoadingButton
+              title="Ingresar"
+              loadingTitle="Ingresando..."
+              isLoading={loading}
+              styling="w-full mt-6 bg-indigo-600 rounded-full hover:bg-indigo-700"
+            />
             <p className="text-center mt-2">
               ¿Olvidaste tu contraseña?{" "}
               <Link
@@ -126,9 +135,13 @@ export default function LoginForm() {
             @{new Date().getFullYear()} All rights reserved
           </p>
           {error && (
-            <div className="pt-10" >
+            <div className="pt-10">
               <Alert
-                variant={error === "Login exitoso, redirigiendo..." ? "default" : "destructive"}
+                variant={
+                  error === "Login exitoso, redirigiendo..."
+                    ? "default"
+                    : "destructive"
+                }
               >
                 {error}
               </Alert>

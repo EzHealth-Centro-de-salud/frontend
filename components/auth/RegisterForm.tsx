@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import { REGISTER_PATIENT_MUTATION } from "../apollo/mutations";
 import { Loader2 } from "lucide-react";
 
-//import client from "@/components/apollo/ApolloClient";
 import {
   Select,
   SelectContent,
@@ -34,7 +33,7 @@ export default function RegisterForm() {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [registerPatient] = useMutation(REGISTER_PATIENT_MUTATION);
+  const [registerPatient] = useMutation(REGISTER_PATIENT_MUTATION,  );
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
 
