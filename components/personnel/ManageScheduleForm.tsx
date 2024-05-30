@@ -26,6 +26,7 @@ export default function ManageScheduleForm() {
     const { loading, error, data } = useQuery(GET_ALL_PERSONNEL_QUERY);
     const [assignAvailability] = useMutation(ASSIGN_AVAILABILITY_MUTATION);
     const personnel = data?.getAllPersonnel;
+    console.log(personnel);
     const [selectedId, setSelectedId] = useState('');
     const [schedule, setSchedule] = useState({
         semana: [
@@ -38,11 +39,39 @@ export default function ManageScheduleForm() {
     });
     type Day = 'lunes' | 'martes' | 'miercoles' | 'jueves' | 'viernes';
     type Period = 'mañana' | 'tarde';
-
+    type Availability = {
+        day: Day;
+        turn: Period;
+    };
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedId(event.target.value);
-        setSchedule(prevSchedule => ({ ...prevSchedule, id: event.target.value }));
+        const selectedId = event.target.value;
+        setSelectedId(selectedId);
+    
+        // Find the selected personnel
+        const selectedIdNumber = Number(selectedId);
+        const selectedPersonnel = personnel.find((person: Personnel) => person.id === selectedIdNumber);
+        
+        // Define the correct order of days
+const daysOrder: Day[] = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+
+// If the selected personnel is found and has availability
+if (selectedPersonnel && selectedPersonnel.availability) {
+    // Create a new schedule in the correct order
+    const newSchedule = daysOrder.map(day => {
+        // Find the availability for this day
+        const avail = selectedPersonnel.availability.find((a: Availability) => a.day === day);
+
+        // If availability is found, return it, otherwise return 'ninguno'
+        return {
+            dia: day,
+            turno: avail ? avail.turn : 'ninguno',
+        };
+    });
+
+    // Update the schedule state
+    setSchedule({ semana: newSchedule });
+}
     };
 
     const handleCheckboxChange = (day: Day, period: Period) => {

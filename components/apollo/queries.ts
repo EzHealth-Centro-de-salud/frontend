@@ -62,6 +62,11 @@ export const GET_ALL_PERSONNEL_QUERY = gql`
       email
       role
       speciality
+      availability{
+        id
+        day
+        turn
+      }
       
     }
   }
