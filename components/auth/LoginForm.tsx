@@ -1,14 +1,10 @@
 "use client";
-
 import { useMutation } from "@apollo/client";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useState } from "react";
 import { LOGIN_PATIENT_MUTATION } from "../apollo/mutations";
-import { Loader2 } from "lucide-react";
-//import client from "../apollo/ApolloClient";
 import { Alert } from "../ui/alert";
 import LoadingButton from "../ui/loadingButton";
 
@@ -53,7 +49,7 @@ export default function LoginForm() {
     setError(message);
     setTimeout(() => {
       setError(null);
-    }, 5000); // Clear the error message after 5 seconds
+    }, 5000); 
   };
 
   return (
@@ -89,23 +85,6 @@ export default function LoginForm() {
               required
               maxLength={128}
             />
-
-            {/*<Button
-              type="submit"
-              className=""
-              size="lg"
-              disabled={loading}
-            >
-              {loading ? (
-                <span className="flex items-center">
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
-                  Ingresando...
-                </span>
-              ) : (
-                "Ingresar"
-              )}
-            </Button>
-            */}
             <LoadingButton
               title="Ingresar"
               loadingTitle="Ingresando..."

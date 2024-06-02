@@ -90,3 +90,29 @@ export const GET_ALL_PERSONNEL_QUERY = gql`
     }
   }
 `;
+
+export const GET_ALL_BRANCHES_WITH_PERSONNEL_QUERY = gql`
+  query GetAllBranches {
+    getAllBranches {
+      id
+      box_count
+      address
+      personnel{
+        id
+        rut
+        first_name
+        middle_name
+        surname
+        second_surname
+        email
+        role
+        speciality
+        availability{
+          id
+          day
+          turn
+        }
+      }
+    }
+  }
+`;
