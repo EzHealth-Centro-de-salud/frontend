@@ -73,6 +73,7 @@ export const GET_ALL_PATIENTS_QUERY = gql`
 export const GET_ALL_PERSONNEL_QUERY = gql`
   query GetAllPersonnel {
     getAllPersonnel {
+      id
       rut
       first_name
       middle_name
