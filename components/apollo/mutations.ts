@@ -125,3 +125,13 @@ export const ASSIGN_AVAILABILITY_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_APPOINTMENT_MUTATION = gql`
+  mutation CreateAppointment($input: CreateAppointmentInput!) {
+    createAppointment(input: $input) {
+      success
+      message
+    }
+  }
+`;
+

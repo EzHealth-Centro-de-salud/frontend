@@ -29,6 +29,7 @@ export default function LoginForm() {
       if (data?.loginPatient) {
         localStorage.setItem("rut", data.loginPatient.rut);
         localStorage.setItem("access_token", data.loginPatient.access_token);
+        localStorage.setItem("patient_id", data.loginPatient.id);
         setError("Login exitoso, redirigiendo...");
         setTimeout(() => {
           setError(null);
