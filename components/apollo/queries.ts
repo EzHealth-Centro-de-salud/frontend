@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_PATIENT_QUERY = gql`
+export const GET_PATIENT_BY_RUT_QUERY = gql`
   query GetPatientByRut($rut: String!) {
     getPatientByRut(rut: $rut) {
       id
@@ -17,6 +17,29 @@ export const GET_PATIENT_QUERY = gql`
       commune
       email
       phone
+      appointments {
+        id
+        date
+        time
+        type
+        status
+        box{
+          id
+          box
+        }
+        personnel{
+          id
+          rut
+          first_name
+          middle_name
+          surname
+          second_surname
+          email
+          role
+          speciality
+          
+        }
+      }
     }
   }
 `;

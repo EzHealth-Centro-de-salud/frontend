@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UPDATE_PATIENT_MUTATION } from "../../apollo/mutations";
-import { GET_PATIENT_QUERY } from "../../apollo/queries"; // assuming you have a query to get patient details
+import { GET_PATIENT_BY_RUT_QUERY } from "../../apollo/queries"; // assuming you have a query to get patient details
 import { Loader2 } from "lucide-react";
 import client from "@/components/apollo/ApolloClient";
 import chileRegions from "@/constants/chileRegions";
@@ -17,7 +17,7 @@ interface EditFormProps {
 
 export default function PatientEditForm({ rut }: EditFormProps) {
   const { data: patientData, loading: patientLoading } = useQuery(
-    GET_PATIENT_QUERY,
+    GET_PATIENT_BY_RUT_QUERY,
     {
       variables: { rut },
     }
