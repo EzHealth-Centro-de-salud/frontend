@@ -73,6 +73,7 @@ export const GET_ALL_PATIENTS_QUERY = gql`
 export const GET_ALL_PERSONNEL_QUERY = gql`
   query GetAllPersonnel {
     getAllPersonnel {
+      id
       rut
       first_name
       middle_name
@@ -85,6 +86,32 @@ export const GET_ALL_PERSONNEL_QUERY = gql`
         id
         box_count
         address
+      }
+    }
+  }
+`;
+
+export const GET_ALL_BRANCHES_WITH_PERSONNEL_QUERY = gql`
+  query GetAllBranches {
+    getAllBranches {
+      id
+      box_count
+      address
+      personnel{
+        id
+        rut
+        first_name
+        middle_name
+        surname
+        second_surname
+        email
+        role
+        speciality
+        availability{
+          id
+          day
+          turn
+        }
       }
     }
   }

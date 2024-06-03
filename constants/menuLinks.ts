@@ -13,7 +13,7 @@ export const PatientMenuLinks = [
   },
   {
     name: "Agendar Cita Médica",
-    link: "/patient/book-appointment",
+    link: "/patient/bookAppointment",
   },
   {
     name: "Historial Médico",

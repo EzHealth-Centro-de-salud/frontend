@@ -1,11 +1,14 @@
-import { Branch } from "./Branch";
+//import { Branch } from "./Branch";
+interface Branch{
+  id: number;
+}
 
 export interface Personnel {
-  id? : string;
+  id : number;
   rut: string;
   password: string;
   first_name: string;
-  middle_name?: string;
+  middle_name: string;
   surname: string;
   second_surname?: string;
   email: string;
@@ -13,4 +16,5 @@ export interface Personnel {
   speciality: string;
   id_branch?: number;
   branch: Branch;
+  is_active: boolean;
 }
