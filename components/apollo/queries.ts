@@ -116,3 +116,13 @@ export const GET_ALL_BRANCHES_WITH_PERSONNEL_QUERY = gql`
     }
   }
 `;
+
+export const CHECK_SCHEDULE_QUERY = gql`
+  query CheckSchedule($CheckScheduleInput: CheckScheduleInput!) {
+    checkSchedule(input: $CheckScheduleInput) {
+      success
+      message
+    }
+  }
+`;
+

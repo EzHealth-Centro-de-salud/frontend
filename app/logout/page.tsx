@@ -10,6 +10,7 @@ const Logout = () => {
     // Remove the 'rut' variable from localStorage
     localStorage.removeItem('rut');
     localStorage.removeItem('access_token');
+    localStorage.removeItem('patient_id');
     
     // Redirect to the homepage
     router.push('/');
