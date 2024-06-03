@@ -40,7 +40,7 @@ interface Branch {
   address: string;
 }
 
-export default function BookingFlow2() {
+export default function BookingFlow() {
   const patientId = localStorage.getItem("patient_id");
   const [branch, setBranch] = useState("");
   const [branchAddress, setBranchAddress] = useState("");
