@@ -9,7 +9,7 @@ export const PatientMenuLinks = [
   },
   {
     name: "Citas Médicas",
-    link: "/patient/appointments",
+    link: "/patient/appointment/appointments",
   },
   {
     name: "Agendar Cita Médica",

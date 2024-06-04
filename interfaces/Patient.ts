@@ -1,5 +1,6 @@
+import { Appointment } from './Appointment';
 export interface Patient{
-    id?: string;
+    id?: number
     rut: string;
     first_name: string;
     middle_name: string;
@@ -12,4 +13,5 @@ export interface Patient{
     commune: string;
     email: string;
     phone: string;
+    appointments: Appointment[];
 }

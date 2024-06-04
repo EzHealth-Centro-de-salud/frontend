@@ -85,7 +85,7 @@ export default function PersonnelLoginForm() {
               type="text"
               id="rut"
               placeholder="Ingrese su RUT"
-              maxLength={9}
+              maxLength={12}
             />
             <Label className="text-[#26313c]" htmlFor="password">
               Contraseña
