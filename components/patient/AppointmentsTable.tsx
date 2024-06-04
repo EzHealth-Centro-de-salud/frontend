@@ -9,16 +9,19 @@ const columns = [
     name: "Fecha",
     selector: (row: Patient['appointments'][number]) => row.date,
     sortable: true,
+    width: "120px",
     },
     {
     name: "Hora",
     selector: (row: Patient['appointments'][number]) => row.time,
     sortable: true,
+    width: "80px",
     },
     {
     name: "Tipo",
     selector: (row: Patient['appointments'][number]) => row.type,
     sortable: true,
+    width: "100px",
     },
     {
     name: "Estado",
@@ -28,14 +31,15 @@ const columns = [
     { 
     name: "Box",
     selector: (row: Patient['appointments'][number]) => row.box.box,
+    width: "55px",
     },
     {
     name: "Rut Profesional",
-    selector: (row: Patient['appointments'][number]) => row.personnel.rut
-
+    selector: (row: Patient['appointments'][number]) => row.personnel.rut,
+    width: "120px",
     },
     {
-    name: "Personal",
+    name: "Nombre Personal",
     selector: (row: Patient['appointments'][number]) => row.personnel.first_name + ' ' + row.personnel.surname,
     },
     {
@@ -43,8 +47,8 @@ const columns = [
     selector: (row: Patient['appointments'][number]) => row.personnel.speciality,
     },
     {
-    name: "Rol",
-    selector: (row: Patient['appointments'][number]) => row.personnel.role,
+    name: "Sucursal",
+    selector: (row: Patient['appointments'][number]) => row.box.branch.address,
     },
     
   
@@ -69,7 +73,7 @@ export default function AppointmentsTable() {
     if (patientError) return <p>Error :</p>;
     console.log("patientError:", patientError)
     return (
-        <div className="space-y-8 w-[1000px] ">
+        <div className="space-y-8 w-[1200px] ">
             {patientData?.getPatientByRut.appointments ? (
             <DataTable
                 title="Citas del Paciente"

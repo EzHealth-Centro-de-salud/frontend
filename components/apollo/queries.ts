@@ -26,6 +26,10 @@ export const GET_PATIENT_BY_RUT_QUERY = gql`
         box{
           id
           box
+          branch{
+            id
+            address
+          }
         }
         personnel{
           id
