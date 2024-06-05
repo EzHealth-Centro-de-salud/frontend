@@ -1,4 +1,4 @@
-import BookingFlow from "@/components/common/bookingFlow/BookingFlow";
+import AppointmentsTable from "@/components/patient/AppointmentsTable";
 import React from "react";
 
 const page = () => {
@@ -6,9 +6,9 @@ const page = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8 w-full">
       <div className="bg-white shadow-lg rounded-lg p-8">
         <h1 className="text-2xl font-semibold mb-6 text-center">
-          Agenda tu cita médica
+          Tabla de Citas
         </h1>
-        <BookingFlow />
+        <AppointmentsTable />
       </div>
     </div>
   );
