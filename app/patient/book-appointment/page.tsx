@@ -1,4 +1,4 @@
-import BookingFlow from "@/components/common/bookingFlow/BookingFlow";
+import BookingFlow from "@/components/common/BookingFlowComponent";
 import React from "react";
 
 const page = () => {

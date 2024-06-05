@@ -41,7 +41,6 @@ interface Branch {
 }
 
 export default function BookingFlow() {
-  const patientId = localStorage.getItem("patient_id");
   const [branch, setBranch] = useState("");
   const [branchAddress, setBranchAddress] = useState("");
   const [medicId, setMedicId] = useState<string | null>(null);
@@ -61,6 +60,7 @@ export default function BookingFlow() {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
   const [wasBooked, setWasBooked] = useState("false");
+  const [patientId, setPatientId] = useState("");
 
   const bookingType = ["Consulta", "Procedimiento", "Control"];
   //Branches
@@ -175,6 +175,10 @@ export default function BookingFlow() {
   const handleContinueFromTimeSelection = () => {
     getMedicDetails(medicId as string);
     getBranchAddress(branch);
+    const localStoragePatientId = localStorage.getItem("patient_id");
+    if (localStoragePatientId) {
+      setPatientId(localStoragePatientId);
+    }
     setView("Details");
   };
 
@@ -206,11 +210,11 @@ export default function BookingFlow() {
   ///////////////////////////////////////////////////////////////////////
   let now = today(getLocalTimeZone());
 
-  let disabledRanges = [
-    [now, now.add({ days: 5 })],
-    [now.add({ days: 14 }), now.add({ days: 16 })],
-    [now.add({ days: 23 }), now.add({ days: 24 })],
-  ];
+  // let disabledRanges = [
+  //   [now, now.add({ days: 5 })],
+  //   [now.add({ days: 14 }), now.add({ days: 16 })],
+  //   [now.add({ days: 23 }), now.add({ days: 24 })],
+  // ];
 
   let isDateUnavailable = (date: any) => isWeekend(date, locale);
 
