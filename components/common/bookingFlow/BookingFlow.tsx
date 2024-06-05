@@ -215,7 +215,7 @@ export default function BookingFlow() {
   let isDateUnavailable = (date: any) => isWeekend(date, locale);
 
   const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setLoading(true);
     try {
       console.log("inside try");
@@ -251,7 +251,7 @@ export default function BookingFlow() {
   };
 
   return (
-    <div >
+    <div>
       {view === "branchSelection" && (
         <div className="w-[550px]">
           <Label className="text-[#26313c] mb-5">Sucursal</Label>
@@ -446,24 +446,30 @@ export default function BookingFlow() {
             </TableBody>
           </Table>
           <div className="flex justify-center pt-3" onSubmit={onSubmit}>
-            { wasBooked === "false" && (
+            {wasBooked === "false" && (
               <div className="flex ">
-              <Button
-              className="w-[100px] mr-5 "
-              onClick={handleBackToDatePicking}
-            >
-              Volver
-            </Button>
-            <form onSubmit={onSubmit}>
-              <LoadingButton title="Agendar Cita" loadingTitle="Agendando su Cita..." isLoading={loading} styling="w-[300px]"/>
-              
-            </form>
-            </div>
-          )}
+                <Button
+                  className="w-[100px] mr-5 "
+                  onClick={handleBackToDatePicking}
+                >
+                  Volver
+                </Button>
+                <form onSubmit={onSubmit}>
+                  <LoadingButton
+                    title="Agendar Cita"
+                    loadingTitle="Agendando su Cita..."
+                    isLoading={loading}
+                    styling="w-[300px]"
+                  />
+                </form>
+              </div>
+            )}
             {alertMessage && (
               <div className="fixed bottom-4 right-4">
                 <Alert
-                  variant={alertType === "big error" ? "destructive" : "default"}
+                  variant={
+                    alertType === "big error" ? "destructive" : "default"
+                  }
                 >
                   <AlertTitle>
                     {alertType === "big error"
