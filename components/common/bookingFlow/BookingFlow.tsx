@@ -60,6 +60,7 @@ export default function BookingFlow() {
   const [createAppointment] = useMutation(CREATE_APPOINTMENT_MUTATION);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
+  const [wasBooked, setWasBooked] = useState("false");
 
   const bookingType = ["Consulta", "Procedimiento", "Control"];
   //Branches
@@ -231,6 +232,7 @@ export default function BookingFlow() {
       });
       console.log(data);
       if (data?.createAppointment.success) {
+        setWasBooked("true");
         setAlertType("success");
         setAlertMessage("Cita agendada exitosamente");
         console.log("Appointment created successfully");
@@ -444,7 +446,9 @@ export default function BookingFlow() {
             </TableBody>
           </Table>
           <div className="flex justify-center pt-3" onSubmit={onSubmit}>
-            <Button
+            { wasBooked === "false" && (
+              <div className="flex ">
+              <Button
               className="w-[100px] mr-5 "
               onClick={handleBackToDatePicking}
             >
@@ -454,6 +458,8 @@ export default function BookingFlow() {
               <LoadingButton title="Agendar Cita" loadingTitle="Agendando su Cita..." isLoading={loading} styling="w-[300px]"/>
               
             </form>
+            </div>
+          )}
             {alertMessage && (
               <div className="fixed bottom-4 right-4">
                 <Alert
