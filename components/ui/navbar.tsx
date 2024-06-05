@@ -50,7 +50,10 @@ const NavBar: React.FC<NavBarProps> = () => {
             <Link href="/auth/register">Registrarse</Link>
           </Button>
           <Button className="hidden md:inline-flex">
-            <Link href="/auth/login">Ingresar</Link>
+            <Link href="/auth/login">Ingreso Paciente</Link>
+          </Button>
+          <Button className="hidden md:inline-flex">
+            <Link href="/auth/personnelLogin">Ingreso Personal</Link>
           </Button>
           <Button className="md:hidden" size={"icon"} variant={"outline"}>
             <span className="sr-only">Toggle navigation</span>

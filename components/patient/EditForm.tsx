@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useMutation, useQuery, ApolloProvider } from "@apollo/client";
 import { useState, useEffect } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -6,35 +6,37 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UPDATE_PATIENT_MUTATION } from "../apollo/mutations";
-import { GET_PATIENT_QUERY } from "../apollo/queries"; // assuming you have a query to get patient details
+import { GET_PATIENT_BY_RUT_QUERY } from "../apollo/queries"; // assuming you have a query to get patient details
 import { Loader2 } from "lucide-react";
-import client from "@/components/apollo/ApolloClient";
+//import client from "@/components/apollo/ApolloClient";
+import chileRegions from "@/constants/chileRegions";
 
 interface EditFormProps {
   rut: string;
 }
 
-function EditForm({ rut }: EditFormProps) {
-  const { data: patientData, loading: patientLoading } = useQuery(GET_PATIENT_QUERY, {
-    variables: { rut } 
-  });
+export default function EditForm({ rut }: EditFormProps) {
+  const { data: patientData, loading: patientLoading } = useQuery(
+    GET_PATIENT_BY_RUT_QUERY,
+    {
+      variables: { rut },
+    }
+  );
 
-  console.log(patientData)
-
-  const [first_name, setFirstName] = useState('');
-  const [middle_name, setMiddleName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [second_surname, setSecondSurname] = useState('');
-  const [birthdate, setBirthdate] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [region, setRegion] = useState('');
-  const [commune, setCommune] = useState('');
+  const [first_name, setFirstName] = useState("");
+  const [middle_name, setMiddleName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [second_surname, setSecondSurname] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [region, setRegion] = useState("");
+  const [commune, setCommune] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertType, setAlertType] = useState('');
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
 
   useEffect(() => {
     if (patientData) {
@@ -50,24 +52,21 @@ function EditForm({ rut }: EditFormProps) {
         region,
         commune,
       } = patientData.getPatientByRut;
-      setFirstName(first_name || '');
-      setMiddleName(middle_name || '');
-      setSurname(surname || '');
-      setSecondSurname(second_surname || '');
-      setBirthdate(birthdate || '');
-      setEmail(email || '');
-      setPhone(phone || '');
-      setAddress(address || '');
-      setRegion(region || '');
-      setCommune(commune || '');
+      setFirstName(first_name || "");
+      setMiddleName(middle_name || "");
+      setSurname(surname || "");
+      setSecondSurname(second_surname || "");
+      setBirthdate(birthdate || "");
+      setEmail(email || "");
+      setPhone(phone || "");
+      setAddress(address || "");
+      setRegion(region || "");
+      setCommune(commune || "");
     }
   }, [patientData]);
 
-  
-  const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION, {
-    client,
-  });
-  
+  const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION,  );
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -104,13 +103,16 @@ function EditForm({ rut }: EditFormProps) {
     }
   };
 
+  if (patientData) {
+    console.log(patientData.getPatientByRut.region);
+  }
+
   if (patientLoading) {
     return <Loader2 className="mr-2 h-4 w-4 animate-spin" />;
   }
 
   return (
     <div className="flex flex-col w-[1000px] lg:flex-row gap-8 p-4 md:p-6 text-gray-900 bg-gray-100 dark:bg-gray-800 dark:text-gray-50">
-      {/* Left Column */}
       <div className="lg:w-1/2 space-y-4">
         <div>
           <Label className="text-gray-900 dark:text-gray-50">RUT</Label>
@@ -134,7 +136,9 @@ function EditForm({ rut }: EditFormProps) {
           <Label className="text-gray-900 dark:text-gray-50">
             Fecha de Nacimiento
           </Label>
-          <div className="text-[#26313c] bg-white p-2 rounded-md">{"test"}</div>
+          <div className="text-[#26313c] bg-white p-2 rounded-md">
+            {birthdate}
+          </div>
         </div>
       </div>
 
@@ -162,11 +166,25 @@ function EditForm({ rut }: EditFormProps) {
             <Input
               className="text-[#26313c]"
               required
+              placeholder="Ej: 912345678"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               id="phone"
               type="text"
               maxLength={9}
+              minLength={9}
+              onKeyDownCapture={(e) => {
+                if (
+                  !/[0-9]/.test(e.key) &&
+                  e.key !== "Backspace" &&
+                  e.key !== "Delete" &&
+                  e.key !== "ArrowLeft" &&
+                  e.key !== "ArrowRight" &&
+                  e.key !== "Tab"
+                ) {
+                  e.preventDefault();
+                }
+              }}
             />
           </div>
           <div className="grid w-full items-center gap-1.5">
@@ -186,42 +204,29 @@ function EditForm({ rut }: EditFormProps) {
               maxLength={100}
             />
           </div>
+
           <div className="grid w-full items-center gap-1.5">
             <Label className="text-gray-900 dark:text-gray-50" htmlFor="region">
               Región
             </Label>
-            <select
-              className="text-[#26313c]"
-              required
-              value={region}
-              onChange={(e) => setRegion(e.target.value)}
-              id="region"
-            >
-              <option value="">Seleccione...</option>
-              <option value="Arica y Parinacota">Arica y Parinacota</option>
-              <option value="Tarapacá">Tarapacá</option>
-              <option value="Antofagasta">Antofagasta</option>
-              <option value="Atacama">Atacama</option>
-              <option value="Coquimbo">Coquimbo</option>
-              <option value="Valparaíso">Valparaíso</option>
-              <option value="Metropolitana de Santiago">Metropolitana</option>
-              <option value="Libertador General Bernardo O'Higgins">
-                Lib. Bernardo O&apos;Higgins
-              </option>
-              <option value="Maule">Maule</option>
-              <option value="Ñuble">Ñuble</option>
-              <option value="Biobío">Biobío</option>
-              <option value="La Araucanía">La Araucanía</option>
-              <option value="Los Ríos">Los Ríos</option>
-              <option value="Los Lagos">Los Lagos</option>
-              <option value="Aysén del General Carlos Ibáñez del Campo">
-                Aysén
-              </option>
-              <option value="Magallanes y de la Antártica Chilena">
-                Magallanes
-              </option>
-            </select>
+            <div className="relative">
+              <select
+                className="text-sm w-full py-2 pl-3 pr-10 text-[#26313c] bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-[#26313c] focus:ring focus:ring-[#26313c] focus:ring-opacity-50"
+                required
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+                id="region"
+              >
+                <option value="">Seleccione...</option>
+                {chileRegions.map((regionObj, index) => (
+                  <option key={index} value={regionObj.name}>
+                    {regionObj.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
+
           <div className="grid w-full items-center gap-1.5">
             <Label
               className="text-gray-900 dark:text-gray-50"
@@ -240,30 +245,21 @@ function EditForm({ rut }: EditFormProps) {
             />
           </div>
           <div className="w-full">
-            {/*<Button type="submit" className="w-full" size="lg">
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={loading}
+            >
               {loading ? (
-                <Button disabled>
+                <span className="flex items-center">
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />{" "}
                   Actualizando...
-                </Button>
+                </span>
               ) : (
                 "Actualizar datos"
               )}
-            </Button>*/}
-            <Button
-            type="submit"
-            className="w-full"
-            size="lg"
-            disabled={loading}
-          >
-            {loading ? (
-              <span className="flex items-center">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Actualizando...
-              </span>
-            ) : (
-              "Actualizar datos"
-            )}
-          </Button>
+            </Button>
           </div>
         </form>
         {alertMessage && (
@@ -284,12 +280,3 @@ function EditForm({ rut }: EditFormProps) {
     </div>
   );
 }
-
-const EditFormComponent = ({ rut }: EditFormProps) => (
-  <ApolloProvider client={client}>
-    <EditForm rut={rut} />
-  </ApolloProvider>
-);
-
-EditFormComponent.displayName = "EditFormComponent";
-export default EditFormComponent;

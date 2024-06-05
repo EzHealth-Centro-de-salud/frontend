@@ -46,7 +46,7 @@ const Page = () => {
         <h1 className="text-2xl font-semibold mb-6 text-center">
           Editar Datos de Personal
         </h1>
-        <EditFormComponent rut="91284298" />
+        <EditFormComponent rut= {userRut || ""} />
       </div>
     </div>
   );

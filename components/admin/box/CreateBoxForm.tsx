@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { CREATE_BOX_MUTATION } from "../../apollo/mutations";
-import { GET_BRANCHES_QUERY } from "@/components/apollo/queries";
+import { GET_ALL_BRANCHES_QUERY } from "@/components/apollo/queries";
 import { useMutation, ApolloProvider, useQuery } from "@apollo/client";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {  Select,  SelectContent,  SelectItem,  SelectTrigger,  SelectValue,} from "@/components/ui/select";
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
-import client from "@/components/apollo/ApolloClient";
+//import client from "@/components/apollo/ApolloClient";
 
 interface Branch {
   id: string;
@@ -17,7 +17,7 @@ interface Branch {
   address: string;
 }
 
-function CreateBoxForm() {
+export default function CreateBoxForm() {
   const [idBranch, setIdBranch] = useState("");
   const [box, setBox] = useState("");
   const [loadingMutation, setLoadingMutation] = useState(false);
@@ -26,11 +26,11 @@ function CreateBoxForm() {
     loading: loadingBranches,
     error: errorBranches,
     data: dataBranches,
-  } = useQuery(GET_BRANCHES_QUERY);
+  } = useQuery(GET_ALL_BRANCHES_QUERY);
   const [
     createBox,
     { loading: loadingCreate, error: errorCreate, data: dataCreate },
-  ] = useMutation(CREATE_BOX_MUTATION, { client });
+  ] = useMutation(CREATE_BOX_MUTATION);
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
@@ -90,7 +90,7 @@ function CreateBoxForm() {
               <SelectValue placeholder="Select a branch" />
             </SelectTrigger>
             <SelectContent>
-              {dataBranches.getBranches.map((branch: Branch) => (
+              {dataBranches.getAllBranches.map((branch: Branch) => (
                 <SelectItem
                   value={branch.id + "\n" + branch.address}
                   key={branch.id}
@@ -138,10 +138,3 @@ function CreateBoxForm() {
     </div>
   );
 }
-const CreateBoxFormComponent = () => (
-  <ApolloProvider client={client}>
-    <CreateBoxForm />
-  </ApolloProvider>
-);
-CreateBoxFormComponent.displayName = "CreateBoxFormComponent";
-export default CreateBoxFormComponent;

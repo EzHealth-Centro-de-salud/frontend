@@ -9,11 +9,11 @@ export const PatientMenuLinks = [
   },
   {
     name: "Citas Médicas",
-    link: "/patient/appointments",
+    link: "/patient/appointment/appointments",
   },
   {
     name: "Agendar Cita Médica",
-    link: "/patient/book-appointment",
+    link: "/patient/bookAppointment",
   },
   {
     name: "Historial Médico",
@@ -60,15 +60,15 @@ export const AdminMenuLinks = [
   
   {
     name: "Personnel",
-    link: "/admin/personnel",
+    link: "/admin/personnel/new",
   },
   {
     name: "Patients",
-    link: "/admin/patients",
+    link: "/admin/patient",
   },
   {
     name: "Surcursales",
-    link: "/admin/branches",
+    link: "/admin/branch",
   },
   {
     name: "Box",

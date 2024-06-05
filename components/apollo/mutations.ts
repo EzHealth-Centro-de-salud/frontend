@@ -32,8 +32,8 @@ export const REGISTER_PERSONNEL_MUTATION = gql`
 `;
 
 export const LOGIN_PERSONNEL_MUTATION = gql`
-  mutation LoginPersonnel($LoginInput: LoginInput!) {
-    loginPersonnel(input: $LoginInput) {
+  mutation LoginPersonnel($input: LoginInput!) {
+    loginPersonnel(input: $input) {
       id
       access_token
       rut
@@ -116,3 +116,22 @@ export const CREATE_BOX_MUTATION = gql`
     }
   }
 `;
+
+export const ASSIGN_AVAILABILITY_MUTATION = gql`
+  mutation AssignAvailability($input: AssignAvailabilityInput!) {
+    assignAvailability(input: $input) {
+      success
+      message
+    }
+  }
+`;
+
+export const CREATE_APPOINTMENT_MUTATION = gql`
+  mutation CreateAppointment($input: CreateAppointmentInput!) {
+    createAppointment(input: $input) {
+      success
+      message
+    }
+  }
+`;
+

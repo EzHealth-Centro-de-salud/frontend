@@ -9,6 +9,8 @@ const Logout = () => {
   useEffect(() => {
     // Remove the 'rut' variable from localStorage
     localStorage.removeItem('rut');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('patient_id');
     
     // Redirect to the homepage
     router.push('/');
@@ -20,7 +22,7 @@ const Logout = () => {
     }
   }, [isLoggingOut, router]);
 
-  return null;
+  return <div></div>;
 };
 
 export default Logout;

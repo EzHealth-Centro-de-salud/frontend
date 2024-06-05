@@ -4,18 +4,13 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CHANGE_PASSWORD_PATIENT_MUTATION } from "@/components/apollo/mutations";
-import client from "@/components/apollo/ApolloClient";
+//import client from "@/components/apollo/ApolloClient";
 
 export default function ChangePasswordPatientForm() {
   const [newPass, setNewPass] = useState("");
   const [repeatPass, setRepeatPass] = useState("");
   const [error, setError] = useState("");
-  const [changePasswordPatient] = useMutation(
-    CHANGE_PASSWORD_PATIENT_MUTATION,
-    {
-      client,
-    }
-  );
+  const [changePasswordPatient] = useMutation( CHANGE_PASSWORD_PATIENT_MUTATION);
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPass !== repeatPass) {

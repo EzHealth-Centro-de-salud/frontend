@@ -17,13 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="flex h-full">
-          <Sidebar menuLinks={PersonnelMenuLinks} />
-          {children}
-        </div>
-      </body>
-    </html>
+    <div className={`flex h-full ${inter.className}`}>
+      <Sidebar menuLinks={PersonnelMenuLinks} />
+      {children}
+    </div>
   );
 }
