@@ -3,7 +3,7 @@ import DataTable from "react-data-table-component";
 import { Patient } from "@/interfaces/Patient";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_PATIENTS_QUERY } from "@/components/apollo/queries";
-import { CiEdit, CiTrash } from "react-icons/ci";
+import { CiEdit, CiRead, CiTrash } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import { encrypt } from "@/utils/cryptoUtils";
 import Swal from "sweetalert2";
@@ -46,6 +46,12 @@ export default function PatientsTable() {
         );
       }
     });
+  };
+
+  const handleShowAppointmentsClick = (row: Patient) => {
+    const encryptedRut = encrypt(row.rut);
+    localStorage.setItem("patientRut", encryptedRut);
+    router.push("/admin/patient/appointments");
   };
 
   const columns = [
@@ -103,7 +109,20 @@ export default function PatientsTable() {
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,
-    }
+    },
+    {
+      name: "Ver citas",
+      cell: (row: Patient) => (
+        <CiRead
+          onClick={() => handleShowAppointmentsClick(row)}
+          style={{ cursor: "pointer" }}
+        />
+      ),
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    },
+    
   ];
 
   return (
