@@ -1,7 +1,6 @@
 "use client";
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { REGISTER_PERSONNEL_MUTATION } from "../../apollo/mutations";
@@ -117,6 +116,20 @@ export default function PersonnelRegisterForm() {
             type="text"
             maxLength={12}
             name="rut"
+            onKeyDownCapture={(e) => {
+              if (
+                !/[0-9]/.test(e.key) &&
+                e.key !== "Backspace" &&
+                e.key !== "Delete" &&
+                e.key !== "ArrowLeft" &&
+                e.key !== "ArrowRight" &&
+                e.key !== "Tab" &&
+                e.key !== "k" &&
+                e.key !== "K"
+              ) {
+                e.preventDefault();
+              }
+            }}
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -262,17 +275,7 @@ export default function PersonnelRegisterForm() {
             />
           </div>
         </div>
-
         <div className="w-full flex justify-center pt-8">
-          {/*<Button type="submit" className="" size="lg" disabled={loading}   >
-            {loading ? (
-              <span className="flex items-center">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Registrando...
-              </span>
-            ) : (
-              "Registrar personal"
-            )}
-          </Button>*/}
           <LoadingButton title="Registrar personal" loadingTitle="Registrando..." isLoading={loading} styling= "w-[300px]"/>
         </div>
       </form>

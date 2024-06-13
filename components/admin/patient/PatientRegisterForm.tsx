@@ -1,39 +1,68 @@
 "use client";
-import { useMutation} from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { REGISTER_PATIENT_MUTATION } from "../apollo/mutations";
+import { REGISTER_PATIENT_MUTATION } from "../../apollo/mutations";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "../../ui/select";
 import chileRegions from "@/constants/chileRegions";
-import LoadingButton from "../ui/loadingButton";
+import LoadingButton from "@/components/ui/loadingButton";
 
-export default function RegisterForm() {
-  const [rut, setRut] = useState("");
-  const [password, setPassword] = useState("");
-  const [birthdate, setBirthdate] = useState("");
-  const [first_name, setFirst_name] = useState("");
-  const [middle_name, setMiddle_name] = useState("");
-  const [surname, setSurname] = useState("");
-  const [second_surname, setSecond_surname] = useState("");
-  const [sex, setSex] = useState("");
-  const [address, setAddress] = useState("");
-  const [region, setRegion] = useState("");
-  const [commune, setCommune] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [loading, setLoading] = useState(false);
+interface PatientFormState{
+  rut: string;
+  password: string;
+  birthdate: string;
+  first_name: string;
+  middle_name: string;
+  surname: string;
+  second_surname: string
+  sex: string;
+  address: string;
+  region: string;
+  commune: string;
+  email: string;
+  phone: string;
+}
 
-  const [registerPatient] = useMutation(REGISTER_PATIENT_MUTATION,  );
+export default function PatientRegisterForm() {
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
+
+  const [patientFormState, setPatientFormState] = useState<PatientFormState>({
+    rut: "",
+    password: "",
+    birthdate: "",
+    first_name: "",
+    middle_name: "",
+    surname: "",
+    second_surname: "",
+    sex: "",
+    address: "",
+    region: "",
+    commune: "",
+    email: "",
+    phone: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [registerPatient] = useMutation(REGISTER_PATIENT_MUTATION);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setPatientFormState({
+      ...patientFormState,
+      [name]: value,
+    });
+  };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); //evita que se refresque la pagina al enviar el formulario
@@ -43,41 +72,28 @@ export default function RegisterForm() {
       const { data, errors } = await registerPatient({
         variables: {
           CreatePatientInput: {
-            rut,
-            password,
-            birthdate,
-            first_name,
-            middle_name,
-            surname,
-            second_surname,
-            sex,
-            address,
-            region,
-            commune,
-            email,
-            phone,
+            ...patientFormState,
           },
         },
       });
       if (data?.createPatient.success) {
         setAlertType("success");
-        setAlertMessage("Usuario creado, volviendo al menú principal...");
-        setRut("");
-        setPassword("");
-        setBirthdate("");
-        setFirst_name("");
-        setMiddle_name("");
-        setSurname("");
-        setSecond_surname("");
-        setSex("");
-        setAddress("");
-        setRegion("");
-        setCommune("");
-        setEmail("");
-        setPhone("");
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 4000);
+        setAlertMessage("Usuario creado exitosamente");
+        setPatientFormState({
+          rut: "",
+          password: "",
+          birthdate: "",
+          first_name: "",
+          middle_name: "",
+          surname: "",
+          second_surname: "",
+          sex: "",
+          address: "",
+          region: "",
+          commune: "",
+          email: "",
+          phone: "",
+        });        
       } else {
         console.log("inside else");
         setAlertType("error");
@@ -96,18 +112,33 @@ export default function RegisterForm() {
     <div className="space-y-5 w-[1100px] ">
       <form onSubmit={onSubmit} className="space-y-5 ">
         <div className="grid w-full items-center gap-1">
-          <Label className="text-[#26313c]" htmlFor="rut">
+          <Label className="text-[#26313c]">
             RUT
           </Label>
           <Input
             className=" text-[#26313c]"
             required
-            value={rut}
-            onChange={(e) => setRut(e.target.value)}
+            value={patientFormState.rut}
+            onChange={handleInputChange}
             id="rut"
             type="text"
+            name="rut"
             placeholder="Ingrese su rut"
             maxLength={12}
+            onKeyDownCapture={(e) => {
+              if (
+                !/[0-9]/.test(e.key) &&
+                e.key !== "Backspace" &&
+                e.key !== "Delete" &&
+                e.key !== "ArrowLeft" &&
+                e.key !== "ArrowRight" &&
+                e.key !== "Tab" &&
+                e.key !== "k" &&
+                e.key !== "K" 
+              ) {
+                e.preventDefault();
+              }
+            }}
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -118,9 +149,10 @@ export default function RegisterForm() {
             <Input
               className=" text-[#26313c]"
               required
-              value={first_name}
-              onChange={(e) => setFirst_name(e.target.value)}
+              value={patientFormState.first_name}
+              onChange={handleInputChange}
               id="first_name"
+              name="first_name"
               type="text"
               maxLength={50}
             />
@@ -131,10 +163,11 @@ export default function RegisterForm() {
             </Label>
             <Input
               className=" text-[#26313c]"
-              value={middle_name}
-              onChange={(e) => setMiddle_name(e.target.value)}
+              value={patientFormState.middle_name}
+              onChange={handleInputChange}
               id="middle_name"
               type="text"
+              name="middle_name"
               maxLength={50}
             />
           </div>
@@ -147,10 +180,11 @@ export default function RegisterForm() {
             <Input
               className=" text-[#26313c]"
               required
-              value={surname}
-              onChange={(e) => setSurname(e.target.value)}
+              value={patientFormState.surname}
+              onChange={handleInputChange}
               id="surname"
               type="text"
+              name="surname"
               maxLength={50}
             />
           </div>
@@ -160,10 +194,11 @@ export default function RegisterForm() {
             </Label>
             <Input
               className=" text-[#26313c]"
-              value={second_surname}
-              onChange={(e) => setSecond_surname(e.target.value)}
+              value={patientFormState.second_surname}
+              onChange={handleInputChange}
               id="second_surname"
               type="text"
+              name="second_surname"
               maxLength={50}
             />
           </div>
@@ -176,10 +211,11 @@ export default function RegisterForm() {
             <Input
               className=" text-[#26313c]"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={patientFormState.email}
+              onChange={handleInputChange}
               id="email"
               type="email"
+              name="email"
               maxLength={254}
             />
           </div>
@@ -190,10 +226,11 @@ export default function RegisterForm() {
             <Input
               className=" text-[#26313c]"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={patientFormState.password}
+              onChange={handleInputChange}
               id="password"
               type="password"
+              name="password"
               maxLength={128}
             />
           </div>
@@ -206,9 +243,10 @@ export default function RegisterForm() {
             <Input
               className=" text-[#26313c]"
               required
-              value={birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
+              value={patientFormState.birthdate}
+              onChange={handleInputChange}
               id="birthdate"
+              name="birthdate"
               type="date"
             />
           </div>
@@ -216,13 +254,18 @@ export default function RegisterForm() {
             <Label className="text-[#26313c]" htmlFor="sex">
               Sexo
             </Label>
-            <Select onValueChange={setSex} value={sex}>
+            <Select onValueChange={(value) =>
+                setPatientFormState({
+                  ...patientFormState,
+                  sex: value, // Update the sex field in the state
+                })
+              } >
               <SelectTrigger className=" text-[#26313c]">
                 <SelectValue placeholder="Seleccione..." />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Femenino">Femenino</SelectItem>
-                <SelectItem value="Masculino">Masculino</SelectItem>                
+                <SelectItem value="Masculino">Masculino</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -235,9 +278,10 @@ export default function RegisterForm() {
             <Input
               className=" text-[#26313c]"
               required
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              value={patientFormState.address}
+              onChange={handleInputChange}
               id="address"
+              name="address"
               type="text"
               maxLength={100}
             />
@@ -246,7 +290,12 @@ export default function RegisterForm() {
             <Label className="text-[#26313c]" htmlFor="region">
               Región
             </Label>
-            <Select onValueChange={setRegion} value={region}>
+            <Select onValueChange={(value) =>
+                setPatientFormState({
+                    ...patientFormState,
+                    region: value, // Update the region field in the state
+                  })
+                }>
               <SelectTrigger className=" text-[#26313c]">
                 <SelectValue placeholder="Seleccione..." />
               </SelectTrigger>
@@ -268,10 +317,11 @@ export default function RegisterForm() {
             <Input
               className=" text-[#26313c]"
               required
-              value={commune}
-              onChange={(e) => setCommune(e.target.value)}
+              value={patientFormState.commune}
+              onChange={handleInputChange}
               id="commune"
               type="text"
+              name="commune"
               maxLength={60}
             />
           </div>
@@ -282,9 +332,10 @@ export default function RegisterForm() {
             <Input
               className=" text-[#26313c]"
               required
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              value={patientFormState.phone}
+              onChange={handleInputChange}
               id="phone"
+              name="phone"
               type="text"
               maxLength={9}
               minLength={9}

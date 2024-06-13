@@ -60,7 +60,7 @@ export const AdminMenuLinks = [
   
   {
     name: "Personnel",
-    link: "/admin/personnel/new",
+    link: "/admin/personnel",
   },
   {
     name: "Patients",

@@ -1,4 +1,4 @@
-import PersonnelRegisterFormComponent from "@/components/auth/personnel/PersonnelRegisterForm";
+import PersonnelRegisterFormComponent from "@/components/admin/personnel/PersonnelRegisterForm";
 
 export default function PersonnelRegisterPage() {
   return (

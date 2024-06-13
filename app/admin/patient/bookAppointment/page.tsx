@@ -4,6 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2 } from "lucide-react";
 import { decrypt } from '@/utils/cryptoUtils';
 import PatientAppointments from '@/components/admin/patient/PatientAppointments';
+import BookAppointmentFlow from "@/components/admin/patient/BookAppointmentFlow";
 
 const Page = () => {
   const [patientRut, setPatientRut] = useState("");
@@ -11,10 +12,8 @@ const Page = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const EncryptedRut = localStorage.getItem("patientRut");
-    const rut = decrypt(EncryptedRut as string);
-    if (rut != "") {
-      setPatientRut(rut);
+    const localStoragePatientId= localStorage.getItem("patient_id");
+    if (localStoragePatientId != "") {
       setLoading(false);
     } else {
       setError(true);
@@ -35,7 +34,7 @@ const Page = () => {
       <div className="flex justify-center items-center h-screen">
         <Alert variant="destructive">
           <AlertTitle>Error</AlertTitle>
-          <AlertDescription>No hay un rut definido para editar.</AlertDescription>
+          <AlertDescription>No hay un rut definido para agendar una cita.</AlertDescription>
         </Alert>
       </div>
     );
@@ -45,9 +44,9 @@ const Page = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8 w-full">
       <div className="bg-white shadow-lg rounded-lg p-8">
         <h1 className="text-2xl font-semibold mb-6 text-center">
-          Listado de citas
+          Agendar cita para el paciente
         </h1>
-        <PatientAppointments rut={patientRut || ""}/>
+        <BookAppointmentFlow />
       </div>
     </div>
   );

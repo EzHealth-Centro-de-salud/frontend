@@ -131,39 +131,57 @@ export default function ManageScheduleForm() {
     }
   };
   return (
-    <div className="space-y-8 w-[800px] flex">
-      <form action="" onSubmit={onsubmit} className="w-[400px]">
-        <div>
-          <select value={selectedId} onChange={handleChange}>
+    <div className="space-y-8 w-full flex flex-col items-center">
+      <form
+        action=""
+        onSubmit={onsubmit}
+        className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      >
+        <div className="mb-4">
+          <label
+            htmlFor="personnel-select"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Seleccione un profesional:
+          </label>
+          <select
+            id="personnel-select"
+            value={selectedId}
+            onChange={handleChange}
+            className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+          >
             <option value="">Seleccione un profesional</option>
             {personnel &&
               personnel.map((person: Personnel) => (
                 <option key={person.id} value={person.id}>
-                  {person.first_name} {person.surname} {person.second_surname}
+                  {person.first_name} {person.surname}{" "}
+                  {person.second_surname}
                 </option>
               ))}
           </select>
         </div>
-        <Button type="submit" className="mt-40">
-          Submit
-        </Button>
+        <div className="flex justify-center">
+          <Button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Submit
+          </Button>
+        </div>
       </form>
-      <table className="ml-4">
+      <table className="table-auto bg-white shadow-md rounded w-full max-w-lg">
         <thead>
-          <tr>
-            <th>Día</th>
-            <th>mañana</th>
-            <th>tarde</th>
+          <tr className="bg-gray-200">
+            <th className="px-4 py-2">Día</th>
+            <th className="px-4 py-2">Mañana</th>
+            <th className="px-4 py-2">Tarde</th>
           </tr>
         </thead>
         <tbody>
           {schedule.semana.map(({ dia, turno }) => (
-            <tr key={dia}>
-              <td>{dia}</td>
+            <tr key={dia} className="hover:bg-gray-100">
+              <td className="border px-4 py-2">{dia}</td>
               {["mañana", "tarde"].map((period) => {
                 const daySchedule = schedule.semana.find((d) => d.dia === dia);
                 return (
-                  <td key={period}>
+                  <td key={period} className="border px-4 py-2 text-center">
                     <input
                       type="checkbox"
                       checked={
@@ -186,5 +204,3 @@ export default function ManageScheduleForm() {
     </div>
   );
 }
-//id
-//turns

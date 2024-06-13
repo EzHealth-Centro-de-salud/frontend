@@ -3,7 +3,7 @@ import DataTable from "react-data-table-component";
 import { Patient } from "@/interfaces/Patient";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_PATIENTS_QUERY } from "@/components/apollo/queries";
-import { CiEdit, CiRead, CiTrash } from "react-icons/ci";
+import { CiCirclePlus, CiEdit, CiRead, CiTrash } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import { encrypt } from "@/utils/cryptoUtils";
 import Swal from "sweetalert2";
@@ -53,6 +53,13 @@ export default function PatientsTable() {
     localStorage.setItem("patientRut", encryptedRut);
     router.push("/admin/patient/appointments");
   };
+
+  const handleBookAppointmentClick = (row: Patient) => {
+    if(row.id){
+      localStorage.setItem("patient_id", row.id.toString());
+    }
+    router.push("/admin/patient/bookAppointment");
+  }
 
   const columns = [
     { name: "Rut", selector: (row: Patient) => row.rut, sortable: true },
@@ -122,7 +129,19 @@ export default function PatientsTable() {
       allowOverflow: true,
       button: true,
     },
-    
+    {
+      name: "Agendar cita",
+      cell: (row: Patient) => (
+        <CiCirclePlus
+          onClick={() => handleBookAppointmentClick(row)}
+          style={{ cursor: "pointer" }}
+        />
+      ),
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    }
+
   ];
 
   return (
