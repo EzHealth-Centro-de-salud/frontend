@@ -93,6 +93,12 @@ export const GET_ALL_PATIENTS_QUERY = gql`
       commune
       email
       phone
+      medical_records {
+        id
+        diagnosis
+        prescription
+        date_time
+      }
     }
   }
 `;
