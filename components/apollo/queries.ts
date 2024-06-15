@@ -51,6 +51,7 @@ export const GET_PATIENT_BY_RUT_QUERY = gql`
 export const GET_PERSONNEL_QUERY = gql`
   query GetPersonnelByRut($rut: String!) {
     getPersonnelByRut(rut: $rut) {
+      id
       rut
       first_name
       middle_name
@@ -63,6 +64,30 @@ export const GET_PERSONNEL_QUERY = gql`
         id
         address
       }
+      appointments{
+        id
+        date
+        time
+        type
+        status
+        box{
+          box
+          branch{
+            address
+          }
+        }
+        patient{
+          rut
+          first_name
+          surname
+        }
+        personnel{
+          id
+          rut
+          first_name
+          surname
+        }
+      } 
     }
   }
 `;
