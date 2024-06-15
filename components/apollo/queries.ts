@@ -178,3 +178,41 @@ export const CHECK_SCHEDULE_QUERY = gql`
   }
 `;
 
+
+export const GET_ALL_APPOINTMENTS_QUERY = gql`
+  query GetAllAppointments {
+    getAllAppointments {
+      id
+      date
+      time
+      type
+      status
+      box{
+        id
+        box
+        branch{
+          id
+          address
+        }
+      }
+      patient{
+        id
+        rut
+        first_name
+        surname
+      }
+      personnel{
+        id
+        rut
+        first_name
+        surname
+      }
+      medical_record{
+        id
+        diagnosis
+        prescription
+        date_time
+      }
+    }
+  }
+`;

@@ -146,17 +146,27 @@ export default function PersonnelAppointmentsTable() {
               icon={<DragHandleIcon />}
               size="sm"
             />
-            <MenuList bg="orange">
+            <MenuList>
               {row.status === "Pendiente" && (
+                <>
                 <MenuItem
                   onClick={() => handleAcceptAppointment(row.id, row.personnel.id)}
-                  border="1px solid #000" // Agrega un borde
-                  borderRadius="md" // Redondea las esquinas del borde
-                  p={2} // Agrega relleno
+                   // Agrega un borde
+                  // Redondea las esquinas del borde
+                  // Agrega relleno
                 >
                   Confirmar cita
                 </MenuItem>
-              )}
+                <MenuItem
+                  onClick={() => handleAcceptAppointment(row.id, row.personnel.id)}
+                   // Agrega un borde
+                  // Redondea las esquinas del borde
+                  // Agrega relleno
+                >
+                  Bloquear paciente
+                </MenuItem>
+                </>
+                            )}
               {row.status === "Confirmada" && (
                 <MenuItem
                   onClick={() => handleCompleteAppointment(row.id, row.personnel.id)} // Asegúrate de definir esta función
@@ -177,7 +187,7 @@ export default function PersonnelAppointmentsTable() {
   ];
 
   return (
-    <div className="space-y-8 w-[1200px] ">
+    <div className="space-y-8 w-[1550px] ">
       {personnelData?.getPersonnelByRut ? (
         <DataTable
           title="Citas del Medico"

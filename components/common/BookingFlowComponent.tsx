@@ -112,7 +112,7 @@ export default function BookingFlow() {
   const personnel: Personnel[] = dataPersonnel.getAllPersonnel;
 
   const personnelForBranch = personnel.filter((personnel) => {
-    return personnel.branch.id === parseInt(branch);
+    return personnel.branch.id === branch;
   });
 
   const handleContinueFromBranchSelection = () => {
