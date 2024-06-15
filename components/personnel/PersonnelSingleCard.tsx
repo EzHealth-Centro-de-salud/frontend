@@ -14,7 +14,8 @@ export default function PersonnelSingleCard() {
         </CardHeader>
         <CardContent className="grid gap-4">
           <Button variant="outline" onClick={() => router.push('/admin/personnel/new')}>Agregar profesional</Button>
-          <Button disabled variant="outline">Confirmar Turnos</Button>
+          <Button variant="outline" onClick={() => router.push('/admin/personnel/personnel')}>Lista de profesionales</Button>
+          <Button disabled variant="outline">Confirmar Cita</Button>
           <Button disabled variant="outline">Ver Disponibilidad Medicos</Button>
           <Button disabled variant="outline">Ingresar Sobrecupo</Button>
           <Button variant="outline" onClick={() => router.push('/admin/personnel/manageSchedule')}>Administrar Horarios</Button>
