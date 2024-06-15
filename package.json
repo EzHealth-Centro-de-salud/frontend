@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.11",
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/react": "^2.8.2",
     "@nextui-org/autocomplete": "^2.1.1",
     "@nextui-org/react": "^2.4.1",
     "@nextui-org/system": "^2.2.1",

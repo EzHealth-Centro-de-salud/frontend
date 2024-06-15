@@ -1,7 +1,5 @@
-//import { Branch } from "./Branch";
-interface Branch{
-  id: number;
-}
+import { Branch } from "./Branch";
+import { Appointment } from "./Appointment";
 
 export interface Personnel {
   id : number;
@@ -17,4 +15,5 @@ export interface Personnel {
   id_branch?: number;
   branch: Branch;
   is_active: boolean;
+  appointments: Appointment[];
 }
