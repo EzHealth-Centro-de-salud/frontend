@@ -1,4 +1,5 @@
 import { Appointment } from './Appointment';
+import { MedicalRecord } from './MedicalRecords';
 export interface Patient{
     id?: number
     rut: string;
@@ -14,4 +15,5 @@ export interface Patient{
     email: string;
     phone: string;
     appointments: Appointment[];
+    medical_records: MedicalRecord[];
 }

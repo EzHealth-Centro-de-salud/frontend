@@ -47,6 +47,10 @@ export const PersonnelMenuLinks = [
     link: "/personnel/schedule",
   },
   {
+    name: "Historial Médico",
+    link: "/personnel/medical-records",
+  },
+  {
     name: "Cerrar Sesión",
     link: "/logout",
   },

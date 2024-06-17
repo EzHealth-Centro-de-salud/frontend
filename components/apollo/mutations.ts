@@ -144,6 +144,15 @@ export const CONFIRM_APPOINTMENT_MUTATION = gql`
   }
 `;
 
+export const COMPLETE_APPOINTMENT_MUTATION = gql`
+  mutation CompleteAppointment($input: CompleteAppointmentInput!) {
+    completeAppointment(input: $input) {
+      success
+      message
+    }
+  }
+`;
+
 export const CANCEL_APPOINTMENT_MUTATION = gql`
   mutation CancelAppointment($input: CancelAppointmentInput!) {
     cancelAppointment(input: $input) {
@@ -161,4 +170,3 @@ export const RESCHEDULE_APPOINTMENT_MUTATION = gql`
     }
   }
 `; 
-
