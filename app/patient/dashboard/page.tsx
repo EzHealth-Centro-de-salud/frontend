@@ -1,9 +1,17 @@
-import React from 'react'
+import PatientDashboard from "@/components/patient/PatientDashboard";
+import React from "react";
 
 const page = () => {
   return (
-    <div>blah blah blah page</div>
-  )
-}
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8 w-full">
+      <div className="bg-white shadow-lg rounded-lg p-8">
+        <h1 className="text-2xl font-semibold mb-6 text-center">
+          Dashboard
+        </h1>
+        <PatientDashboard/>
+      </div>
+    </div>
+  );
+};
 
-export default page
+export default page;

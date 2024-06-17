@@ -4,6 +4,9 @@ import DataTable from "react-data-table-component";
 import { useQuery } from "@apollo/client";
 import { GET_PATIENT_BY_RUT_QUERY } from "@/components/apollo/queries";
 import { Patient } from "@/interfaces/Patient";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 const columns = [
   {
@@ -74,34 +77,67 @@ export default function PatientAppointments({ rut }: { rut: string }) {
   if (patientError) return <p>Error :</p>;
 
   const filteredAppointments = patientData?.getPatientByRut.appointments.filter(
-    (appointment: Patient["appointments"][number]) =>
-      (appointment.personnel.first_name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      appointment.personnel.surname
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      appointment.personnel.rut
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      appointment.box.branch.address
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())) &&
-      (statusFilter === "" || appointment.status.toLowerCase() === statusFilter) &&
-      (typeFilter === "" || appointment.type.toLowerCase() === typeFilter)
-  );
+  (appointment: Patient["appointments"][number]) => {
+    const searchTerm = searchQuery.toLowerCase().trim();
+    const searchTerms = searchTerm.split(' ');
+
+    return searchTerms.every(term =>
+      (appointment.personnel.first_name.toLowerCase().includes(term) ||
+      appointment.personnel.surname.toLowerCase().includes(term) ||
+      appointment.personnel.rut.toLowerCase().includes(term) ||
+      appointment.box.branch.address.toLowerCase().includes(term)) &&
+      
+      (statusFilter === "" || statusFilter === "Todos" || appointment.status.toLowerCase() === statusFilter) &&
+      (typeFilter === "" || typeFilter === "Todos" || appointment.type.toLowerCase() === typeFilter)
+    );
+  }
+);
 
   return (
     <div className="space-y-8 w-[1200px]">
       <div className="flex space-x-4">
-        <input
+        <div>
+        <Label>Buscar por nombre de personal, RUT o Sucursal</Label>
+        <Input
           type="text"
           placeholder="Buscar..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2 border border-gray-300 rounded"
+          className="p-2 border border-gray-300 rounded w-[500px]"
         />
-        <select
+        </div>
+        <div>
+        <Label>Filtrar por estado</Label>
+        <Select onValueChange={(value) => setStatusFilter(value)}>
+          <SelectTrigger className="w-[300px]">
+            <SelectValue placeholder="Filtrar por estado" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Todos">Todos</SelectItem>
+            <SelectItem value="pendiente">Pendiente</SelectItem>
+            <SelectItem value="confirmada">Confirmada</SelectItem>
+            <SelectItem value="cancelada">Cancelada</SelectItem>
+            <SelectItem value="reprogramada">Reprogramada</SelectItem>
+          </SelectContent>
+        </Select>
+        </div>
+
+        <div className="w-[400]px">
+        <Label>Filtrar por tipo</Label>
+        <Select onValueChange={(value) => setTypeFilter(value)}>
+          <SelectTrigger className="w-[300px]">
+            <SelectValue placeholder="Filtrar por tipo" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Todos">Todos</SelectItem>
+            <SelectItem value="control">Control</SelectItem>
+            <SelectItem value="procedimiento">Procedimiento</SelectItem>
+            <SelectItem value="consulta">Consulta</SelectItem>
+          </SelectContent>
+        </Select>
+        </div>
+
+        {/* <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
           className="p-2 border border-gray-300 rounded"
@@ -111,8 +147,9 @@ export default function PatientAppointments({ rut }: { rut: string }) {
           <option value="confirmada">Confirmada</option>
           <option value="cancelada">Cancelada</option>
           <option value="reprogramada">Reprogramada</option>
-        </select>
-        <select
+        </select> */}
+        
+        {/* <select
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
           className="p-2 border border-gray-300 rounded"
@@ -121,7 +158,9 @@ export default function PatientAppointments({ rut }: { rut: string }) {
           <option value="control">Control</option>
           <option value="procedimiento">Procedimiento</option>
           <option value="consulta">Consulta</option>
-        </select>
+        </select> */}
+        
+
       </div>
       {patientData?.getPatientByRut.appointments ? (
         <DataTable

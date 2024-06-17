@@ -222,3 +222,51 @@ export const GET_ALL_APPOINTMENTS_QUERY = gql`
     }
   }
 `;
+
+export const GET_PATIENT_QUERY = gql`
+  query GetPatient($id: Int!) {
+    getPatient(id: $id) {
+      id
+      rut
+      birthdate
+      first_name
+      middle_name
+      surname
+      second_surname
+      sex
+      address
+      region
+      commune
+      email
+      phone
+      appointments {
+        id
+        date
+        time
+        type
+        status
+        box{
+          id
+          box
+          branch{
+            id
+            address
+          }
+        }
+        personnel{
+          id
+          rut
+          first_name
+          middle_name
+          surname
+          second_surname
+          email
+          role
+          speciality
+          
+        }
+      }
+    }
+  }
+`;
+
