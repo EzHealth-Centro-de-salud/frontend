@@ -51,11 +51,11 @@ interface Props{
   id_personnel: number;
   id_appointment: number;
   appointmentType: string;  
-  branch_
+  branchAddress: string;
 }
 
 
-export default function RescheduleAppointment( {id_patient, id_personnel, id_appointment, appointmentType}: Props) {
+export default function RescheduleAppointment( {id_patient, id_personnel, id_appointment, appointmentType, branchAddress}: Props) {
   const [medicFullName, setMedicFullName] = useState("");
   const [medicSpeciality, setMedicSpeciality] = useState("");
   const [date, setDate] = useState("");

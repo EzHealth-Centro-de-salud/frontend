@@ -41,6 +41,7 @@ export default function ManageAppointments() {
   const [patientId, setPatientId] = useState(0);
   const [appointment, setAppointment] = useState(0);
   const [appointmentType, setAppointmentType] = useState("");
+  const [branchAddress, setBranchAddress] = useState("");
 
   const {
     data: appointmentData,
@@ -134,6 +135,7 @@ export default function ManageAppointments() {
     id_personnel: number,
     id_appointment: number,
     appointmentType: string,
+    branchAddress: string,
   ) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
@@ -150,6 +152,7 @@ export default function ManageAppointments() {
       setPatientId(id_patient);
       setAppointment(id_appointment);
       setAppointmentType(appointmentType);
+      setBranchAddress(branchAddress);
     }
   };
 
@@ -272,7 +275,7 @@ export default function ManageAppointments() {
       cell: (row: Appointment) => (
         <CiCalendar
           onClick={() =>
-            handleRescheduleBookAppointment(row.patient.id as number, row.personnel.id, row.id, row.type)
+            handleRescheduleBookAppointment(row.patient.id as number, row.personnel.id, row.id, row.type, row.box.branch.address)
           }
           style={{ cursor: "pointer" }}
         />
