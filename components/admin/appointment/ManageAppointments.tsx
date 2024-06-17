@@ -13,7 +13,6 @@ import {
 import {
   CANCEL_APPOINTMENT_MUTATION,
   CONFIRM_APPOINTMENT_MUTATION,
-  REJECT_APPOINTMENT_MUTATION,
   RESCHEDULE_APPOINTMENT_MUTATION,
 } from "@/components/apollo/mutations";
 import Swal from "sweetalert2";
@@ -32,7 +31,6 @@ import {
 export default function ManageAppointments() {
   const [confirmAppointment] = useMutation(CONFIRM_APPOINTMENT_MUTATION);
   const [cancelAppointment] = useMutation(CANCEL_APPOINTMENT_MUTATION);
-  const [rejectAppointment] = useMutation(REJECT_APPOINTMENT_MUTATION);
   const [rescheduleAppointment] = useMutation(RESCHEDULE_APPOINTMENT_MUTATION);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("Todos");
@@ -99,11 +97,11 @@ export default function ManageAppointments() {
           successMessage = "La cita ha sido cancelada exitosamente.";
           errorMessage = "Hubo un error al cancelar la cita.";
           break;
-        case "reject":
+        /*case "reject":
           mutationFunction = rejectAppointment;
           successMessage = "La cita ha sido rechazada exitosamente.";
           errorMessage = "Hubo un error al rechazar la cita.";
-          break;
+          break;*/
         default:
           console.error("Estado no válido: ", status);
           return;
