@@ -47,21 +47,21 @@ interface Branch {
 
 
 interface Props{
-  
+  id_patient: number;
+  id_personnel: number;
+  id_appointment: number;
+  appointmentType: string;  
+  branch_
 }
 
-export default function RescheduleAppointment(props:Props) {
-  const [branch, setBranch] = useState("");
-  const [branchAddress, setBranchAddress] = useState("");
-  const [medicId, setMedicId] = useState<string | null>(null);
-  const [appointmentType, setAppointmentType] = useState("");
+
+export default function RescheduleAppointment( {id_patient, id_personnel, id_appointment, appointmentType}: Props) {
   const [medicFullName, setMedicFullName] = useState("");
   const [medicSpeciality, setMedicSpeciality] = useState("");
   const [date, setDate] = useState("");
   const [calendarDate, setCalendarDate] = useState<DateValue | null>(null);
-  const [view, setView] = useState("branchSelection");
   const [showTooltip, setShowTooltip] = useState(false);
-  const [showTooltipType, setShowTooltipType] = useState(false);
+  const [view, setView] = useState("datePicking");
   const [timetableView, setTimetableView] = useState(false);
   const [medicAvailability, setMedicAvailability] = useState<string[]>([]);
   const [selectedTime, setSelectedTime] = useState("");
@@ -73,7 +73,6 @@ export default function RescheduleAppointment(props:Props) {
   const [patientId, setPatientId] = useState("");
   const router = useRouter();
 
-  const bookingType = ["Consulta", "Procedimiento", "Control"];
   //Branches
   const {
     loading: loadingBranches,
@@ -95,11 +94,10 @@ export default function RescheduleAppointment(props:Props) {
   } = useQuery(CHECK_SCHEDULE_QUERY, {
     variables: {
       CheckScheduleInput: {
-        id_personnel: parseFloat(medicId as string),
+        id_personnel: id_personnel,
         date,
       },
     },
-    skip: !medicId || !date,
   });
 
   let { locale } = useLocale();
@@ -126,36 +124,6 @@ export default function RescheduleAppointment(props:Props) {
     return parseInt(personnel.branch.id) === parseInt(branch);
   });
 
-  const handleContinueFromBranchSelection = () => {
-    if (!branch) {
-      setShowTooltip(true);
-    } else {
-      setShowTooltip(false);
-      setView("medicSelection");
-    }
-  };
-
-  const handleBackToMedicSelection = () => {
-    setDate("");
-    setCalendarDate(null);
-    setTimetableView(false);
-    setView("medicSelection");
-  };
-
-  const handleContinueFromMedicSelection = () => {
-    if (!medicId) {
-      setShowTooltip(true);
-    }
-    if (!appointmentType) {
-      setShowTooltipType(true);
-    } else {
-      if (medicId && appointmentType) {
-        setShowTooltip(false);
-        setShowTooltipType(false);
-        setView("datePicking");
-      }
-    }
-  };
 
   const handleContinueFromDatePicking = () => {
     if (!date) {
@@ -168,20 +136,10 @@ export default function RescheduleAppointment(props:Props) {
     }
   };
 
-  const handleBackToSelection = () => {
-    setBranch("");
-    setMedicId(null);
-    setAppointmentType("");
-    setView("branchSelection");
-  };
-
   const handleBackToDatePicking = () => {
     setView("datePicking");
   };
 
-  const handleSetMedicId = (key: any) => {
-    setMedicId(key as string); // Ensure the key is treated as a string
-  };
 
   const handleContinueFromTimeSelection = () => {
     getMedicDetails(medicId as string);
@@ -267,106 +225,6 @@ export default function RescheduleAppointment(props:Props) {
 
   return (
     <div>
-      {view === "branchSelection" && (
-        <div className="w-[550px]">
-          <Label className="text-[#26313c] mb-5">Sucursal</Label>
-          <div>
-            <Select onValueChange={(value) => setBranch(value)}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Selecciona una sucursal" />
-              </SelectTrigger>
-              <SelectContent>
-                {branches.map((branch: Branch) => (
-                  <SelectItem value={branch.id.toString()} key={branch.id}>
-                    {branch.address}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {showTooltip && (
-              <p className="text-red-500 mt-2">
-                Por favor selecciona una sucursal
-              </p>
-            )}
-            <div className="flex justify-center pt-3">
-              <Button
-                className="w-[400px]"
-                onClick={handleContinueFromBranchSelection}
-              >
-                Continuar
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {view === "medicSelection" && (
-        <div className="w-[550px]">
-          <div className="flex w-full flex-wrap">
-            <Autocomplete
-              label="Busca por un médico o especialidad"
-              placeholder="Escribe o despliega"
-              className="max-w-[550px] "
-              selectedKey={medicId}
-              onSelectionChange={handleSetMedicId}
-            >
-              {personnelForBranch.map((item) => (
-                <AutocompleteItem
-                  key={item.id.toString()}
-                  value={item.id.toString()}
-                >
-                  {item.first_name +
-                    " " +
-                    item.surname +
-                    " | " +
-                    item.speciality}
-                </AutocompleteItem>
-              ))}
-            </Autocomplete>
-            {showTooltip && (
-              <p className="text-red-500 mt-2">
-                Por favor selecciona un médico o especialidad
-              </p>
-            )}
-            <div className="w-[550px]">
-              <Label className="text-[#26313c] mb-5 ">Tipo de cita</Label>
-              <div>
-                <Select
-                  onValueChange={(value) => setAppointmentType(value)}
-                  value={appointmentType}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Selecciona el tipo de cita" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {bookingType.map((type) => (
-                      <SelectItem value={type} key={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              {showTooltipType && (
-                <p className="text-red-500 mt-2">
-                  Por favor selecciona el tipo de cita
-                </p>
-              )}
-            </div>
-          </div>
-          <div className="flex justify-center pt-3">
-            <Button className="w-[100px] mr-5 " onClick={handleBackToSelection}>
-              Volver
-            </Button>
-            <Button
-              className="w-[400px]"
-              onClick={handleContinueFromMedicSelection}
-            >
-              Continuar
-            </Button>
-          </div>
-        </div>
-      )}
       {view === "datePicking" && (
         <div>
           <div className="w-[550px] justify-center pb-5">
@@ -386,12 +244,6 @@ export default function RescheduleAppointment(props:Props) {
               }}
             />
             <div className="flex justify-center pt-3">
-              <Button
-                className="w-[100px] mr-5 "
-                onClick={handleBackToMedicSelection}
-              >
-                Volver
-              </Button>
               <Button
                 className="w-[400px]"
                 onClick={handleContinueFromDatePicking}

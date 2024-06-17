@@ -39,9 +39,8 @@ export default function ManageAppointments() {
   //For rescheduling
   const [medicId, setMedicId] = useState(0);
   const [patientId, setPatientId] = useState(0);
+  const [appointment, setAppointment] = useState(0);
   const [appointmentType, setAppointmentType] = useState("");
-
-
 
   const {
     data: appointmentData,
@@ -97,11 +96,11 @@ export default function ManageAppointments() {
           successMessage = "La cita ha sido cancelada exitosamente.";
           errorMessage = "Hubo un error al cancelar la cita.";
           break;
-        /*case "reject":
-          mutationFunction = rejectAppointment;
-          successMessage = "La cita ha sido rechazada exitosamente.";
-          errorMessage = "Hubo un error al rechazar la cita.";
-          break;*/
+        // case "reject":
+        //   mutationFunction = rejectAppointment;
+        //   successMessage = "La cita ha sido rechazada exitosamente.";
+        //   errorMessage = "Hubo un error al rechazar la cita.";
+        //   break;
         default:
           console.error("Estado no válido: ", status);
           return;
@@ -131,8 +130,10 @@ export default function ManageAppointments() {
   };
 
   const handleRescheduleBookAppointment = async (
+    id_patient: number,
+    id_personnel: number,
     id_appointment: number,
-    id_personnel: number
+    appointmentType: string,
   ) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
@@ -145,6 +146,10 @@ export default function ManageAppointments() {
 
     if (result.isConfirmed) {
       setShowReschedule(true);
+      setMedicId(id_personnel);
+      setPatientId(id_patient);
+      setAppointment(id_appointment);
+      setAppointmentType(appointmentType);
     }
   };
 
@@ -267,7 +272,7 @@ export default function ManageAppointments() {
       cell: (row: Appointment) => (
         <CiCalendar
           onClick={() =>
-            handleRescheduleBookAppointment(row.id, row.personnel.id)
+            handleRescheduleBookAppointment(row.patient.id as number, row.personnel.id, row.id, row.type)
           }
           style={{ cursor: "pointer" }}
         />
