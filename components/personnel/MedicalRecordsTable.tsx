@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { Patient } from "@/interfaces/Patient";
 import { useState } from "react";
 import DataTable from "react-data-table-component";
+import { select } from "@nextui-org/theme";
 
 export default function MedicalRecordsTable() {
   //call endpoint to get all patients
@@ -27,7 +28,7 @@ export default function MedicalRecordsTable() {
   if (errorPatients) return <p>Error: {errorPatients.message}</p>;
 
   const columns = [
-    { name: "Rut", selector: (row: Patient) => row.rut, sortable: true, width: "200px"},
+    /*{ name: "Rut", selector: (row: Patient) => row.rut, sortable: true, width: "200px"},
     {
       name: "Nombre completo",
       selector: (row: Patient) => {
@@ -43,7 +44,23 @@ export default function MedicalRecordsTable() {
         return fullName;
       },
       sortable: true,
+    },*/
+    {
+      name: "Fecha",
+      selector: (row: Patient) => row.medical_records.map(record => record.date_time).join(", "),
+      sortable: true,
     },
+    {
+      name: "Diagnóstico",
+      selector: (row: Patient) => row.medical_records.map(record => record.diagnosis).join(", "),
+      sortable: true,
+    },
+    {
+      name: "Prescripción",
+      selector: (row: Patient) => row.medical_records.map(record => record.prescription).join(", "),
+      sortable: true,
+    }
+
   ];
   const filteredPatients = patients?.filter(
     (patient: Patient) => patient.id === selectedPatient
@@ -66,8 +83,8 @@ export default function MedicalRecordsTable() {
         <DataTable
           title={
             selectedPatientData
-              ? `Historial Medico: ${selectedPatientData.first_name} ${selectedPatientData.surname} ${selectedPatientData.rut}`
-              : "Historial Medico"
+              ? `Historial Medico de : ${selectedPatientData.first_name} ${selectedPatientData.surname} ${selectedPatientData.rut}`
+              : "Historial Medico:"
           }
           columns={columns}
           data={filteredPatients}

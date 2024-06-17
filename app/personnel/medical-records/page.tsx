@@ -1,4 +1,4 @@
-import MedicalRecordsTable from '@/components/admin/patient/MedicalRecordsTable'
+import MedicalRecordsTable from '@/components/personnel/MedicalRecordsTable'
 import React from 'react'
 
 const page = () => {
