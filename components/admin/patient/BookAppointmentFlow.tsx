@@ -87,7 +87,7 @@ export default function BookAppointmentFlow() {
     variables: {
       CheckScheduleInput: {
         id_personnel: parseFloat(medicId as string),
-        id_patient: parseFloat(patientId),
+        id_patient: parseFloat(patientId as string),
         date,
       },
     },
@@ -122,6 +122,10 @@ export default function BookAppointmentFlow() {
     if (!branch) {
       setShowTooltip(true);
     } else {
+      const localStoragePatientId = localStorage.getItem("patient_id");
+      if (localStoragePatientId) {
+        setPatientId(localStoragePatientId);
+      }
       setShowTooltip(false);
       setView("medicSelection");
     }
@@ -154,13 +158,11 @@ export default function BookAppointmentFlow() {
       setShowTooltip(true);
     } else {
       setShowTooltip(false);
-      const localStoragePatientId = localStorage.getItem("patient_id");
-      if (localStoragePatientId) {
-        setPatientId(localStoragePatientId);
+      if(medicId && patientId && date){
+        const availabilityByMedicId = dataSchedule?.checkSchedule.message;
+        setMedicAvailability(JSON.parse(availabilityByMedicId));
+        setTimetableView(true);
       }
-      const availabilityByMedicId = dataSchedule?.checkSchedule?.message || [];
-      setMedicAvailability(JSON.parse(availabilityByMedicId) || []);
-      setTimetableView(true);
     }
   };
 

@@ -1,10 +1,9 @@
 "use client";
 import {
-  GET_ALL_BRANCHES_WITH_PERSONNEL_QUERY,
   GET_ALL_PERSONNEL_QUERY,
   CHECK_SCHEDULE_QUERY,
 } from "@/components/apollo/queries";
-import { CREATE_APPOINTMENT_MUTATION } from "@/components/apollo/mutations";
+import { RESCHEDULE_APPOINTMENT_MUTATION } from "@/components/apollo/mutations";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -18,8 +17,6 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Personnel } from "@/interfaces/Personnel";
 import {
-  Autocomplete,
-  AutocompleteItem,
   DatePicker,
   DateValue,
   Table,
@@ -35,17 +32,12 @@ import Link from "next/link";
 import LoadingButton from "@/components/ui/loadingButton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useRouter } from "next/navigation";
+import { Router } from "lucide-react";
 
 interface Branch {
   id: number;
   address: string;
 }
-//mutation for rescheduling appointment
-//   id_appointment
-//   new_date
-//   new_time
-
-
 interface Props{
   id_patient: number;
   id_personnel: number;
@@ -54,31 +46,23 @@ interface Props{
   branchAddress: string;
 }
 
-
 export default function RescheduleAppointment( {id_patient, id_personnel, id_appointment, appointmentType, branchAddress}: Props) {
   const [medicFullName, setMedicFullName] = useState("");
   const [medicSpeciality, setMedicSpeciality] = useState("");
   const [date, setDate] = useState("");
   const [calendarDate, setCalendarDate] = useState<DateValue | null>(null);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [view, setView] = useState("datePicking");
+  const [view, setView] = useState("startRescheduling");
   const [timetableView, setTimetableView] = useState(false);
   const [medicAvailability, setMedicAvailability] = useState<string[]>([]);
   const [selectedTime, setSelectedTime] = useState("");
   const [loading, setLoading] = useState(false);
-  const [createAppointment] = useMutation(CREATE_APPOINTMENT_MUTATION);
+  const [rescheduleAppointment] = useMutation(RESCHEDULE_APPOINTMENT_MUTATION);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
-  const [wasBooked, setWasBooked] = useState("false");
-  const [patientId, setPatientId] = useState("");
+  const [wasRescheduled, setWasRescheduled] = useState("false");
   const router = useRouter();
 
-  //Branches
-  const {
-    loading: loadingBranches,
-    error: errorBranches,
-    data: dataBranches,
-  } = useQuery(GET_ALL_BRANCHES_WITH_PERSONNEL_QUERY);
 
   const {
     loading: loadingPersonnel,
@@ -95,34 +79,32 @@ export default function RescheduleAppointment( {id_patient, id_personnel, id_app
     variables: {
       CheckScheduleInput: {
         id_personnel: id_personnel,
+        id_patient: id_patient,
         date,
       },
     },
+    skip: !id_personnel || !date || !id_patient,
   });
 
   let { locale } = useLocale();
 
-  if (loadingBranches || loadingPersonnel || loadingSchedule)
+  if (loadingPersonnel || loadingSchedule)
     return <p>Loading...</p>;
-  if (errorBranches || errorPersonnel) return <p>Error :(</p>;
+  if (errorPersonnel) return <p>Error :(</p>;
 
   if (errorSchedule)
     return (
       <div>
         <p>Hubo un problema con la disponibilidad del médico.</p>
         <Button>
-          <Link href="/patient/dashboard">Volver al inicio</Link>
+          <Link href="/admin/appointment/manage">Volver al inicio</Link>
         </Button>
       </div>
     );
 
-  const branches: Branch[] = dataBranches.getAllBranches;
 
   const personnel: Personnel[] = dataPersonnel.getAllPersonnel;
 
-  const personnelForBranch = personnel.filter((personnel) => {
-    return parseInt(personnel.branch.id) === parseInt(branch);
-  });
 
 
   const handleContinueFromDatePicking = () => {
@@ -136,28 +118,27 @@ export default function RescheduleAppointment( {id_patient, id_personnel, id_app
     }
   };
 
+  const handleContinueToMedicSelection = () => {
+    setView("datePicking");
+  }
+
   const handleBackToDatePicking = () => {
     setView("datePicking");
   };
 
 
   const handleContinueFromTimeSelection = () => {
-    getMedicDetails(medicId as string);
-    getBranchAddress(branch);
-    const localStoragePatientId = localStorage.getItem("patient_id");
-    if (localStoragePatientId) {
-      setPatientId(localStoragePatientId);
-    }
+    getMedicDetails(id_personnel);
     setView("Details");
   };
 
-  const handleNewAppointment = () => {
-    router.push("/admin/patient/patients");
+  const handlePatientsAppointments = () => {
+    window.location.reload()
   };
 
-  const getMedicDetails = (medicId: string) => {
+  const getMedicDetails = (medicId: number) => {
     const medic = personnel.find(
-      (personnel) => personnel.id === parseInt(medicId)
+      (personnel) => personnel.id === medicId
     );
     if (medic) {
       setMedicFullName(
@@ -170,13 +151,6 @@ export default function RescheduleAppointment( {id_patient, id_personnel, id_app
           medic.second_surname
       );
       setMedicSpeciality(medic.speciality);
-    }
-  };
-
-  const getBranchAddress = (branchId: string) => {
-    const branch = branches.find((branch) => branch.id === parseInt(branchId));
-    if (branch) {
-      setBranchAddress(branch.address);
     }
   };
 
@@ -196,25 +170,23 @@ export default function RescheduleAppointment( {id_patient, id_personnel, id_app
     setLoading(true);
     try {
       console.log("inside try");
-      const { data, errors } = await createAppointment({
+      const { data, errors } = await rescheduleAppointment({
         variables: {
           input: {
-            id_personnel: parseFloat(medicId as string),
-            id_patient: parseFloat(patientId as string),
-            date,
+            id_appointment: id_appointment,
+            date: date,
             time: selectedTime,
-            type: appointmentType,
           },
         },
       });
       console.log(data);
-      if (data?.createAppointment.success) {
-        setWasBooked("true");
+      if (data?.rescheduleAppointment.success) {
+        setWasRescheduled("true");
         setAlertType("success");
-        setAlertMessage("Cita agendada exitosamente");
+        setAlertMessage("Cita reagendada exitosamente");
       } else {
         setAlertType("error");
-        setAlertMessage("Hubo un error al agendar la cita");
+        setAlertMessage("Hubo un error al reagendar la cita");
         console.log("Error: ", errors);
       }
     } catch (error) {
@@ -225,6 +197,14 @@ export default function RescheduleAppointment( {id_patient, id_personnel, id_app
 
   return (
     <div>
+      {view === "startRescheduling" && (
+        <Button
+          className="w-[400px]"
+          onClick={handleContinueToMedicSelection}
+        >
+          Continuar
+        </Button>
+      )}
       {view === "datePicking" && (
         <div>
           <div className="w-[550px] justify-center pb-5">
@@ -286,7 +266,7 @@ export default function RescheduleAppointment( {id_patient, id_personnel, id_app
       {view === "Details" && (
         <div className="w-[1000px] justify-center pb-5">
           <Label className="text-[#26313c] mb-5 flex align-middle justify-center">
-            Por favor confirma los detalles de tu cita médica
+            Por favor confirma los detalles de la cita médica
           </Label>
           <Table aria-label="Example static collection table">
             <TableHeader>
@@ -313,7 +293,7 @@ export default function RescheduleAppointment( {id_patient, id_personnel, id_app
             </TableBody>
           </Table>
           <div className="flex justify-center pt-3" onSubmit={onSubmit}>
-            {wasBooked === "false" && (
+            {wasRescheduled === "false" && (
               <div className="flex ">
                 <Button
                   className="w-[100px] mr-5 "
@@ -331,10 +311,10 @@ export default function RescheduleAppointment( {id_patient, id_personnel, id_app
                 </form>
               </div>
             )}
-            {wasBooked === "true" && (
+            {wasRescheduled === "true" && (
               <div className="flex justify-center pt-3">
-                <Button className="w-[400px]" onClick={handleNewAppointment}>
-                  Agendar otra cita
+                <Button className="w-[400px]" onClick={handlePatientsAppointments}>
+                  Ver lista de citas
                 </Button>
               </div>
             )}
@@ -348,7 +328,7 @@ export default function RescheduleAppointment( {id_patient, id_personnel, id_app
                   <AlertTitle>
                     {alertType === "big error"
                       ? "¡Oops, ocurrió un error!"
-                      : "¡Agendado exitoso!"}
+                      : "¡Reagendado exitoso!"}
                   </AlertTitle>
                   <AlertDescription>{alertMessage}</AlertDescription>
                 </Alert>

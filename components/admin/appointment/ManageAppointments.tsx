@@ -1,6 +1,6 @@
 "use client";
 import { GET_ALL_APPOINTMENTS_QUERY } from "@/components/apollo/queries";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import DataTable from "react-data-table-component";
 import {
@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import RescheduleAppointment from "./RescheduleAppointment";
 
 export default function ManageAppointments() {
   const [confirmAppointment] = useMutation(CONFIRM_APPOINTMENT_MUTATION);
@@ -135,7 +136,7 @@ export default function ManageAppointments() {
     id_personnel: number,
     id_appointment: number,
     appointmentType: string,
-    branchAddress: string,
+    branchAddress: string
   ) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
@@ -156,21 +157,22 @@ export default function ManageAppointments() {
     }
   };
 
-  const filteredAppointments = appointments.filter(
-    (appointment) => {
-      const searchTerm = searchQuery.toLowerCase().trim();
-      const searchTerms = searchTerm.split(' ');
+  const filteredAppointments = appointments.filter((appointment) => {
+    const searchTerm = searchQuery.toLowerCase().trim();
+    const searchTerms = searchTerm.split(" ");
 
-      return searchTerms.every(term =>
+    return searchTerms.every(
+      (term) =>
         (appointment.personnel.first_name.toLowerCase().includes(term) ||
           appointment.personnel.surname.toLowerCase().includes(term) ||
           appointment.personnel.rut.toLowerCase().includes(term) ||
           appointment.box.branch.address.toLowerCase().includes(term)) &&
-        (statusFilter === "Todos" || appointment.status.toLowerCase() === statusFilter) &&
-        (typeFilter === "Todos" || appointment.type.toLowerCase() === typeFilter)
-      );
-    }
-  );
+        (statusFilter === "Todos" ||
+          appointment.status.toLowerCase() === statusFilter) &&
+        (typeFilter === "Todos" ||
+          appointment.type.toLowerCase() === typeFilter)
+    );
+  });
 
   const columns = [
     {
@@ -275,7 +277,13 @@ export default function ManageAppointments() {
       cell: (row: Appointment) => (
         <CiCalendar
           onClick={() =>
-            handleRescheduleBookAppointment(row.patient.id as number, row.personnel.id, row.id, row.type, row.box.branch.address)
+            handleRescheduleBookAppointment(
+              row.patient.id as number,
+              row.personnel.id,
+              row.id,
+              row.type,
+              row.box.branch.address
+            )
           }
           style={{ cursor: "pointer" }}
         />
@@ -287,7 +295,17 @@ export default function ManageAppointments() {
   ];
 
   if (showReschedule) {
-    return <div> Reschedule </div>;
+    return (
+      <div>
+        <RescheduleAppointment
+          id_patient={patientId}
+          id_personnel={medicId}
+          id_appointment={appointment}
+          appointmentType={appointmentType}
+          branchAddress={branchAddress}
+        />
+      </div>
+    );
   }
 
   return (
@@ -333,11 +351,7 @@ export default function ManageAppointments() {
         </div>
       </div>
       {filteredAppointments.length > 0 ? (
-        <DataTable
-          columns={columns}
-          data={filteredAppointments}
-          pagination
-        />
+        <DataTable columns={columns} data={filteredAppointments} pagination />
       ) : (
         <p>No se han encontrado citas agendadas</p>
       )}

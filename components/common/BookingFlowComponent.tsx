@@ -85,6 +85,7 @@ export default function BookingFlow() {
     variables: {
       CheckScheduleInput: {
         id_personnel: parseFloat(medicId as string),
+        id_patient: parseFloat(patientId as string),
         date,
       },
     },
@@ -125,6 +126,10 @@ export default function BookingFlow() {
       setShowTooltip(true);
     } else {
       setShowTooltip(false);
+      const localStoragePatientId = localStorage.getItem("patient_id");
+      if (localStoragePatientId) {
+        setPatientId(localStoragePatientId);
+      }
       setView("medicSelection");
     }
   };
@@ -156,9 +161,11 @@ export default function BookingFlow() {
       setShowTooltip(true);
     } else {
       setShowTooltip(false);
-      const availabilityByMedicId = dataSchedule?.checkSchedule?.message || [];
-      setMedicAvailability(JSON.parse(availabilityByMedicId) || []);
-      setTimetableView(true);
+      if(medicId && patientId && date){
+        const availabilityByMedicId = dataSchedule?.checkSchedule.message;
+        setMedicAvailability(JSON.parse(availabilityByMedicId));
+        setTimetableView(true);
+      }
     }
   };
 
