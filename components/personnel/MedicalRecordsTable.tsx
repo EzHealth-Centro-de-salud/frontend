@@ -47,27 +47,29 @@ export default function MedicalRecordsTable() {
     },*/
     {
       name: "Fecha",
-      selector: (row: Patient) => row.medical_records.map(record => record.date_time).join(", "),
+      selector: (row: Patient["medical_records"][number]) => {
+        const date = new Date(row.date_time);
+        return date.toLocaleDateString(); // Formato predeterminado basado en la configuración regional
+      },
       sortable: true,
     },
     {
       name: "Diagnóstico",
-      selector: (row: Patient) => row.medical_records.map(record => record.diagnosis).join(", "),
+      selector: (row: Patient["medical_records"][number]) => row.diagnosis,
       sortable: true,
     },
     {
       name: "Prescripción",
-      selector: (row: Patient) => row.medical_records.map(record => record.prescription).join(", "),
+      selector: (row: Patient["medical_records"][number]) => row.prescription,
       sortable: true,
     }
 
   ];
-  const filteredPatients = patients?.filter(
-    (patient: Patient) => patient.id === selectedPatient
-  );
+  
   const selectedPatientData = patients?.find(
     (patient: Patient) => patient.id === selectedPatient
   );
+  const medicalRecords = selectedPatientData ? selectedPatientData.medical_records : [];
 
   return (
     <div>
@@ -87,7 +89,7 @@ export default function MedicalRecordsTable() {
               : "Historial Medico:"
           }
           columns={columns}
-          data={filteredPatients}
+          data={medicalRecords}
           pagination
         />
       </div>

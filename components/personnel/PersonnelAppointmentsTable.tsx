@@ -4,14 +4,19 @@ import React, { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { Personnel } from "@/interfaces/Personnel";
 import DataTable from "react-data-table-component";
-import { input, select } from "@nextui-org/theme";
-import { Button } from "@/components/ui/button";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import {Menu, MenuButton, MenuList, MenuItem, IconButton } from "@chakra-ui/react";
 import { CONFIRM_APPOINTMENT_MUTATION, COMPLETE_APPOINTMENT_MUTATION } from "@/components/apollo/mutations";
 import Swal from 'sweetalert2';
-import { Appointment } from "@/interfaces/Appointment";
 import  CompleteAppointmentModal  from "@/components/personnel/CompleteAppointmentModal";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 export default function PersonnelAppointmentsTable() {
   //variables
@@ -19,6 +24,7 @@ export default function PersonnelAppointmentsTable() {
   const [confirmAppointment] = useMutation(CONFIRM_APPOINTMENT_MUTATION);
   const [completeAppointment] = useMutation(COMPLETE_APPOINTMENT_MUTATION);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("Todos");
   const [selectedAppointment, setSelectedAppointment] = useState<{ id_appointment: number, id_personnel: number } | null>(null);
   //call endpoint
   const { data: personnelData, loading: personnelLoading, refetch } = useQuery(
@@ -78,7 +84,17 @@ export default function PersonnelAppointmentsTable() {
       }
     }
   }
-  const handleCompleteAppointment = async (id_appointment: number, id_personnel: number) => {
+  const handleCompleteAppointment = async (id_appointment: number, id_personnel: number, date: string) => {
+    const today = new Date().toISOString().split('T')[0];
+
+    if (date !== today) {
+      Swal.fire(
+        'No se puede completar la cita',
+        'La cita no se puede completar porque aún no es el día de la cita.',
+        'error'
+      );
+      return;
+    }
     setSelectedAppointment({ id_appointment, id_personnel });
     setModalOpen(true);
   }
@@ -202,17 +218,11 @@ export default function PersonnelAppointmentsTable() {
                 <>
                 <MenuItem
                   onClick={() => handleAcceptAppointment(row.id, row.personnel.id)}
-                   // Agrega un borde
-                  // Redondea las esquinas del borde
-                  // Agrega relleno
                 >
                   Confirmar cita
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleAcceptAppointment(row.id, row.personnel.id)}
-                   // Agrega un borde
-                  // Redondea las esquinas del borde
-                  // Agrega relleno
                 >
                   Bloquear paciente
                 </MenuItem>
@@ -220,7 +230,7 @@ export default function PersonnelAppointmentsTable() {
                             )}
               {row.status === "Confirmada" && (
                 <MenuItem
-                  onClick={() => handleCompleteAppointment(row.id, row.personnel.id)} // Asegúrate de definir esta función
+                  onClick={() => handleCompleteAppointment(row.id, row.personnel.id, row.date)} // Asegúrate de definir esta función
                   border="1px solid #000" // Agrega un borde
                   borderRadius="md" // Redondea las esquinas del borde
                   p={2} // Agrega relleno
@@ -237,13 +247,33 @@ export default function PersonnelAppointmentsTable() {
       }
   ];
 
+  const filteredAppointments = personnelData?.getPersonnelByRut?.appointments.filter((appointment: Personnel["appointments"][number]) => {
+    if (statusFilter === "Todos") return true;
+    return appointment.status.toLowerCase() === statusFilter.toLowerCase();
+  });
+
   return (
+    
     <div className="space-y-8 w-[1550px] ">
+      <div>
+          <Label>Filtrar por estado</Label>
+          <Select onValueChange={(value) => setStatusFilter(value)}>
+            <SelectTrigger className="w-[300px]">
+              <SelectValue placeholder="Filtrar por estado" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Todos">Todos</SelectItem>
+              <SelectItem value="pendiente">Pendiente</SelectItem>
+              <SelectItem value="confirmada">Confirmada</SelectItem>
+              <SelectItem value="completada">Completada</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       {personnelData?.getPersonnelByRut ? (
         <DataTable
           title="Citas del Medico"
           columns={columns}
-          data={personnelData?.getPersonnelByRut.appointments}
+          data={filteredAppointments}
           pagination
         />
       ) : (
