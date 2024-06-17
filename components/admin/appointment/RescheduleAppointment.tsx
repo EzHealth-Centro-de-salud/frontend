@@ -34,13 +34,23 @@ import { useLocale } from "@react-aria/i18n";
 import Link from "next/link";
 import LoadingButton from "@/components/ui/loadingButton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useRouter } from "next/navigation";
 
 interface Branch {
   id: number;
   address: string;
 }
+//mutation for rescheduling appointment
+//   id_appointment
+//   new_date
+//   new_time
 
-export default function BookingFlow() {
+
+interface Props{
+  
+}
+
+export default function RescheduleAppointment(props:Props) {
   const [branch, setBranch] = useState("");
   const [branchAddress, setBranchAddress] = useState("");
   const [medicId, setMedicId] = useState<string | null>(null);
@@ -61,6 +71,7 @@ export default function BookingFlow() {
   const [alertType, setAlertType] = useState("");
   const [wasBooked, setWasBooked] = useState("false");
   const [patientId, setPatientId] = useState("");
+  const router = useRouter();
 
   const bookingType = ["Consulta", "Procedimiento", "Control"];
   //Branches
@@ -111,14 +122,9 @@ export default function BookingFlow() {
 
   const personnel: Personnel[] = dataPersonnel.getAllPersonnel;
 
-  console.log(personnel)
-
   const personnelForBranch = personnel.filter((personnel) => {
-    return parseInt(personnel.branch.id) === parseInt(branch) ;
+    return parseInt(personnel.branch.id) === parseInt(branch);
   });
-
-  console.log(personnelForBranch + "personnelForBranch")
-
 
   const handleContinueFromBranchSelection = () => {
     if (!branch) {
@@ -187,6 +193,10 @@ export default function BookingFlow() {
     setView("Details");
   };
 
+  const handleNewAppointment = () => {
+    router.push("/admin/patient/patients");
+  };
+
   const getMedicDetails = (medicId: string) => {
     const medic = personnel.find(
       (personnel) => personnel.id === parseInt(medicId)
@@ -244,10 +254,6 @@ export default function BookingFlow() {
         setWasBooked("true");
         setAlertType("success");
         setAlertMessage("Cita agendada exitosamente");
-        console.log("Appointment created successfully");
-        setTimeout(() => {
-          window.location.href = "/patient/dashboard";
-        }, 2000);
       } else {
         setAlertType("error");
         setAlertMessage("Hubo un error al agendar la cita");
@@ -471,6 +477,13 @@ export default function BookingFlow() {
                     styling="w-[300px]"
                   />
                 </form>
+              </div>
+            )}
+            {wasBooked === "true" && (
+              <div className="flex justify-center pt-3">
+                <Button className="w-[400px]" onClick={handleNewAppointment}>
+                  Agendar otra cita
+                </Button>
               </div>
             )}
             {alertMessage && (

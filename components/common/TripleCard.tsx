@@ -14,8 +14,8 @@ export default function TripleCard() {
           <CardTitle>Paciente</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <Button disabled variant="outline" >Agregar Paciente</Button>
-          <Button disabled variant="outline">Agendar Paciente</Button>
+          <Button variant="outline" onClick={() => router.push('/admin/patient/new')}>Agregar paciente</Button>
+          <Button variant="outline" onClick={() => router.push('/admin/patient/patients')}>Ver lista de pacientes / agendar</Button>
           <Button disabled variant="outline">Bloquear Agenda de Paciente</Button>
         </CardContent>
       </Card>
@@ -37,10 +37,9 @@ export default function TripleCard() {
           <CardTitle>Personal</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <Link className="grid gap-4" href="/admin/personnel/new">
-          <Button variant="outline">Agregar Profesional</Button></Link>
-          <Link className="grid gap-4" href="/admin/personnel/personnel">
-          <Button variant="outline">Ver listado Profesionales</Button></Link>
+           <Button variant="outline" onClick={() => router.push('/admin/personnel/new')}>Agregar profesional</Button>
+          <Button variant="outline" onClick={() => router.push('/admin/personnel/personnel')}>Lista de profesionales</Button>
+          <Button variant="outline" onClick={() => router.push('/admin/appointment/manage')}>Administrar Citas</Button>
           <Button disabled variant="outline">Ver Disponibilidad Medicos</Button>
           <Button disabled variant="outline">Ingresar Sobrecupo</Button>
           <Button variant="outline" onClick={() => router.push('/admin/personnel/manageSchedule')}>Administrar Horarios</Button>

@@ -144,3 +144,30 @@ export const CONFIRM_APPOINTMENT_MUTATION = gql`
   }
 `;
 
+export const CANCEL_APPOINTMENT_MUTATION = gql`
+  mutation CancelAppointment($input: CancelAppointmentInput!) {
+    cancelAppointment(input: $input) {
+      success
+      message
+    }
+  }
+`;
+
+export const REJECT_APPOINTMENT_MUTATION = gql`
+  mutation RejectAppointment($input: RejectAppointmentInput!) {
+    rejectAppointment(input: $input) {
+      success
+      message
+    }
+  }
+`;
+
+export const RESCHEDULE_APPOINTMENT_MUTATION = gql`
+  mutation RescheduleAppointment($input: RescheduleAppointmentInput!) {
+    rescheduleAppointment(input: $input) {
+      success
+      message
+    }
+  }
+`; 
+
