@@ -108,7 +108,7 @@ export default function PatientAppointments({ rut }: { rut: string }) {
         >
           <option value="">Todos</option>
           <option value="pendiente">Pendiente</option>
-          <option value="aceptada">Aceptada</option>
+          <option value="confirmada">Confirmada</option>
           <option value="cancelada">Cancelada</option>
           <option value="reprogramada">Reprogramada</option>
         </select>

@@ -114,7 +114,7 @@ export default function BookAppointmentFlow() {
   const personnel: Personnel[] = dataPersonnel.getAllPersonnel;
 
   const personnelForBranch = personnel.filter((personnel) => {
-    return personnel.branch.id === parseInt(branch);
+    return parseInt(personnel.branch.id) === parseInt(branch) ;
   });
 
   const handleContinueFromBranchSelection = () => {

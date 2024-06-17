@@ -135,3 +135,21 @@ export const CREATE_APPOINTMENT_MUTATION = gql`
   }
 `;
 
+export const CONFIRM_APPOINTMENT_MUTATION = gql`
+  mutation ConfirmAppointment($input: ConfirmAppointmentInput!) {
+    confirmAppointment(input: $input) {
+      success
+      message
+    }
+  }
+`;
+
+export const COMPLETE_APPOINTMENT_MUTATION = gql`
+  mutation CompleteAppointment($input: CompleteAppointmentInput!) {
+    completeAppointment(input: $input) {
+      success
+      message
+    }
+  }
+`;
+

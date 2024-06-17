@@ -145,7 +145,7 @@ export default function PatientsTable() {
   ];
 
   return (
-    <div className="space-y-8 w-[1400px] ">
+    <div className="space-y-8 w-[1550px] ">
       <DataTable
         title="Lista de Pacientes"
         columns={columns}

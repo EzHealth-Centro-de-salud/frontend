@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import Sidebar from "@/components/Sidebar";
 import { AdminMenuLinks } from "@/constants/menuLinks";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <body className={inter.className}>
-      <div className="flex h-full">
+    <div className={`${inter.className} flex h-full`}>
+      <ChakraProvider>
         <Sidebar menuLinks={AdminMenuLinks} />
         {children}
-      </div>
-    </body>
+      </ChakraProvider>
+    </div>
   );
 }
