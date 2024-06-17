@@ -144,3 +144,12 @@ export const CONFIRM_APPOINTMENT_MUTATION = gql`
   }
 `;
 
+export const COMPLETE_APPOINTMENT_MUTATION = gql`
+  mutation CompleteAppointment($input: CompleteAppointmentInput!) {
+    completeAppointment(input: $input) {
+      success
+      message
+    }
+  }
+`;
+

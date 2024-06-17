@@ -8,14 +8,18 @@ import { input, select } from "@nextui-org/theme";
 import { Button } from "@/components/ui/button";
 import { DragHandleIcon } from "@chakra-ui/icons";
 import {Menu, MenuButton, MenuList, MenuItem, IconButton } from "@chakra-ui/react";
-import { CONFIRM_APPOINTMENT_MUTATION } from "@/components/apollo/mutations";
+import { CONFIRM_APPOINTMENT_MUTATION, COMPLETE_APPOINTMENT_MUTATION } from "@/components/apollo/mutations";
 import Swal from 'sweetalert2';
-
+import { Appointment } from "@/interfaces/Appointment";
+import  CompleteAppointmentModal  from "@/components/personnel/CompleteAppointmentModal";
 
 export default function PersonnelAppointmentsTable() {
   //variables
   const [personnelRut, setPersonnelRut] = useState<string | null>(null);
   const [confirmAppointment] = useMutation(CONFIRM_APPOINTMENT_MUTATION);
+  const [completeAppointment] = useMutation(COMPLETE_APPOINTMENT_MUTATION);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState<{ id_appointment: number, id_personnel: number } | null>(null);
   //call endpoint
   const { data: personnelData, loading: personnelLoading, refetch } = useQuery(
     GET_PERSONNEL_QUERY,
@@ -23,6 +27,7 @@ export default function PersonnelAppointmentsTable() {
       variables: { rut: personnelRut },
     }
   );
+  console.log(personnelData);
   //get rut in server side
   useEffect(() => {
     setPersonnelRut(localStorage.getItem("rut"));
@@ -74,12 +79,58 @@ export default function PersonnelAppointmentsTable() {
     }
   }
   const handleCompleteAppointment = async (id_appointment: number, id_personnel: number) => {
-    //TODO: request diagnosis and presecription
-    console.log(id_appointment, id_personnel)
-    console.log ("Completar cita");
+    setSelectedAppointment({ id_appointment, id_personnel });
+    setModalOpen(true);
   }
 
-  ;
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setSelectedAppointment(null);
+  };
+
+  const handleModalSubmit = async ({ diagnosis, prescription }: { diagnosis: string; prescription: string }) => {
+    if (!selectedAppointment) return;
+
+    const { id_appointment, id_personnel } = selectedAppointment;
+
+    try {
+      const { data, errors } = await completeAppointment({
+        variables: {
+          input: {
+            id_appointment,
+            id_personnel,
+            diagnosis,
+            prescription
+          }
+        }
+      });
+
+      if (data?.completeAppointment?.success) {
+        Swal.fire(
+          'Cita completada',
+          'La cita ha sido completada exitosamente.',
+          'success'
+        );
+        refetch();
+      } else {
+        console.error("Error al completar la cita: ", errors);
+        Swal.fire(
+          'Error',
+          'Hubo un error al completar la cita.',
+          'error'
+        );
+      }
+    } catch (error) {
+      console.error("Error al completar la cita: ", error);
+      Swal.fire(
+        'Error',
+        'Hubo un error al completar la cita.',
+        'error'
+      );
+    }
+  };
+
+  
   //columns for datatable
   const columns = [
     {
@@ -198,6 +249,11 @@ export default function PersonnelAppointmentsTable() {
       ) : (
         <p>No se han encontrado citas agendadas</p>
       )}
+      <CompleteAppointmentModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onSubmit={handleModalSubmit}
+      />
     </div>
   );
 }
