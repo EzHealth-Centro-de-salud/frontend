@@ -44,9 +44,10 @@ interface Props{
   id_appointment: number;
   appointmentType: string;  
   branchAddress: string;
+  onComplete: () => void;
 }
 
-export default function RescheduleAppointment( {id_patient, id_personnel, id_appointment, appointmentType, branchAddress}: Props) {
+export default function RescheduleAppointment( {id_patient, id_personnel, id_appointment, appointmentType, branchAddress, onComplete }: Props) {
   const [medicFullName, setMedicFullName] = useState("");
   const [medicSpeciality, setMedicSpeciality] = useState("");
   const [date, setDate] = useState("");
@@ -133,7 +134,7 @@ export default function RescheduleAppointment( {id_patient, id_personnel, id_app
   };
 
   const handlePatientsAppointments = () => {
-    window.location.reload()
+    onComplete();
   };
 
   const getMedicDetails = (medicId: number) => {

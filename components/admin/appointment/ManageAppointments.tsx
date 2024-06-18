@@ -131,6 +131,8 @@ export default function ManageAppointments() {
     }
   };
 
+  
+  
   const handleRescheduleBookAppointment = async (
     id_patient: number,
     id_personnel: number,
@@ -146,7 +148,7 @@ export default function ManageAppointments() {
       confirmButtonText: "Sí, reprogramar",
       cancelButtonText: "Cancelar",
     });
-
+    
     if (result.isConfirmed) {
       setShowReschedule(true);
       setMedicId(id_personnel);
@@ -157,6 +159,11 @@ export default function ManageAppointments() {
     }
   };
 
+  const onCompleteReschedule = () => {
+    setShowReschedule(false); 
+    refetch(); 
+  };
+  
   const filteredAppointments = appointments.filter((appointment) => {
     const searchTerm = searchQuery.toLowerCase().trim();
     const searchTerms = searchTerm.split(" ");
@@ -303,6 +310,7 @@ export default function ManageAppointments() {
           id_appointment={appointment}
           appointmentType={appointmentType}
           branchAddress={branchAddress}
+          onComplete={onCompleteReschedule}
         />
       </div>
     );
