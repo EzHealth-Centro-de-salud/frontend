@@ -1,7 +1,7 @@
-'use client'
-import PersonnelAppointmentsTable from '@/components/personnel/PersonnelAppointmentsTable'
-import { ChakraProvider } from '@chakra-ui/react'
-import React from 'react'
+"use client";
+import PersonnelAppointmentsTable from "@/components/personnel/PersonnelAppointmentsTable";
+import { ChakraProvider } from "@chakra-ui/react";
+import React from "react";
 
 const page = () => {
   return (
@@ -11,11 +11,11 @@ const page = () => {
           Lista de mis citas
         </h1>
         <ChakraProvider>
-        <PersonnelAppointmentsTable/>
+          <PersonnelAppointmentsTable />
         </ChakraProvider>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

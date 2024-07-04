@@ -43,10 +43,6 @@ export const PersonnelMenuLinks = [
     link: "/personnel/appointments",
   },
   {
-    name: "Horarios de Atención",
-    link: "/personnel/schedule",
-  },
-  {
     name: "Historial Médico",
     link: "/personnel/medical-records",
   },
@@ -61,13 +57,13 @@ export const AdminMenuLinks = [
     name: "Dashboard",
     link: "/admin/dashboard",
   },
-  
+
   {
-    name: "Personnel",
+    name: "Médicos",
     link: "/admin/personnel",
   },
   {
-    name: "Patients",
+    name: "Pacientes",
     link: "/admin/patient",
   },
   {
@@ -75,12 +71,7 @@ export const AdminMenuLinks = [
     link: "/admin/branch",
   },
   {
-    name: "Box",
-    link: "/admin/box/new",
-  },
-  {
     name: "Cerrar Sesión",
     link: "/logout",
   },
 ];
-

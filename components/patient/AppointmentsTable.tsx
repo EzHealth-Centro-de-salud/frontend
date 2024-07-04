@@ -7,7 +7,6 @@ import { CANCEL_APPOINTMENT_MUTATION } from "../apollo/mutations";
 import Swal from "sweetalert2";
 import { CiSquareRemove } from "react-icons/ci";
 import { differenceInHours, parseISO } from "date-fns";
-// appointments{date, time, type, status, box{box}, personnel{rut, first_name, surname, speciality, role}}
 
 export default function AppointmentsTable() {
   const [cancelAppointment] = useMutation(CANCEL_APPOINTMENT_MUTATION);
@@ -35,7 +34,7 @@ export default function AppointmentsTable() {
   ) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
-      text: `¿Estás seguro de que quieres cancelar la cita?`,
+      text: `¿Estás seguro de que quieres anular la cita?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Sí, confirmar",
@@ -88,12 +87,13 @@ export default function AppointmentsTable() {
       name: "Tipo",
       selector: (row: Patient["appointments"][number]) => row.type,
       sortable: true,
-      width: "100px",
+      width: "120px",
     },
     {
       name: "Estado",
       selector: (row: Patient["appointments"][number]) => row.status,
       sortable: true,
+      width: "120px",
     },
     {
       name: "Box",
@@ -109,11 +109,13 @@ export default function AppointmentsTable() {
       name: "Nombre Personal",
       selector: (row: Patient["appointments"][number]) =>
         row.personnel.first_name + " " + row.personnel.surname,
+      width: "200px",
     },
     {
       name: "Especialidad",
       selector: (row: Patient["appointments"][number]) =>
         row.personnel.speciality,
+      width: "200px",
     },
     {
       name: "Sucursal",
@@ -146,7 +148,7 @@ export default function AppointmentsTable() {
     <div className="space-y-8 w-[1500px] ">
       {patientData?.getPatientByRut.appointments ? (
         <DataTable
-          title="Citas del Paciente"
+          title="Tabla de Citas"
           columns={columns}
           data={patientData.getPatientByRut.appointments}
           pagination

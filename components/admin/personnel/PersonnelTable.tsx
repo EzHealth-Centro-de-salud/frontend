@@ -51,9 +51,14 @@ export default function PersonnelTable() {
   };
 
   const columns = [
-    { name: "Rut", selector: (row: Personnel) => row.rut, sortable: true },
     {
-      name: "Full name",
+      name: "Rut",
+      selector: (row: Personnel) => row.rut,
+      sortable: true,
+      width: "150px",
+    },
+    {
+      name: "Nombre Completo",
       selector: (row: Personnel) => {
         let fullName = `${row.first_name}`;
 
@@ -109,13 +114,14 @@ export default function PersonnelTable() {
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,
+      width: "150px",
     },
   ];
 
   return (
     <div className="space-y-8 w-[1400px] ">
       <DataTable
-        title="Lista de Personal"
+        title="Detalles de Personal"
         columns={columns}
         data={personnel}
         pagination

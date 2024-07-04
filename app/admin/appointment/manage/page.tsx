@@ -1,7 +1,8 @@
-'use client'
+"use client";
 
-import ManageAppointments from '@/components/admin/appointment/ManageAppointments'
-import React from 'react'
+import ManageAppointments from "@/components/admin/appointment/ManageAppointments";
+import { ChakraProvider } from "@chakra-ui/react";
+import React from "react";
 
 const page = () => {
   return (
@@ -10,10 +11,12 @@ const page = () => {
         <h1 className="text-2xl font-semibold mb-6 text-center">
           Administrar citas
         </h1>
-        <ManageAppointments />
+        <ChakraProvider>
+          <ManageAppointments />
+        </ChakraProvider>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

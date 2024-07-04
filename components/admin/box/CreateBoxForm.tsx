@@ -4,7 +4,13 @@ import { CREATE_BOX_MUTATION } from "../../apollo/mutations";
 import { GET_ALL_BRANCHES_QUERY } from "@/components/apollo/queries";
 import { useMutation, ApolloProvider, useQuery } from "@apollo/client";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import {  Select,  SelectContent,  SelectItem,  SelectTrigger,  SelectValue,} from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -49,6 +55,7 @@ export default function CreateBoxForm() {
         console.log("inside if");
         setAlertType("success");
         setAlertMessage("Box creado correctamente");
+        setBox("");
       } else {
         console.log("inside else");
         setAlertType("error");
@@ -102,7 +109,6 @@ export default function CreateBoxForm() {
           </Select>
         </div>
         <div className="w-full">
-          
           <Button
             type="submit"
             className="w-full"
@@ -134,7 +140,6 @@ export default function CreateBoxForm() {
         </div>
       )}
       {errorCreate && <p>Error: {errorCreate.message}</p>}
-      {dataCreate && <p>Box created successfully!</p>}
     </div>
   );
 }

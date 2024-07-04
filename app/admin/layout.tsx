@@ -19,10 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <div className={`${inter.className} flex h-full`}>
-      <ChakraProvider>
-        <Sidebar menuLinks={AdminMenuLinks} />
-        {children}
-      </ChakraProvider>
+      <Sidebar menuLinks={AdminMenuLinks} />
+      {children}
     </div>
   );
 }

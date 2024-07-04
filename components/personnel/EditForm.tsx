@@ -15,12 +15,13 @@ interface EditFormProps {
 }
 
 export default function EditForm({ rut }: EditFormProps) {
-  const { data: personnelData, loading: personnelLoading } = useQuery(GET_PERSONNEL_QUERY,{
-    variables: { rut }
-  });
+  const { data: personnelData, loading: personnelLoading } = useQuery(
+    GET_PERSONNEL_QUERY,
+    {
+      variables: { rut },
+    }
+  );
 
-  
-  
   const [first_name, setFirstName] = useState("");
   const [middle_name, setMiddleName] = useState("");
   const [surname, setSurname] = useState("");
@@ -32,7 +33,7 @@ export default function EditForm({ rut }: EditFormProps) {
   const [branchAddress, setBranchAddress] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [updatePersonnel] = useMutation(UPDATE_PERSONNEL_MUTATION,  );
+  const [updatePersonnel] = useMutation(UPDATE_PERSONNEL_MUTATION);
 
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");

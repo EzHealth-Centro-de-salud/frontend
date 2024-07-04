@@ -4,6 +4,7 @@ import { GET_ALL_PERSONNEL_QUERY } from "../apollo/queries";
 import { ASSIGN_AVAILABILITY_MUTATION } from "../apollo/mutations";
 import { useQuery, useMutation } from "@apollo/client";
 import { Button } from "@/components/ui/button";
+import Swal from "sweetalert2";
 
 interface Personnel {
   id: number;
@@ -25,7 +26,6 @@ export default function ManageScheduleForm() {
   const { loading, error, data } = useQuery(GET_ALL_PERSONNEL_QUERY);
   const [assignAvailability] = useMutation(ASSIGN_AVAILABILITY_MUTATION);
   const personnel = data?.getAllPersonnel;
-  console.log(personnel);
   const [selectedId, setSelectedId] = useState("");
   const [schedule, setSchedule] = useState({
     semana: [
@@ -47,13 +47,11 @@ export default function ManageScheduleForm() {
     const selectedId = event.target.value;
     setSelectedId(selectedId);
 
-    // Find the selected personnel
     const selectedIdNumber = Number(selectedId);
     const selectedPersonnel = personnel.find(
       (person: Personnel) => person.id === selectedIdNumber
     );
 
-    // Define the correct order of days
     const daysOrder: Day[] = [
       "lunes",
       "martes",
@@ -62,23 +60,18 @@ export default function ManageScheduleForm() {
       "viernes",
     ];
 
-    // If the selected personnel is found and has availability
     if (selectedPersonnel && selectedPersonnel.availability) {
-      // Create a new schedule in the correct order
       const newSchedule = daysOrder.map((day) => {
-        // Find the availability for this day
         const avail = selectedPersonnel.availability.find(
           (a: Availability) => a.day === day
         );
 
-        // If availability is found, return it, otherwise return 'ninguno'
         return {
           dia: day,
           turno: avail ? avail.turn : "ninguno",
         };
       });
 
-      // Update the schedule state
       setSchedule({ semana: newSchedule });
     }
   };
@@ -120,20 +113,31 @@ export default function ManageScheduleForm() {
           },
         },
       });
-      console.log(data);
       if (data?.assignAvailability.success) {
-        console.log("Schedule assigned successfully");
+        Swal.fire({
+          icon: "success",
+          title: "Éxito",
+          text: "Horario asignado exitosamente",
+        });
       } else {
-        console.log("Error: ", errors);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudo asignar el horario",
+        });
       }
     } catch (error) {
-      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ocurrió un error al asignar el horario",
+      });
     }
   };
+
   return (
     <div className="space-y-8 w-full flex flex-col items-center">
       <form
-        action=""
         onSubmit={onsubmit}
         className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
@@ -154,14 +158,16 @@ export default function ManageScheduleForm() {
             {personnel &&
               personnel.map((person: Personnel) => (
                 <option key={person.id} value={person.id}>
-                  {person.first_name} {person.surname}{" "}
-                  {person.second_surname}
+                  {person.first_name} {person.surname} {person.second_surname}
                 </option>
               ))}
           </select>
         </div>
         <div className="flex justify-center">
-          <Button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <Button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
             Submit
           </Button>
         </div>
@@ -193,6 +199,7 @@ export default function ManageScheduleForm() {
                       onChange={() =>
                         handleCheckboxChange(dia as Day, period as Period)
                       }
+                      className="form-checkbox h-5 w-5 text-blue-600"
                     />
                   </td>
                 );
