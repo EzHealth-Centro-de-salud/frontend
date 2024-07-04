@@ -23,15 +23,15 @@ export const GET_PATIENT_BY_RUT_QUERY = gql`
         time
         type
         status
-        box{
+        box {
           id
           box
-          branch{
+          branch {
             id
             address
           }
         }
-        personnel{
+        personnel {
           id
           rut
           first_name
@@ -41,7 +41,6 @@ export const GET_PATIENT_BY_RUT_QUERY = gql`
           email
           role
           speciality
-          
         }
       }
     }
@@ -60,34 +59,34 @@ export const GET_PERSONNEL_QUERY = gql`
       email
       role
       speciality
-      branch{
+      branch {
         id
         address
       }
-      appointments{
+      appointments {
         id
         date
         time
         type
         status
-        box{
+        box {
           box
-          branch{
+          branch {
             address
           }
         }
-        patient{
+        patient {
           rut
           first_name
           surname
         }
-        personnel{
+        personnel {
           id
           rut
           first_name
           surname
         }
-      } 
+      }
     }
   }
 `;
@@ -140,7 +139,7 @@ export const GET_ALL_PERSONNEL_QUERY = gql`
       email
       role
       speciality
-      branch{
+      branch {
         id
         box_count
         address
@@ -155,7 +154,7 @@ export const GET_ALL_BRANCHES_WITH_PERSONNEL_QUERY = gql`
       id
       box_count
       address
-      personnel{
+      personnel {
         id
         rut
         first_name
@@ -165,7 +164,7 @@ export const GET_ALL_BRANCHES_WITH_PERSONNEL_QUERY = gql`
         email
         role
         speciality
-        availability{
+        availability {
           id
           day
           turn
@@ -184,7 +183,6 @@ export const CHECK_SCHEDULE_QUERY = gql`
   }
 `;
 
-
 export const GET_ALL_APPOINTMENTS_QUERY = gql`
   query GetAllAppointments {
     getAllAppointments {
@@ -193,27 +191,27 @@ export const GET_ALL_APPOINTMENTS_QUERY = gql`
       time
       type
       status
-      box{
+      box {
         id
         box
-        branch{
+        branch {
           id
           address
         }
       }
-      patient{
+      patient {
         id
         rut
         first_name
         surname
       }
-      personnel{
+      personnel {
         id
         rut
         first_name
         surname
       }
-      medical_record{
+      medical_record {
         id
         diagnosis
         prescription
@@ -245,15 +243,15 @@ export const GET_PATIENT_QUERY = gql`
         time
         type
         status
-        box{
+        box {
           id
           box
-          branch{
+          branch {
             id
             address
           }
         }
-        personnel{
+        personnel {
           id
           rut
           first_name
@@ -263,10 +261,17 @@ export const GET_PATIENT_QUERY = gql`
           email
           role
           speciality
-          
         }
       }
     }
   }
 `;
 
+export const CHECK_SCHEDULE_ADMIN_QUERY = gql`
+  query CheckScheduleAdmin($CheckScheduleAdminInput: CheckScheduleAdminInput!) {
+    checkScheduleAdmin(input: $CheckScheduleAdminInput) {
+      success
+      message
+    }
+  }
+`;

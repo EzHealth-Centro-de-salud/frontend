@@ -1,12 +1,12 @@
-"use client"
+"use client";
 import DataTable from "react-data-table-component";
 import { Personnel } from "@/interfaces/Personnel";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_PERSONNEL_QUERY } from "@/components/apollo/queries";
-import { CiEdit, CiTrash } from "react-icons/ci";
+import { CiEdit, CiRead, CiTrash } from "react-icons/ci";
 import { encrypt } from "@/utils/cryptoUtils";
 import { useRouter } from "next/navigation";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 export default function PersonnelTable() {
   const router = useRouter();
@@ -21,7 +21,6 @@ export default function PersonnelTable() {
   if (loadingPersonnel) return <p>Loading...</p>;
   if (errorPersonnel) return <p>Error: {errorPersonnel.message}</p>;
 
-
   const handleEditClick = (row: Personnel) => {
     const encryptedRut = encrypt(row.rut);
     localStorage.setItem("personnelRut", encryptedRut);
@@ -30,23 +29,25 @@ export default function PersonnelTable() {
 
   const handleDeactivateClick = (row: Personnel) => {
     Swal.fire({
-      title: '¿Estás seguro?',
+      title: "¿Estás seguro?",
       text: `¿Quieres desactivar al personal con RUT ${row.rut}?`,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: '¡Sí, desactivar!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, desactivar!",
     }).then((result) => {
       if (result.isConfirmed) {
         // Add your deactivation logic, such as calling an API to update the user's status
-        Swal.fire(
-          'Desactivado!',
-          'El usuario ha sido desactivado.',
-          'success'
-        );
+        Swal.fire("Desactivado!", "El usuario ha sido desactivado.", "success");
       }
     });
+  };
+
+  const handleCheckAvailabilityClick = (row: Personnel) => {
+    const encryptedId = encrypt(row.id.toString());
+    localStorage.setItem("personnelId", encryptedId);
+    router.push("/admin/personnel/availability");
   };
 
   const columns = [
@@ -55,7 +56,7 @@ export default function PersonnelTable() {
       name: "Full name",
       selector: (row: Personnel) => {
         let fullName = `${row.first_name}`;
-  
+
         if (row.middle_name) {
           fullName += ` ${row.middle_name}`;
         }
@@ -67,8 +68,12 @@ export default function PersonnelTable() {
       },
       sortable: true,
     },
-    { name: "Especialidad" , selector: (row: Personnel) => row.speciality, sortable: true },
-    { name: "Email" , selector: (row: Personnel) => row.email, sortable: true },
+    {
+      name: "Especialidad",
+      selector: (row: Personnel) => row.speciality,
+      sortable: true,
+    },
+    { name: "Email", selector: (row: Personnel) => row.email, sortable: true },
     {
       name: "Editar",
       cell: (row: Personnel) => (
@@ -92,7 +97,19 @@ export default function PersonnelTable() {
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,
-    }
+    },
+    {
+      name: "Ver Disponibilidad",
+      cell: (row: Personnel) => (
+        <CiRead
+          onClick={() => handleCheckAvailabilityClick(row)}
+          style={{ cursor: "pointer" }}
+        />
+      ),
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    },
   ];
 
   return (

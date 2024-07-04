@@ -112,14 +112,9 @@ export default function BookingFlow() {
 
   const personnel: Personnel[] = dataPersonnel.getAllPersonnel;
 
-  console.log(personnel)
-
   const personnelForBranch = personnel.filter((personnel) => {
-    return parseInt(personnel.branch.id) === parseInt(branch) ;
+    return parseInt(personnel.branch.id) === parseInt(branch);
   });
-
-  console.log(personnelForBranch + "personnelForBranch")
-
 
   const handleContinueFromBranchSelection = () => {
     if (!branch) {
@@ -161,7 +156,7 @@ export default function BookingFlow() {
       setShowTooltip(true);
     } else {
       setShowTooltip(false);
-      if(medicId && patientId && date){
+      if (medicId && patientId && date) {
         const availabilityByMedicId = dataSchedule?.checkSchedule.message;
         setMedicAvailability(JSON.parse(availabilityByMedicId));
         setTimetableView(true);
@@ -234,7 +229,6 @@ export default function BookingFlow() {
     e.preventDefault();
     setLoading(true);
     try {
-      console.log("inside try");
       const { data, errors } = await createAppointment({
         variables: {
           input: {
@@ -246,19 +240,16 @@ export default function BookingFlow() {
           },
         },
       });
-      console.log(data);
       if (data?.createAppointment.success) {
         setWasBooked("true");
         setAlertType("success");
         setAlertMessage("Cita agendada exitosamente");
-        console.log("Appointment created successfully");
         setTimeout(() => {
           window.location.href = "/patient/dashboard";
         }, 2000);
       } else {
         setAlertType("error");
         setAlertMessage("Hubo un error al agendar la cita");
-        console.log("Error: ", errors);
       }
     } catch (error) {
       console.error(error);
