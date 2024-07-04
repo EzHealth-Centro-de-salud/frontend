@@ -44,6 +44,12 @@ export const GET_PATIENT_BY_RUT_QUERY = gql`
           
         }
       }
+      medical_records {
+        id
+        diagnosis
+        prescription
+        date_time
+      }
     }
   }
 `;

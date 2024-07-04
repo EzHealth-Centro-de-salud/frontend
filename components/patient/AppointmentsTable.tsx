@@ -76,7 +76,7 @@ export default function AppointmentsTable() {
         <div className="space-y-8 w-[1200px] ">
             {patientData?.getPatientByRut.appointments ? (
             <DataTable
-                title="Citas del Paciente"
+                title="Tabla de Citas"
                 columns={columns}
                 data={patientData.getPatientByRut.appointments}
                 pagination
