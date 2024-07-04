@@ -48,7 +48,10 @@ export const LOGIN_PERSONNEL_MUTATION = gql`
 
 export const RECOVERY_PATIENT_MUTATION = gql`
   mutation RecoveryPatient($recoveryInput: RecoveryUserInput!) {
-    recoveryPatient(input: $recoveryInput)
+    recoveryPatient(input: $recoveryInput) {
+      success
+      message
+    }
   }
 `;
 
@@ -169,4 +172,4 @@ export const RESCHEDULE_APPOINTMENT_MUTATION = gql`
       message
     }
   }
-`; 
+`;

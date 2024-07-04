@@ -23,10 +23,10 @@ export const PatientMenuLinks = [
     name: "Cerrar Sesión",
     link: "/logout",
   },
-  {
-    name: "Don't click!!!",
-    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  },
+  // {
+  //   name: "Don't click!!!",
+  //   link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  // },
 ];
 
 export const PersonnelMenuLinks = [
