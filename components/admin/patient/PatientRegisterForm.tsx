@@ -15,14 +15,14 @@ import {
 import chileRegions from "@/constants/chileRegions";
 import LoadingButton from "@/components/ui/loadingButton";
 
-interface PatientFormState{
+interface PatientFormState {
   rut: string;
   password: string;
   birthdate: string;
   first_name: string;
   middle_name: string;
   surname: string;
-  second_surname: string
+  second_surname: string;
   sex: string;
   address: string;
   region: string;
@@ -93,7 +93,7 @@ export default function PatientRegisterForm() {
           commune: "",
           email: "",
           phone: "",
-        });        
+        });
       } else {
         console.log("inside else");
         setAlertType("error");
@@ -112,9 +112,7 @@ export default function PatientRegisterForm() {
     <div className="space-y-5 w-[1100px] ">
       <form onSubmit={onSubmit} className="space-y-5 ">
         <div className="grid w-full items-center gap-1">
-          <Label className="text-[#26313c]">
-            RUT
-          </Label>
+          <Label className="text-[#26313c]">RUT</Label>
           <Input
             className=" text-[#26313c]"
             required
@@ -134,7 +132,7 @@ export default function PatientRegisterForm() {
                 e.key !== "ArrowRight" &&
                 e.key !== "Tab" &&
                 e.key !== "k" &&
-                e.key !== "K" 
+                e.key !== "K"
               ) {
                 e.preventDefault();
               }
@@ -231,6 +229,7 @@ export default function PatientRegisterForm() {
               id="password"
               type="password"
               name="password"
+              minLength={8}
               maxLength={128}
             />
           </div>
@@ -254,12 +253,14 @@ export default function PatientRegisterForm() {
             <Label className="text-[#26313c]" htmlFor="sex">
               Sexo
             </Label>
-            <Select onValueChange={(value) =>
+            <Select
+              onValueChange={(value) =>
                 setPatientFormState({
                   ...patientFormState,
                   sex: value, // Update the sex field in the state
                 })
-              } >
+              }
+            >
               <SelectTrigger className=" text-[#26313c]">
                 <SelectValue placeholder="Seleccione..." />
               </SelectTrigger>
@@ -290,12 +291,14 @@ export default function PatientRegisterForm() {
             <Label className="text-[#26313c]" htmlFor="region">
               Región
             </Label>
-            <Select onValueChange={(value) =>
+            <Select
+              onValueChange={(value) =>
                 setPatientFormState({
-                    ...patientFormState,
-                    region: value, // Update the region field in the state
-                  })
-                }>
+                  ...patientFormState,
+                  region: value, // Update the region field in the state
+                })
+              }
+            >
               <SelectTrigger className=" text-[#26313c]">
                 <SelectValue placeholder="Seleccione..." />
               </SelectTrigger>
@@ -355,7 +358,12 @@ export default function PatientRegisterForm() {
           </div>
         </div>
         <div className="w-full flex justify-center">
-          <LoadingButton title="Registrar paciente" loadingTitle="Registrando..." isLoading={loading} styling= "w-[300px]"/>
+          <LoadingButton
+            title="Registrar paciente"
+            loadingTitle="Registrando..."
+            isLoading={loading}
+            styling="w-[300px]"
+          />
         </div>
       </form>
       {alertMessage && (

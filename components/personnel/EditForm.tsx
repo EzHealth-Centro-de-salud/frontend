@@ -21,7 +21,7 @@ export default function EditForm({ rut }: EditFormProps) {
       variables: { rut },
     }
   );
-
+  const [id, setId] = useState(0);
   const [first_name, setFirstName] = useState("");
   const [middle_name, setMiddleName] = useState("");
   const [surname, setSurname] = useState("");
@@ -41,6 +41,7 @@ export default function EditForm({ rut }: EditFormProps) {
   useEffect(() => {
     if (personnelData) {
       const {
+        id,
         first_name,
         middle_name,
         surname,
@@ -50,6 +51,7 @@ export default function EditForm({ rut }: EditFormProps) {
         speciality,
         branch: { id: id_branch, address: branchAddress },
       } = personnelData.getPersonnelByRut;
+      setId(parseFloat(id));
       setFirstName(first_name || "");
       setMiddleName(middle_name || "");
       setSurname(surname || "");
@@ -68,16 +70,9 @@ export default function EditForm({ rut }: EditFormProps) {
     try {
       const { data, errors } = await updatePersonnel({
         variables: {
-          UpdatePersonnelInput: {
-            rut,
-            first_name,
-            middle_name,
-            surname,
-            second_surname,
+          input: {
+            id_personnel: id,
             email,
-            role,
-            speciality,
-            id_branch,
           },
         },
       });

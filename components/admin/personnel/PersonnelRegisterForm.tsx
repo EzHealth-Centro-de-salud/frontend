@@ -5,7 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { REGISTER_PERSONNEL_MUTATION } from "../../apollo/mutations";
 import { GET_ALL_BRANCHES_QUERY } from "@/components/apollo/queries";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Branch } from "@/interfaces/Branch";
 import LoadingButton from "@/components/ui/loadingButton";
@@ -24,10 +30,9 @@ interface PersonnelFormState {
 }
 
 export default function PersonnelRegisterForm() {
-
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
-  
+
   const [personnelFormState, setPersonnelFormState] =
     useState<PersonnelFormState>({
       rut: "",
@@ -49,9 +54,7 @@ export default function PersonnelRegisterForm() {
     data: dataBranches,
   } = useQuery(GET_ALL_BRANCHES_QUERY);
 
-  
-
-  const [registerPersonnel] = useMutation(REGISTER_PERSONNEL_MUTATION,  );
+  const [registerPersonnel] = useMutation(REGISTER_PERSONNEL_MUTATION);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -100,7 +103,6 @@ export default function PersonnelRegisterForm() {
 
   if (loadingBranches) return <p>Loading...</p>;
   if (errorBranches) return <p>Error: {errorBranches.message}</p>;
-  
 
   return (
     <div className="space-y-5 w-[1000px] ">
@@ -221,6 +223,7 @@ export default function PersonnelRegisterForm() {
               onChange={handleInputChange}
               id="password"
               type="password"
+              minLength={8}
               maxLength={128}
               name="password"
             />
@@ -242,23 +245,23 @@ export default function PersonnelRegisterForm() {
             />
           </div>
           <div>
-          <Label className="text-[#26313c]">Branch</Label>
-          <Select onValueChange={(value) => personnelFormState.id_branch}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Selecciona una sucursal" />
-            </SelectTrigger>
-            <SelectContent>
-              {dataBranches.getAllBranches.map((branch: Branch) => (
-                <SelectItem
-                  value={branch.id + "\n" + branch.address}
-                  key={branch.id}
-                >
-                  {branch.address}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+            <Label className="text-[#26313c]">Branch</Label>
+            <Select onValueChange={(value) => personnelFormState.id_branch}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecciona una sucursal" />
+              </SelectTrigger>
+              <SelectContent>
+                {dataBranches.getAllBranches.map((branch: Branch) => (
+                  <SelectItem
+                    value={branch.id + "\n" + branch.address}
+                    key={branch.id}
+                  >
+                    {branch.address}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <div className="grid w-full items-center gap-1.5">
             <Label className="text-[#26313c]" htmlFor="role">
               Rol
@@ -276,7 +279,12 @@ export default function PersonnelRegisterForm() {
           </div>
         </div>
         <div className="w-full flex justify-center pt-8">
-          <LoadingButton title="Registrar personal" loadingTitle="Registrando..." isLoading={loading} styling= "w-[300px]"/>
+          <LoadingButton
+            title="Registrar personal"
+            loadingTitle="Registrando..."
+            isLoading={loading}
+            styling="w-[300px]"
+          />
         </div>
       </form>
       {alertMessage && (

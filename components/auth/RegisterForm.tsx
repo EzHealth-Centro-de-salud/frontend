@@ -1,5 +1,5 @@
 "use client";
-import { useMutation} from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
@@ -31,7 +31,7 @@ export default function RegisterForm() {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [registerPatient] = useMutation(REGISTER_PATIENT_MUTATION,  );
+  const [registerPatient] = useMutation(REGISTER_PATIENT_MUTATION);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("");
 
@@ -61,7 +61,7 @@ export default function RegisterForm() {
       });
       if (data?.createPatient.success) {
         setAlertType("success");
-        setAlertMessage("Usuario creado, volviendo al menú principal...");
+        setAlertMessage("Cuenta creada, redirijiendo al Login...");
         setRut("");
         setPassword("");
         setBirthdate("");
@@ -76,7 +76,7 @@ export default function RegisterForm() {
         setEmail("");
         setPhone("");
         setTimeout(() => {
-          window.location.href = "/";
+          window.location.href = "/auth/login";
         }, 4000);
       } else {
         console.log("inside else");
@@ -194,6 +194,7 @@ export default function RegisterForm() {
               onChange={(e) => setPassword(e.target.value)}
               id="password"
               type="password"
+              minLength={8}
               maxLength={128}
             />
           </div>
@@ -222,7 +223,7 @@ export default function RegisterForm() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Femenino">Femenino</SelectItem>
-                <SelectItem value="Masculino">Masculino</SelectItem>                
+                <SelectItem value="Masculino">Masculino</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -304,7 +305,12 @@ export default function RegisterForm() {
           </div>
         </div>
         <div className="w-full flex justify-center">
-          <LoadingButton title="Registrar paciente" loadingTitle="Registrando..." isLoading={loading} styling= "w-[300px]"/>
+          <LoadingButton
+            title="Registrarse"
+            loadingTitle="Registrando..."
+            isLoading={loading}
+            styling="w-[300px]"
+          />
         </div>
       </form>
       {alertMessage && (

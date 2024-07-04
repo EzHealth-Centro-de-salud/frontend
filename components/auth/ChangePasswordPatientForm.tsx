@@ -4,38 +4,62 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CHANGE_PASSWORD_PATIENT_MUTATION } from "@/components/apollo/mutations";
-//import client from "@/components/apollo/ApolloClient";
+import Swal from "sweetalert2";
 
 export default function ChangePasswordPatientForm() {
   const [newPass, setNewPass] = useState("");
   const [repeatPass, setRepeatPass] = useState("");
   const [error, setError] = useState("");
-  const [changePasswordPatient] = useMutation( CHANGE_PASSWORD_PATIENT_MUTATION);
+  const [changePasswordPatient] = useMutation(CHANGE_PASSWORD_PATIENT_MUTATION);
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPass !== repeatPass) {
       setError("Las contraseñas no coinciden");
       return;
     }
-    const { data } = await changePasswordPatient({
-      variables: {
-        recoveryInput: {
-          rut: localStorage.getItem("rut"),
-          newPassword: newPass,
+    try {
+      const { data } = await changePasswordPatient({
+        variables: {
+          recoveryInput: {
+            rut: localStorage.getItem("rut"),
+            newPassword: newPass,
+          },
         },
-      },
-    });
-    if (data?.changePasswordPatient.success) {
-      // Password successfully changed
-      window.alert("Contraseña cambiada");
-      // Clear localStorage
-      localStorage.removeItem("rut");
-      // Redirect to login page
-      window.location.href = "/auth/login";
-    } else {
+      });
+
+      if (data?.changePasswordPatient.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Éxito",
+          text: "Contraseña cambiada",
+          confirmButtonText: "OK",
+        }).then(() => {
+          // Clear localStorage
+          localStorage.removeItem("rut");
+          // Redirect to login page
+          window.location.href = "/auth/login";
+        });
+      } else {
+        setError("Error al cambiar la contraseña");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error al cambiar la contraseña",
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (error) {
       setError("Error al cambiar la contraseña");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ocurrió un error al cambiar la contraseña",
+        confirmButtonText: "OK",
+      });
     }
   };
+
   return (
     <form onSubmit={onSubmit} className="space-y-8 w-[400px]">
       <div className="grid w-full items-center gap-1.5">

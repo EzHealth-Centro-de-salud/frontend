@@ -22,7 +22,7 @@ export default function EditForm({ rut }: EditFormProps) {
       variables: { rut },
     }
   );
-
+  const [id, setId] = useState(0);
   const [first_name, setFirstName] = useState("");
   const [middle_name, setMiddleName] = useState("");
   const [surname, setSurname] = useState("");
@@ -41,6 +41,7 @@ export default function EditForm({ rut }: EditFormProps) {
   useEffect(() => {
     if (patientData) {
       const {
+        id,
         first_name,
         middle_name,
         surname,
@@ -52,6 +53,7 @@ export default function EditForm({ rut }: EditFormProps) {
         region,
         commune,
       } = patientData.getPatientByRut;
+      setId(parseFloat(id));
       setFirstName(first_name || "");
       setMiddleName(middle_name || "");
       setSurname(surname || "");
@@ -65,7 +67,7 @@ export default function EditForm({ rut }: EditFormProps) {
     }
   }, [patientData]);
 
-  const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION,  );
+  const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,13 +75,8 @@ export default function EditForm({ rut }: EditFormProps) {
     try {
       const { data, errors } = await updatePatient({
         variables: {
-          UpdatePatientInput: {
-            id: rut,
-            first_name,
-            middle_name,
-            surname,
-            second_surname,
-            birthdate,
+          input: {
+            id_patient: id,
             email,
             phone,
             address,
